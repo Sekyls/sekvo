@@ -1,0 +1,247 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-space-grotesk: var(--font-space-grotesk);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /*Colours Palette/Core */
+  --color-rich-black: #011627;
+  --color-imperial-red: #f71735;
+  --color-turquoise: #41ead4;
+  --color-baby-powder: #fdfffc;
+  --color-orange-peel: #ff9f1c;
+}
+
+/* Light Theme */
+:root {
+  --radius: 0.625rem;
+  --background: #fdfffc; /* Baby powder */
+  --foreground: #011627; /* Rich black */
+
+  /* Primary Accent-Turquoise */
+  --primary: #011627;
+  --primary-foreground: #fdfffc;
+
+  /* Secondary Accent-Orange Peel */
+  --accent: #ff9f1c;
+  --accent-foreground: #011627;
+
+  /* Layered Elements */
+  --card: #fdfffc;
+  --card-foreground: #011627;
+  --popover: #fdfffc;
+  --popover-foreground: #011627;
+
+  /* Borders and Inputs */
+  --border: color-mix(in srgb, #011627 20%, #fdfffc);
+  --input: color-mix(in srgb, #011627 20%, #fdfffc);
+  --ring: #41ead4; /* Turquoise */
+
+  /* Other Semantic Colors */
+  --secondary: color-mix(in srgb, #41ead4 10%, #fdfffc);
+  --secondary-foreground: #011627;
+  --muted: color-mix(in srgb, #41ead4 5%, #fdfffc);
+  --muted-foreground: color-mix(in srgb, #011627 60%, #fdfffc);
+  --destructive: #f71735; /* Imperial red */
+
+  --text-h1: clamp(2.5rem, 1.75rem + 2vw, 4rem);
+  --text-h2: clamp(2rem, 1.4rem + 1.5vw, 3rem);
+  --text-h3: clamp(1.75rem, 1.2rem + 1vw, 2.5rem);
+  --text-h4: clamp(1.5rem, 1.1rem + 0.8vw, 2rem);
+  --text-h5: clamp(1.25rem, 1rem + 0.5vw, 1.5rem);
+  --text-h6: clamp(1.125rem, 0.9rem + 0.4vw, 1.25rem);
+  --text-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  --text-small: clamp(0.875rem, 0.8rem + 0.2vw, 1rem);
+}
+
+/* Dark Theme */
+.dark {
+  /* Colour Core/Palette*/
+  --background: #011627; /* Rich black */
+  --foreground: #fdfffc; /* Baby powder */
+
+  /* Primary Accent */
+  --primary: #41ead4; /* Turquoise */
+  --primary-foreground: #011627;
+
+  /* Secondary Accent */
+  --accent: #ff9f1c; /* Orange peel */
+  --accent-foreground: #011627;
+
+  /* Layered Elements */
+  --card: color-mix(in srgb, #011627 95%, #41ead4);
+  --card-foreground: #fdfffc;
+  --popover: color-mix(in srgb, #011627 95%, #41ead4);
+  --popover-foreground: #fdfffc;
+
+  /* Borders and Inputs */
+  --border: color-mix(in srgb, #011627 30%, transparent);
+  --input: color-mix(in srgb, #011627 30%, transparent);
+  --ring: #41ead4;
+
+  /* Other Semantic Colors */
+  --secondary: color-mix(in srgb, #011627 10%, transparent);
+  --secondary-foreground: #fdfffc;
+  --muted: color-mix(in srgb, #011627 15%, transparent);
+  --muted-foreground: color-mix(in srgb, #fdfffc 70%, transparent);
+  --destructive: color-mix(in srgb, #f71735 80%, #fdfffc);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-space-grotesk;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+}
+
+h1 {
+  font-size: var(--text-h1);
+}
+h2 {
+  font-size: var(--text-h2);
+}
+h3 {
+  font-size: var(--text-h3);
+}
+h4 {
+  font-size: var(--text-h4);
+}
+h5 {
+  font-size: var(--text-h5);
+}
+h6 {
+  font-size: var(--text-h6);
+}
+
+p {
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+  line-height: 1.65;
+}
+small {
+  font-size: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);
+  line-height: 1.4;
+}
+
+.container-constraint {
+  @apply mx-auto w-full;
+  max-width: clamp(10rem, 95vw, 95rem);
+}
+
+::-webkit-scrollbar {
+  @apply bg-accent;
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  border: none;
+  @apply bg-primary;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary/60;
+  cursor: grab;
+}
+
+.icon {
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+}
+
+.material-btn {
+  background: #fff;
+  color: #333;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+}
+
+.material-btn:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15), 0 8px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.material-btn:active {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transform: translateY(0);
+}
+
+.neumo-btn {
+  background: #fdfffc;
+  color: #333;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1),
+    -6px -6px 12px rgba(255, 255, 255, 0.9);
+  transition: all 0.2s ease;
+}
+
+.neumo-btn:hover {
+  @apply transition-all duration-700 ease-in-out;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15),
+    -4px -4px 8px rgba(255, 255, 255, 1);
+  background: linear-gradient(135deg, #e91e63 0%, #ff5722 50%, #ff9800 100%);
+}
+
+.primary-gradient {
+  background: linear-gradient(135deg, #e91e63 0%, #ff5722 50%, #ff9800 100%);
+}
+
+.primary-gradient:hover {
+  opacity: 80%;
+}

@@ -198,18 +198,14 @@ small {
 
 .material-btn {
   background: #fff;
-  color: #333;
-  padding: 0.6rem 1.2rem;
-  border-radius: 12px;
+  color: #011627;
   border: none;
-  font-weight: 500;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15), 0 8px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.2s ease;
 }
 
 .material-btn:hover {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15), 0 8px 12px rgba(0, 0, 0, 0.08);
   transform: translateY(-2px);
 }
 
@@ -220,13 +216,9 @@ small {
 
 .neumo-btn {
   background: #fdfffc;
-  color: #333;
-  padding: 0.6rem 1.2rem;
-  border-radius: 12px;
   border: none;
-  font-weight: 500;
   cursor: pointer;
-  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1),
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2),
     -6px -6px 12px rgba(255, 255, 255, 0.9);
   transition: all 0.2s ease;
 }

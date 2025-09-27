@@ -1,12 +1,11 @@
 import Image from "next/image";
-import { Button } from "../ui/button";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FOOTER_LINKS } from "@/lib/constants";
 
 export default function Footer() {
   return (
-    <footer className="px-5 grid md:grid-cols-[400px_1fr] gap-y-7 gap-x-5 justify-between sm:justify-items-center py-10 bg-accent text-white">
+    <footer className="px-5 grid md:grid-cols-[400px_1fr] gap-y-7 gap-x-5 lg:gap-x-20 xl:gap-x-36 justify-between sm:justify-items-center py-10 bg-accent dark:bg-transparent dark:shadow-2xl dark:shadow-white rounded-t-4xl text-white">
       {/* First Column */}
       <div className="space-y-4">
         <Link href={"/"}>
@@ -55,7 +54,7 @@ export default function Footer() {
         </div>
       </div>
       {/* 2nd columns */}
-      <div className="grid  grid-cols-2 sm:grid-cols-4 gap-y-5 justify-between w-full">
+      <div className="grid  grid-cols-2 gap-x-6 sm:gap-x-0 sm:grid-cols-4 gap-y-5 justify-between w-full">
         {FOOTER_LINKS.map((item, index) => {
           return (
             <div key={index} className="w-full space-y-1">

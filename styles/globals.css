@@ -44,7 +44,6 @@
   /*Colours Palette/Core */
   --color-rich-black: #011627;
   --color-imperial-red: #f71735;
-  --color-turquoise: #41ead4;
   --color-baby-powder: #fdfffc;
   --color-orange-peel: #ff9f1c;
 }
@@ -52,34 +51,32 @@
 /* Light Theme */
 :root {
   --radius: 0.625rem;
-  --background: #fdfffc; /* Baby powder */
-  --foreground: #011627; /* Rich black */
+  --background: #fdfffc;
+  --foreground: black;
 
   /* Primary Accent-Turquoise */
-  --primary: #011627;
+  --primary: black;
   --primary-foreground: #fdfffc;
 
   /* Secondary Accent-Orange Peel */
   --accent: #ff9f1c;
-  --accent-foreground: #011627;
+  --accent-foreground: black;
 
   /* Layered Elements */
   --card: #fdfffc;
-  --card-foreground: #011627;
+  --card-foreground: black;
   --popover: #fdfffc;
-  --popover-foreground: #011627;
+  --popover-foreground: black;
 
   /* Borders and Inputs */
-  --border: color-mix(in srgb, #011627 20%, #fdfffc);
-  --input: color-mix(in srgb, #011627 20%, #fdfffc);
-  --ring: #41ead4; /* Turquoise */
+  --border: color-mix(in srgb, black 20%, #fdfffc);
+  --input: color-mix(in srgb, black 20%, #fdfffc);
+  /* --ring: #41ead4;  */
 
   /* Other Semantic Colors */
-  --secondary: color-mix(in srgb, #41ead4 10%, #fdfffc);
-  --secondary-foreground: #011627;
-  --muted: color-mix(in srgb, #41ead4 5%, #fdfffc);
-  --muted-foreground: color-mix(in srgb, #011627 60%, #fdfffc);
-  --destructive: #f71735; /* Imperial red */
+  --secondary-foreground: black;
+  --muted-foreground: color-mix(in srgb, black 60%, #fdfffc);
+  --destructive: #f71735;
 
   --text-h1: clamp(2.5rem, 1.75rem + 2vw, 4rem);
   --text-h2: clamp(2rem, 1.4rem + 1.5vw, 3rem);
@@ -94,32 +91,30 @@
 /* Dark Theme */
 .dark {
   /* Colour Core/Palette*/
-  --background: #011627; /* Rich black */
-  --foreground: #fdfffc; /* Baby powder */
+  --background: black;
+  --foreground: #fdfffc;
 
   /* Primary Accent */
-  --primary: #41ead4; /* Turquoise */
-  --primary-foreground: #011627;
+  --primary-foreground: black;
 
   /* Secondary Accent */
-  --accent: #ff9f1c; /* Orange peel */
-  --accent-foreground: #011627;
+  --accent: #ff9f1c;
+  --accent-foreground: black;
 
   /* Layered Elements */
-  --card: color-mix(in srgb, #011627 95%, #41ead4);
+  --card: color-mix(in srgb, black 95%, #41ead4);
   --card-foreground: #fdfffc;
-  --popover: color-mix(in srgb, #011627 95%, #41ead4);
+  --popover: color-mix(in srgb, black 95%, #41ead4);
   --popover-foreground: #fdfffc;
 
   /* Borders and Inputs */
-  --border: color-mix(in srgb, #011627 30%, transparent);
-  --input: color-mix(in srgb, #011627 30%, transparent);
-  --ring: #41ead4;
+  --border: color-mix(in srgb, black 30%, transparent);
+  --input: color-mix(in srgb, black 30%, transparent);
 
   /* Other Semantic Colors */
-  --secondary: color-mix(in srgb, #011627 10%, transparent);
+  --secondary: color-mix(in srgb, black 10%, transparent);
   --secondary-foreground: #fdfffc;
-  --muted: color-mix(in srgb, #011627 15%, transparent);
+  --muted: color-mix(in srgb, black 15%, transparent);
   --muted-foreground: color-mix(in srgb, #fdfffc 70%, transparent);
   --destructive: color-mix(in srgb, #f71735 80%, #fdfffc);
 }
@@ -177,19 +172,15 @@ small {
 }
 
 ::-webkit-scrollbar {
-  @apply bg-accent;
-  width: 5px;
+  @apply bg-background w-1;
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  border: none;
-  @apply bg-primary;
+  @apply bg-imperial-red rounded-4xl border-0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-primary/60;
-  cursor: grab;
+  @apply bg-primary/60 cursor-grab;
 }
 
 .icon {
@@ -198,7 +189,7 @@ small {
 
 .material-btn {
   background: #fff;
-  color: #011627;
+  color: black;
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15), 0 8px 12px rgba(0, 0, 0, 0.15);
@@ -207,27 +198,13 @@ small {
 
 .material-btn:hover {
   transform: translateY(-2px);
+  background: linear-gradient(135deg, #e91e63 0%, #ff5722 50%, #ff9800 100%);
+  color: white;
 }
 
 .material-btn:active {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   transform: translateY(0);
-}
-
-.neumo-btn {
-  background: #fdfffc;
-  border: none;
-  cursor: pointer;
-  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2),
-    -6px -6px 12px rgba(255, 255, 255, 0.9);
-  transition: all 0.2s ease;
-}
-
-.neumo-btn:hover {
-  @apply transition-all duration-700 ease-in-out;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15),
-    -4px -4px 8px rgba(255, 255, 255, 1);
-  background: linear-gradient(135deg, #e91e63 0%, #ff5722 50%, #ff9800 100%);
 }
 
 .primary-gradient {

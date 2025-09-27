@@ -13,7 +13,7 @@ export default function Banner() {
         time growing. With Sekvo, creating and managing invoices is fast,
         professional, and stress-free.
       </p>
-      <Button className="flex gap-x-2 items-center justify-center p-6 font-bold primary-gradient max-w-full">
+      <Button className="flex gap-x-2 items-center justify-center p-6 font-bold primary-gradient max-w-full dark:text-white">
         <SendHorizontal className="size-5" />
         <p> Start sending invoices now!</p>
       </Button>

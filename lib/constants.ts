@@ -1,3 +1,6 @@
+import type { Path } from "react-hook-form";
+import { SignupFormValues } from "./types";
+
 export const FOOTER_LINKS = [
   {
     title: "Free Tools",
@@ -21,5 +24,56 @@ export const FOOTER_LINKS = [
       { title: "Affiliates", url: "#" },
       { title: "Blog", url: "#" },
     ],
+  },
+];
+
+export const SIGNUP_FORM_FIELDS: {
+  fieldName: Path<SignupFormValues>;
+  label: string;
+  placeholder: string;
+  phone: boolean;
+  type: "text" | "email" | "password" | "tel";
+}[] = [
+  {
+    fieldName: "name",
+    label: "Company Name",
+    placeholder: "Inskpire Corp",
+    phone: false,
+    type: "text",
+  },
+  {
+    fieldName: "address",
+    label: "Address",
+    placeholder: "Mile 11, West Hills",
+    phone: false,
+    type: "text",
+  },
+  {
+    fieldName: "email",
+    label: "Email",
+    placeholder: "company@email.com",
+    phone: false,
+    type: "email",
+  },
+  {
+    fieldName: "phoneNumber",
+    label: "Phone Number",
+    placeholder: "Enter phone number",
+    phone: true,
+    type: "tel",
+  },
+  {
+    fieldName: "password.password",
+    label: "Password",
+    placeholder: "~k$M@X7#fL0vE!p!a",
+    phone: false,
+    type: "password",
+  },
+  {
+    fieldName: "password.confirmPassword",
+    label: "Confirm Password",
+    placeholder: "~k$M@X7#fL0vE!p!a",
+    phone: false,
+    type: "password",
   },
 ];

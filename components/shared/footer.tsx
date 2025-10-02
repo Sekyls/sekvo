@@ -14,7 +14,7 @@ export default function Footer() {
             alt="sekvo"
             width={70}
             height={70}
-            className="mx-auto sm:mx-0 rounded-2xl bg-white"
+            className="mx-auto sm:mx-0 rounded-2x bg-white dark:rounded-none dark:bg-transparent"
           />
         </Link>
         <p className="text-base! mt-2">
@@ -26,7 +26,7 @@ export default function Footer() {
         </p>
         <div className="hidden sm:flex gap-x-2.5 items-center">
           <Avatar className="border border-red-500 bg-white size-12 pt-0.5 pl-1">
-            <AvatarImage src="/ceo.png" className="object-cover" />
+            <AvatarImage src="/ceo.png" className="object-cover grayscale" />
             <AvatarFallback>S</AvatarFallback>
           </Avatar>
           <p className="text-base!">
@@ -73,7 +73,7 @@ export default function Footer() {
       <div className="sm:hidden space-y-4">
         <div className="flex gap-x-2.5 items-center">
           <Avatar className="border border-red-500 bg-white size-12 pt-0.5 pl-1">
-            <AvatarImage src="/ceo.png" className="object-cover" />
+            <AvatarImage src="/ceo.png" className="object-cover grayscale" />
             <AvatarFallback>S</AvatarFallback>
           </Avatar>
           <p className="text-base!">

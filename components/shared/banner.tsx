@@ -1,6 +1,7 @@
 import { SendHorizontal } from "lucide-react";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Banner() {
   return (
@@ -13,9 +14,14 @@ export default function Banner() {
         time growing. With Sekvo, creating and managing invoices is fast,
         professional, and stress-free.
       </p>
-      <Button className="flex gap-x-2 items-center justify-center p-6 font-bold primary-gradient max-w-full dark:text-white">
-        <SendHorizontal className="size-5" />
-        <p> Start sending invoices now!</p>
+      <Button className="font-bold primary-gradient max-w-full dark:text-white py-6">
+        <Link
+          href={"/auth/signup"}
+          className="flex gap-x-3 items-center justify-center"
+        >
+          <SendHorizontal className="size-5" />
+          <p> Start sending invoices now!</p>
+        </Link>
       </Button>
       <Image
         src={"/invoice-animate.svg"}

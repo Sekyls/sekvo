@@ -33,7 +33,7 @@ export default function SignUpForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 flex justify-center items-center h-screen"
+        className="space-y-8 flex justify-center items-center h-screen mx-3 sm:mx-0"
       >
         <Card className="w-full max-w-md">
           <CardHeader>
@@ -49,7 +49,7 @@ export default function SignUpForm() {
                   alt="sekvo"
                   width={70}
                   height={70}
-                  className="mx-auto sm:mx-0 rounded-2x bg-white dark:rounded-none dark:bg-transparent"
+                  className="mx-auto sm:mx-0 rounded-2x bg-white dark:rounded-none dark:bg-transparent scale-75 sm:scale-100"
                 />
               </Link>
             </CardAction>
@@ -109,7 +109,7 @@ export default function SignUpForm() {
             >
               Signup
             </Button>
-            <p className="text-sm!">
+            <p className="text-sm! text-center mx-auto">
               Already have an account?{" "}
               <Link href={"/auth/login"} className="underline">
                 Log in

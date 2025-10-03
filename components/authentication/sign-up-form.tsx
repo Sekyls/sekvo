@@ -71,6 +71,7 @@ export default function SignUpForm() {
                         {f.phone ? (
                           <PhoneInput
                             placeholder={f.placeholder}
+                            {...field}
                             value={field.value as string}
                             enableSearch={true}
                             country={country?.toLocaleLowerCase()}
@@ -141,11 +142,7 @@ export default function SignUpForm() {
             <Button
               type="submit"
               className="w-full"
-              disabled={
-                !form.formState.isValid ||
-                form.formState.isSubmitting ||
-                form.formState.isSubmitSuccessful
-              }
+              disabled={!form.formState.isValid || form.formState.isSubmitting}
             >
               Signup
             </Button>
@@ -155,10 +152,6 @@ export default function SignUpForm() {
                 Log in
               </Link>
             </p>
-
-            {/* <Button variant="outline" className="w-full">
-                Login with Google
-              </Button> */}
           </CardFooter>
         </Card>
       </form>

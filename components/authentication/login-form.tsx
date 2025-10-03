@@ -115,9 +115,6 @@ export default function LoginForm() {
           <Link href={"#"} className="sm:hidden text-sm underline">
             Forgot password?
           </Link>
-          {/* <Button variant="outline" className="w-full">
-                Login with Google
-              </Button> */}
         </CardFooter>
       </Card>
     </form>

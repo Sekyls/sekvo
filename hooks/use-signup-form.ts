@@ -7,7 +7,7 @@ import { z } from "zod";
 export default function useSignupForm() {
   const form = useForm<z.infer<typeof signupFormSchema>>({
     resolver: zodResolver(signupFormSchema),
-    mode: "onChange",
+    mode: "all",
     defaultValues: {
       name: "",
       address: "",
@@ -18,6 +18,10 @@ export default function useSignupForm() {
   });
   const onSubmit = (values: z.infer<typeof signupFormSchema>) => {
     console.log(values);
+    console.log("Logo:", values.logo);
+    console.log("Logo instanceof File:", values.logo instanceof File);
+    console.log("Logo name:", values.logo?.name);
+    console.log("Logo size:", values.logo?.size);
     form.reset();
   };
 

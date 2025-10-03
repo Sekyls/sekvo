@@ -25,17 +25,20 @@ import Link from "next/link";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import useGeolocation from "@/hooks/use-geolocation";
+import PasswordToggle from "../shared/password-toggle";
+import { useState } from "react";
 
 export default function SignUpForm() {
   const { form, onSubmit } = useSignupForm();
   const country = useGeolocation();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8 flex justify-center items-center h-screen mx-3 sm:mx-0"
       >
-        <Card className="w-full max-w-md">
+        <Card className="w-full max-w-lg">
           <CardHeader>
             <CardTitle>Sign up for Sekvo</CardTitle>
             <CardDescription>
@@ -69,7 +72,6 @@ export default function SignUpForm() {
                           <PhoneInput
                             placeholder={f.placeholder}
                             value={field.value as string}
-                            onChange={(val) => field.onChange(val)}
                             enableSearch={true}
                             country={country?.toLocaleLowerCase()}
                             containerClass="dark:bg-input/30 border-input w-full min-w-0 rounded-md border shadow-xs transition-[color,box-shadow] outline-none"
@@ -79,15 +81,31 @@ export default function SignUpForm() {
                             countryCodeEditable={false}
                           />
                         ) : (
-                          <Input
-                            className="focus-visible:border-0 focus-visible:ring-0 focus:right-0 focus:border-0"
-                            {...field}
-                            placeholder={f.placeholder}
-                            value={field.value as string}
-                            onChange={(val) => field.onChange(val)}
-                            required
-                            type={f.type}
-                          />
+                          <div className="relative">
+                            <Input
+                              className="focus-visible:border-0 focus-visible:ring-0 focus:right-0 focus:border-0"
+                              {...field}
+                              placeholder={f.placeholder}
+                              value={field.value as string}
+                              required
+                              type={
+                                (f.fieldName === "password.confirmPassword" &&
+                                  showPassword === false) ||
+                                (f.fieldName === "password.password" &&
+                                  showPassword === false)
+                                  ? "password"
+                                  : f.type
+                              }
+                            />
+                            {f.fieldName === "password.confirmPassword" ||
+                            f.fieldName === "password.password" ? (
+                              <PasswordToggle
+                                className="absolute inset-y-[20%] inset-x-[93%] z-50"
+                                setShowPassword={setShowPassword}
+                                showPassword={showPassword}
+                              />
+                            ) : null}
+                          </div>
                         )}
                       </FormControl>
                       <FormMessage className="text-sm!" />
@@ -96,6 +114,28 @@ export default function SignUpForm() {
                 />
               );
             })}
+            <FormField
+              control={form.control}
+              name={"logo"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Company Logo</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="focus-visible:border-0 focus-visible:ring-0 focus:right-0 focus:border-0"
+                      onChange={(e) => field.onChange(e.target.files?.[0])}
+                      onBlur={field.onBlur}
+                      ref={field.ref}
+                      name={field.name}
+                      disabled={field.disabled}
+                      placeholder="upload your logo"
+                      type="file"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-sm!" />
+                </FormItem>
+              )}
+            />
           </CardContent>
           <CardFooter className="flex-col gap-2">
             <Button

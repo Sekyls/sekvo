@@ -16,10 +16,12 @@ import { LoaderCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import PasswordToggle from "../shared/password-toggle";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
@@ -34,7 +36,7 @@ export default function LoginForm() {
       onSubmit={handleSubmit}
       className="space-y-8 flex justify-center items-center h-screen mx-3 sm:mx-0"
     >
-      <Card className="w-full max-w-md space-y-2">
+      <Card className="w-full max-w-lg space-y-2">
         <CardHeader>
           <CardTitle>Log in to Sekvo</CardTitle>
           <CardDescription>
@@ -74,16 +76,23 @@ export default function LoginForm() {
                 Forgot password?
               </Link>
             </Label>
-            <Input
-              className="focus-visible:border-0 focus-visible:ring-0 focus:right-0 focus:border-0"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              type="password"
-              required
-            />
+            <div className="relative">
+              <Input
+                className="focus-visible:border-0 focus-visible:ring-0 focus:right-0 focus:border-0"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                type={showPassword ? "text" : "password"}
+                required
+              />
+              <PasswordToggle
+                className="absolute inset-y-[20%] inset-x-[93%] z-50"
+                setShowPassword={setShowPassword}
+                showPassword={showPassword}
+              />
+            </div>
           </div>
         </CardContent>
         <CardFooter className="flex-col gap-2">

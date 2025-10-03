@@ -32,7 +32,7 @@ export const SIGNUP_FORM_FIELDS: {
   label: string;
   placeholder: string;
   phone: boolean;
-  type: "text" | "email" | "password" | "tel";
+  type: "text" | "email" | "password" | "tel" | "file";
 }[] = [
   {
     fieldName: "name",
@@ -67,13 +67,13 @@ export const SIGNUP_FORM_FIELDS: {
     label: "Password",
     placeholder: "~k$M@X7#fL0vE!p!a",
     phone: false,
-    type: "password",
+    type: "text",
   },
   {
     fieldName: "password.confirmPassword",
     label: "Confirm Password",
     placeholder: "~k$M@X7#fL0vE!p!a",
     phone: false,
-    type: "password",
+    type: "text",
   },
 ];

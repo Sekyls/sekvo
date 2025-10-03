@@ -7,4 +7,5 @@ export type SignupFormValues = {
     password: string;
     confirmPassword: string;
   };
+  logo: File;
 };

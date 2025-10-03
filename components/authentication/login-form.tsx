@@ -34,9 +34,9 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-8 flex justify-center items-center h-screen mx-3 sm:mx-0"
+      className="space-y-8 w-full flex items-center"
     >
-      <Card className="w-full max-w-lg space-y-2">
+      <Card className="w-full max-w-lg mx-2 sm:mx-auto  space-y-2">
         <CardHeader>
           <CardTitle>Log in to Sekvo</CardTitle>
           <CardDescription>
@@ -88,7 +88,7 @@ export default function LoginForm() {
                 required
               />
               <PasswordToggle
-                className="absolute inset-y-[20%] inset-x-[93%] z-50"
+                className="absolute inset-y-[20%] max-[360px]:inset-x-[85%] inset-x-11/12 sm:inset-x-[93%] z-50"
                 setShowPassword={setShowPassword}
                 showPassword={showPassword}
               />

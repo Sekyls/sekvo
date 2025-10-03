@@ -36,9 +36,9 @@ export default function SignUpForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 flex justify-center items-center h-screen mx-3 sm:mx-0"
+        className="space-y-8 w-full flex items-center"
       >
-        <Card className="w-full max-w-lg">
+        <Card className="w-full max-w-lg mx-auto rounded-none sm:rounded-xl h-full sm:h-fit">
           <CardHeader>
             <CardTitle>Sign up for Sekvo</CardTitle>
             <CardDescription>
@@ -100,7 +100,7 @@ export default function SignUpForm() {
                             {f.fieldName === "password.confirmPassword" ||
                             f.fieldName === "password.password" ? (
                               <PasswordToggle
-                                className="absolute inset-y-[20%] inset-x-[93%] z-50"
+                                className="absolute inset-y-[20%] max-[360px]:inset-x-[85%] inset-x-11/12 sm:inset-x-[93%] z-50"
                                 setShowPassword={setShowPassword}
                                 showPassword={showPassword}
                               />

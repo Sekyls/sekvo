@@ -51,3 +51,15 @@ export const signupFormSchema = z.object({
     )
     .optional(),
 });
+
+
+export const OTPFormSchema = z.object({
+  pin: z
+    .string()
+    .min(6, {
+      message: "Your one-time password must be 6 characters.",
+    })
+    .max(6, {
+      message: "Your one-time password must be 6 characters.",
+    }),
+});

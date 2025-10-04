@@ -3,8 +3,10 @@ import { signupFormSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 
 export default function useSignupForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof signupFormSchema>>({
     resolver: zodResolver(signupFormSchema),
     mode: "all",
@@ -17,12 +19,13 @@ export default function useSignupForm() {
     },
   });
   const onSubmit = (values: z.infer<typeof signupFormSchema>) => {
+    if (!values) {
+      return;
+    }
     console.log(values);
-    console.log("Logo:", values.logo);
-    console.log("Logo instanceof File:", values.logo instanceof File);
-    console.log("Logo name:", values.logo?.name);
-    console.log("Logo size:", values.logo?.size);
+    localStorage.setItem("signupFormData", JSON.stringify(values));
     form.reset();
+    router.push("/auth/otp-verification");
   };
 
   return { form, onSubmit };

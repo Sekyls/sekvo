@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { inter, spaceGrotesk } from "@/lib/fonts";
 import { appMetaData } from "@/lib/metadata";
 import { ThemeProvider } from "@/providers/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 export const metadata: Metadata = appMetaData;
 
 export default function RootLayout({
@@ -22,6 +23,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

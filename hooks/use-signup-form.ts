@@ -24,11 +24,11 @@ export default function useSignupForm() {
     if (!values) {
       return;
     }
-    console.log(values);
     setPendingUser(values)
-      .then((email: string) => {
+      .then(() => {
+        toast.success(`OTP code sent to ${values.email}`);
         router.push(
-          `/auth/otp-verification?email=${email.replace(".com", "")}`
+          `/auth/otp-verification?email=${values.email.replace(".com", "")}`
         );
         form.reset();
       })

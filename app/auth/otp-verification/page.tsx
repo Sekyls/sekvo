@@ -19,7 +19,6 @@ import { OTPFormSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod/v4";
-import SekvoOTPEmail from "@/components/emails/sekvo-otp-email";
 
 export default function InputOTPForm() {
   const otpForm = useForm<z.infer<typeof OTPFormSchema>>({
@@ -40,42 +39,39 @@ export default function InputOTPForm() {
   }
 
   return (
-    <>
-      <Form {...otpForm}>
-        <form
-          onSubmit={otpForm.handleSubmit(onSubmit)}
-          className="w-2/3 space-y-6"
-        >
-          <FormField
-            control={otpForm.control}
-            name="pin"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>One-Time Password</FormLabel>
-                <FormControl>
-                  <InputOTP maxLength={6} {...field}>
-                    <InputOTPGroup>
-                      <InputOTPSlot index={0} />
-                      <InputOTPSlot index={1} />
-                      <InputOTPSlot index={2} />
-                      <InputOTPSlot index={3} />
-                      <InputOTPSlot index={4} />
-                      <InputOTPSlot index={5} />
-                    </InputOTPGroup>
-                  </InputOTP>
-                </FormControl>
-                <FormDescription>
-                  Please enter the one-time password sent to your email.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <Form {...otpForm}>
+      <form
+        onSubmit={otpForm.handleSubmit(onSubmit)}
+        className="w-2/3 space-y-6"
+      >
+        <FormField
+          control={otpForm.control}
+          name="pin"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>One-Time Password</FormLabel>
+              <FormControl>
+                <InputOTP maxLength={6} {...field}>
+                  <InputOTPGroup>
+                    <InputOTPSlot index={0} />
+                    <InputOTPSlot index={1} />
+                    <InputOTPSlot index={2} />
+                    <InputOTPSlot index={3} />
+                    <InputOTPSlot index={4} />
+                    <InputOTPSlot index={5} />
+                  </InputOTPGroup>
+                </InputOTP>
+              </FormControl>
+              <FormDescription>
+                Please enter the one-time password sent to your email.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
-      <SekvoOTPEmail otp={123456} />
-    </>
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
   );
 }

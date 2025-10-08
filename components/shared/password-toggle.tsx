@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Eye, EyeOff } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 
 export type PasswordToggleProps = {
   className: string;

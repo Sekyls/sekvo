@@ -94,7 +94,7 @@ export default function SekvoOTPEmail({ otp }: SekvoOTPEmailProps) {
                 • Sekvo will never ask for your code via phone or email
               </Text>
               <Text style={securityText}>
-                • If you didn't request this code, please ignore this email
+                • If you didn&apos;t request this code, please ignore this email
               </Text>
             </Section>
           </Section>

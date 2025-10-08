@@ -30,7 +30,7 @@ export default function Footer() {
             <AvatarFallback>S</AvatarFallback>
           </Avatar>
           <p className="text-base!">
-            Hey there! I'm{" "}
+            Hey there! I&apos;m{" "}
             <a
               href="www.linkedin.com/in/sekyls
 
@@ -77,7 +77,7 @@ export default function Footer() {
             <AvatarFallback>S</AvatarFallback>
           </Avatar>
           <p className="text-base!">
-            Hey there! I'm{" "}
+            Hey there! I&apos;m{" "}
             <a
               href="www.linkedin.com/in/sekyls"
               target="_blank"

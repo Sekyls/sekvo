@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import setPendingUser from "@/actions/queries/pending-user";
 
 export default function useSignupForm() {
   const router = useRouter();
@@ -23,9 +25,16 @@ export default function useSignupForm() {
       return;
     }
     console.log(values);
-    localStorage.setItem("signupFormData", JSON.stringify(values));
-    form.reset();
-    router.push("/auth/otp-verification");
+    setPendingUser(values)
+      .then((email: string) => {
+        router.push(
+          `/auth/otp-verification?email=${email.replace(".com", "")}`
+        );
+        form.reset();
+      })
+      .catch((error) => {
+        toast.error(error?.message);
+      });
   };
 
   return { form, onSubmit };

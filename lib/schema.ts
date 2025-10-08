@@ -2,23 +2,26 @@ import { z } from "zod/v4";
 import parsePhoneNumber from "libphonenumber-js";
 
 export const signupFormSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  address: z.string().min(5, "Address is required"),
-  phoneNumber: z.string().superRefine((value, ctx) => {
-    const formattedValue = value.startsWith("+") ? value : `+${value}`;
+  name: z.string().min(1, "Name is required").trim(),
+  address: z.string().min(5, "Address is required").trim(),
+  phoneNumber: z
+    .string()
+    .superRefine((value, ctx) => {
+      const formattedValue = value.startsWith("+") ? value : `+${value}`;
 
-    const phoneNumber = parsePhoneNumber(
-      formattedValue.replace(/\s+/g, "").toString()
-    );
+      const phoneNumber = parsePhoneNumber(
+        formattedValue.replace(/\s+/g, "").toString()
+      );
 
-    if (!phoneNumber || !phoneNumber.isValid()) {
-      ctx.addIssue({
-        code: "custom",
-        message: "Invalid phone number",
-      });
-    }
-  }),
-  email: z.email(),
+      if (!phoneNumber || !phoneNumber.isValid()) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Invalid phone number",
+        });
+      }
+    })
+    .trim(),
+  email: z.email().trim(),
   password: z
     .object({
       password: z
@@ -30,8 +33,9 @@ export const signupFormSchema = z.object({
         .regex(
           /[^A-Za-z0-9]/,
           "Password must contain at least one special character"
-        ),
-      confirmPassword: z.string(),
+        )
+        .trim(),
+      confirmPassword: z.string().trim(),
     })
     .superRefine((data, ctx) => {
       if (data.password !== data.confirmPassword) {
@@ -52,7 +56,6 @@ export const signupFormSchema = z.object({
     .optional(),
 });
 
-
 export const OTPFormSchema = z.object({
   pin: z
     .string()
@@ -61,5 +64,6 @@ export const OTPFormSchema = z.object({
     })
     .max(6, {
       message: "Your one-time password must be 6 characters.",
-    }),
+    })
+    .trim(),
 });

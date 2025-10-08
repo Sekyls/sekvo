@@ -7,5 +7,9 @@ export type SignupFormValues = {
     password: string;
     confirmPassword: string;
   };
-  logo: File;
+  logo?: File | undefined;
 };
+
+export interface SekvoOTPEmailProps {
+  otp: number;
+}

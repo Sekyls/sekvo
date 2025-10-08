@@ -7,3 +7,27 @@ datasource db {
   provider = "postgresql"
   url      = env("PRISMA_POSTGRES_DATABASE_URL")
 }
+
+model PendingUsers{
+  id String @id @default(cuid())
+  name String
+  address String
+  email String @unique
+  phoneNumber String
+  hashedPassword String
+  hashedOTP String
+  logo  Bytes?
+  createdAt DateTime @default(now())
+  expiresAt DateTime @default(dbgenerated("(now()+ interval '5 minutes')"))
+}
+model VerifiedUsers{
+  id String @id @default(cuid())
+  name String
+  address String
+  email String @unique
+  phoneNumber String
+  hashedPassword String
+  logo  Bytes?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

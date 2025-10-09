@@ -1,6 +1,6 @@
 "use server";
 import nodemailer from "nodemailer";
-import { getSekvoOtpEmailHtml } from "./email-template";
+import { getSekvoOtpEmailHtml } from "../lib/email-template";
 
 export async function sendOTP(email: string, otp: string) {
   const transporter = nodemailer.createTransport({

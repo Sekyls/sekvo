@@ -1,10 +1,10 @@
 "use server";
 import { prisma } from "@/lib/clients/prisma";
 import { SignupFormValues } from "@/lib/types";
-import otpGenerator from "../otp-generator";
-import saltGenerator from "../salt-generator";
-import { passwordHasher } from "../password-hasher";
-import { sendOTP } from "../nodemailer";
+import otpGenerator from "./otp-generator";
+import saltGenerator from "./salt-generator";
+import { passwordHasher } from "./password-hasher";
+import { sendOTP } from "./nodemailer";
 
 export default async function setPendingUser(data: SignupFormValues) {
   try {

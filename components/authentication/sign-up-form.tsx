@@ -27,6 +27,7 @@ import "react-phone-input-2/lib/style.css";
 import useGeolocation from "@/hooks/use-geolocation";
 import PasswordToggle from "../shared/password-toggle";
 import { useState } from "react";
+import { Spinner } from "../ui/spinner";
 
 export default function SignUpForm() {
   const { form, onSubmit } = useSignupForm();
@@ -141,9 +142,10 @@ export default function SignUpForm() {
           <CardFooter className="flex-col gap-2">
             <Button
               type="submit"
-              className="w-full"
+              className="w-full flex items-center gap-4 primary-gradient dark:primary-gradient"
               disabled={!form.formState.isValid || form.formState.isSubmitting}
             >
+              {form.formState.isSubmitting && <Spinner />}
               Signup
             </Button>
             <p className="text-sm! text-center mx-auto">

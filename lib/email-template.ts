@@ -7,11 +7,11 @@ export function getSekvoOtpEmailHtml(otp: string) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sekvo OTP Verification</title>
   </head>
-  <body style="margin:0; padding:0; background-color:#f4f4f7; font-family:Arial, Helvetica, sans-serif;">
-    <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="padding:40px 0;">
+  <body style="margin:0; padding:0; background-color:transparent; font-family:Arial, Helvetica, sans-serif;">
+    <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="padding:0; border-radius:10px;">
       <tr>
         <td align="center">
-          <table width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border-radius:8px; overflow:hidden;">
+          <table width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border-radius:10px; overflow:hidden;">
             
             <!-- Header -->
             <tr>

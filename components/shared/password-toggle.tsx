@@ -19,9 +19,9 @@ export default function PasswordToggle({
   return (
     <div className={cn(className)} onClick={handlePasswordToggle}>
       {showPassword ? (
-        <Eye size={20} className="text-green-400" />
+        <Eye size={20} className="text-green-700" />
       ) : (
-        <EyeOff size={20} />
+        <EyeOff size={20} className="text-rich-black/60" />
       )}
     </div>
   );

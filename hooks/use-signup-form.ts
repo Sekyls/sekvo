@@ -4,8 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import setPendingUser from "@/actions/queries/pending-user";
+import setPendingUser from "@/actions/pending-user";
+import { toastError, toastSuccess } from "@/lib/toast-config";
 
 export default function useSignupForm() {
   const router = useRouter();
@@ -20,21 +20,29 @@ export default function useSignupForm() {
       password: { password: "", confirmPassword: "" },
     },
   });
-  const onSubmit = (values: z.infer<typeof signupFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof signupFormSchema>) => {
     if (!values) {
       return;
     }
-    setPendingUser(values)
-      .then(() => {
-        toast.success(`OTP code sent to ${values.email}`);
-        router.push(
-          `/auth/otp-verification?email=${values.email.replace(".com", "")}`
-        );
-        form.reset();
-      })
-      .catch((error) => {
-        toast.error(error?.message);
+    try {
+      await setPendingUser(values);
+      toastSuccess(`Check your email`, undefined, {
+        label: "Success!",
+        onClick: () =>
+          router.push(
+            `/auth/otp-verification?email=${values.email.replace(".com", "")}`
+          ),
       });
+      form.reset();
+      router.push(
+        `/auth/otp-verification?email=${values.email.replace(".com", "")}`
+      );
+    } catch (error) {
+      toastError("Failed to sign you up", undefined, {
+        label: "Retry",
+        onClick: () => form.reset(),
+      });
+    }
   };
 
   return { form, onSubmit };

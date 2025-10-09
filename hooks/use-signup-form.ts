@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import setPendingUser from "@/actions/pending-user";
+import setPendingUser from "@/actions/set-pending-user";
 import { toastError, toastSuccess } from "@/lib/toast-config";
 
 export default function useSignupForm() {

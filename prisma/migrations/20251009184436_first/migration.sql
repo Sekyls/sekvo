@@ -6,10 +6,11 @@ CREATE TABLE "PendingUsers" (
     "email" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
     "hashedPassword" TEXT NOT NULL,
+    "passwordSalt" TEXT NOT NULL,
     "hashedOTP" TEXT NOT NULL,
     "logo" BYTEA,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "expiresAt" TIMESTAMP(3) NOT NULL DEFAULT (now()+ interval '5 minutes'),
+    "expiresAt" TIMESTAMP(3) NOT NULL DEFAULT (now()+ interval '2 minutes'),
 
     CONSTRAINT "PendingUsers_pkey" PRIMARY KEY ("id")
 );
@@ -22,6 +23,7 @@ CREATE TABLE "VerifiedUsers" (
     "email" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
     "hashedPassword" TEXT NOT NULL,
+    "passwordSalt" TEXT NOT NULL,
     "logo" BYTEA,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

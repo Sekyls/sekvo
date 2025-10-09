@@ -30,7 +30,7 @@ export function getSekvoOtpEmailHtml(otp: string) {
                 <h1 style="color:#1a1a1a; font-size:26px; margin:10px 0;">Verify Your Identity</h1>
                 <p style="color:#6b7280; font-size:15px; line-height:22px; margin:0 0 30px;">
                   Enter the verification code below to complete your authentication. 
-                  This code will expire in 5 minutes.
+                  This code will expire in 2 minutes.
                 </p>
 
                 <table align="center" cellpadding="0" cellspacing="0" width="220" style="background-color:#f71735; border-radius:6px; margin:0 auto;">

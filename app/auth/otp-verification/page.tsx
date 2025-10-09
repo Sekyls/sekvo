@@ -22,52 +22,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { OTPFormSchema } from "@/lib/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import z from "zod/v4";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
-import { otpValidator } from "@/actions/otp-validator";
-import { toastError, toastSuccess } from "@/lib/toast-config";
 import { Spinner } from "@/components/ui/spinner";
+import Timer from "@/components/authentication/timer";
+import useOTPForm from "@/hooks/use-otp-form";
 
 export default function InputOTPForm() {
-  const router = useRouter();
-  const email = useSearchParams().get("email") + ".com";
-  const otpForm = useForm<z.infer<typeof OTPFormSchema>>({
-    resolver: zodResolver(OTPFormSchema),
-    mode: "onBlur",
-    defaultValues: {
-      pin: "",
-    },
-  });
-
-  async function onSubmit(data: z.infer<typeof OTPFormSchema>) {
-    try {
-      await otpValidator(data, email);
-      toastSuccess("Verfication succesful", undefined, {
-        label: "Verified",
-        onClick: () => {
-          router.replace("/auth/login");
-        },
-      });
-      otpForm.reset();
-      router.replace("/auth/login");
-    } catch (error) {
-      if (error instanceof Error) {
-        toastError(error.message, undefined, {
-          label: "Inavlid",
-          onClick() {
-            otpForm.reset();
-          },
-        });
-        otpForm.reset()
-      }
-    }
-  }
-
+  const {
+    email,
+    handleOTPResend,
+    onSubmit,
+    otpForm,
+    resendingOTP,
+    setResendingOTP,
+  } = useOTPForm();
   return (
     <Form {...otpForm}>
       <form
@@ -112,6 +81,14 @@ export default function InputOTPForm() {
                     {`Please enter the OTP sent to ${email}`}
                   </FormDescription>
                   <FormMessage className="text-sm!" />
+                  <Timer
+                    duration={2 * 60 * 1000}
+                    disabled={resendingOTP}
+                    onclick={() => {
+                      setResendingOTP(true);
+                      handleOTPResend();
+                    }}
+                  />
                 </FormItem>
               )}
             />

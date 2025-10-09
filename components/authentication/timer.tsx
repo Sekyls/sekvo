@@ -1,0 +1,59 @@
+"use client";
+import { getFormattedCountDown } from "@/lib/utils";
+import React, { useEffect, useState } from "react";
+import { Button } from "../ui/button";
+import { RefreshCcw } from "lucide-react";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+
+export default function Timer({
+  duration,
+  onclick,
+  disabled,
+}: {
+  duration: number;
+  onclick: () => void;
+  disabled: boolean;
+}) {
+  const [countDown, setCountDown] = useState<number>(duration);
+  const [countDownComplete, setCountDownComplete] = useState<boolean>(false);
+  useEffect(() => {
+    if (countDown <= 0) {
+      setCountDownComplete(true);
+      return;
+    }
+    const timer = setTimeout(() => {
+      setCountDown(countDown - 1000);
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [countDown]);
+  return (
+    <>
+      {!countDownComplete && (
+        <div className="flex w-fit items-center overflow-hidden text-accent font-semibold">
+          <DotLottieReact
+            src="https://lottie.host/846893f9-0beb-4b74-bf57-99577fc20188/XxLw3sy65n.lottie"
+            loop
+            autoplay
+            className="w-7 -ml-1"
+          />
+          {getFormattedCountDown(countDown)}
+        </div>
+      )}
+
+      {countDownComplete && (
+        <Button
+          disabled={disabled}
+          variant="outline"
+          size="sm"
+          className="w-fit"
+          onClick={onclick}
+        >
+          <RefreshCcw className={`${disabled ? "animate-spin" : null}`} />{" "}
+          Resend OTP
+        </Button>
+      )}
+    </>
+  );
+}

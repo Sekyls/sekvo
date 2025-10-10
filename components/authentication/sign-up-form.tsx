@@ -72,8 +72,9 @@ export default function SignUpForm() {
                         {f.phone ? (
                           <PhoneInput
                             placeholder={f.placeholder}
-                            {...field}
                             value={field.value as string}
+                            onChange={(value) => field.onChange(value)}
+                            onBlur={field.onBlur}
                             enableSearch={true}
                             country={country?.toLocaleLowerCase()}
                             containerClass="dark:bg-input/30 border-input w-full min-w-0 rounded-md border shadow-xs transition-[color,box-shadow] outline-none"

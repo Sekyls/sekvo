@@ -1,6 +1,3 @@
-import type { Path } from "react-hook-form";
-import { SignupFormValues } from "./types";
-
 export const FOOTER_LINKS = [
   {
     title: "Free Tools",
@@ -28,7 +25,15 @@ export const FOOTER_LINKS = [
 ];
 
 export const SIGNUP_FORM_FIELDS: {
-  fieldName: Path<SignupFormValues>;
+  fieldName:
+    | "name"
+    | "address"
+    | "phoneNumber"
+    | "email"
+    | "password"
+    | "logo"
+    | "password.password"
+    | "password.confirmPassword";
   label: string;
   placeholder: string;
   phone: boolean;
@@ -77,3 +82,5 @@ export const SIGNUP_FORM_FIELDS: {
     type: "text",
   },
 ];
+
+export const SESSION_EXPIRATION = 60 * 60 * 24 * 7;

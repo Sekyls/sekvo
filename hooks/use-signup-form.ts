@@ -1,5 +1,5 @@
 "use client";
-import { signupFormSchema } from "@/lib/schema";
+import { SignupFormSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -9,8 +9,8 @@ import { toastError, toastSuccess } from "@/lib/toast-config";
 
 export default function useSignupForm() {
   const router = useRouter();
-  const form = useForm<z.infer<typeof signupFormSchema>>({
-    resolver: zodResolver(signupFormSchema),
+  const form = useForm<z.infer<typeof SignupFormSchema>>({
+    resolver: zodResolver(SignupFormSchema),
     mode: "all",
     defaultValues: {
       name: "",
@@ -20,7 +20,7 @@ export default function useSignupForm() {
       password: { password: "", confirmPassword: "" },
     },
   });
-  const onSubmit = async (values: z.infer<typeof signupFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof SignupFormSchema>) => {
     if (!values) {
       return;
     }

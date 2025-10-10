@@ -15,25 +15,28 @@ import { cn } from "@/lib/utils";
 import { LoaderCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import PasswordToggle from "../shared/password-toggle";
+import useLoginUser from "@/hooks/use-login-user";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    setIsLoading(true);
-    e.preventDefault();
-    const formData = { email, password };
-    console.log(formData);
-    setIsLoading(false);
-  };
+  const {
+    email,
+    handleSubmit,
+    isLoading,
+    password,
+    setEmail,
+    setIsLoading,
+    setPassword,
+    setShowPassword,
+    showPassword,
+  } = useLoginUser();
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={(e) => {
+        setIsLoading(true);
+        handleSubmit(e);
+      }}
       className="space-y-8 w-full flex items-center"
     >
       <Card className="w-full max-w-lg mx-2 sm:mx-auto  space-y-2">
@@ -99,7 +102,7 @@ export default function LoginForm() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full flex justify-center items-center gap-5"
+            className="w-full flex justify-center items-center gap-5 primary-gradient"
           >
             Log in
             <LoaderCircle

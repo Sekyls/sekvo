@@ -24,7 +24,7 @@ export default function Banner() {
         </Link>
       </Button>
       <Image
-        src={"/invoice-animate.svg"}
+        src={"/animations/invoice-animate.svg"}
         alt="invoice-animate"
         width={600}
         height={600}

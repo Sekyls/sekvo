@@ -33,7 +33,7 @@ export default function Timer({
       {!countDownComplete && (
         <div className="flex w-fit items-center overflow-hidden text-accent font-semibold">
           <DotLottieReact
-            src="https://lottie.host/846893f9-0beb-4b74-bf57-99577fc20188/XxLw3sy65n.lottie"
+            src="/animations/timer.lottie"
             loop
             autoplay
             className="w-7 -ml-1"

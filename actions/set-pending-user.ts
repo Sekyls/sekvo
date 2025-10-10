@@ -4,14 +4,14 @@ import otpGenerator from "./otp-generator";
 import saltGenerator from "./salt-generator";
 import { passwordHasher } from "./password-hasher";
 import { sendOTP } from "./nodemailer";
-import { signupFormSchema } from "@/lib/schema";
+import { SignupFormSchema } from "@/lib/schema";
 import z4 from "zod/v4";
 
 export default async function setPendingUser(
-  data: z4.infer<typeof signupFormSchema>
+  data: z4.infer<typeof SignupFormSchema>
 ) {
   try {
-    const pendingUser = await signupFormSchema.parseAsync(data);
+    const pendingUser = await SignupFormSchema.parseAsync(data);
     async function convertToBuffer(file: File) {
       const arrayBuffer = await file.arrayBuffer();
       return Buffer.from(arrayBuffer);

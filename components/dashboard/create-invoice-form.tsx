@@ -29,25 +29,24 @@ export default function AggregatedInvoiceForm() {
     z.infer<typeof InvoiceFormSchema>
   >({
     resolver: zodResolver(InvoiceFormSchema),
-    mode: "all",
+    mode: "onChange",
     defaultValues: {
       companyAddress: "",
       companyEmail: "",
       companyName: "",
       invoiceItems: [{ description: "", item: "", quantity: "", unitPrice: 0 }],
+      contactPerson: { name: "", title: "" },
+      dueDate: "",
+      invoiceDate: "",
+      notes: "",
+      invoiceNumber: "",
+      phoneNumber: "",
+      purchaseOrder: "",
+      terms: "",
     },
   });
-  const {
-    date,
-    isValidDate,
-    month,
-    open,
-    setDate,
-    setMonth,
-    setOpen,
-    setValue,
-    value,
-  } = useCalendarHook();
+  const invoiceDate = useCalendarHook();
+  const dueDate = useCalendarHook();
   function onSubmit(data: z.infer<typeof InvoiceFormSchema>) {}
 
   return (
@@ -65,20 +64,19 @@ export default function AggregatedInvoiceForm() {
             />
             <ContactPerson formControl={control} formState={formState} />
             <PhoneNumber formControl={control} formState={formState} />
-            {["Invoice Date", "Due Date"].map((label, index) => {
+            {[
+              {
+                label: "Invoice Date",
+                name: "invoiceDate",
+                state: invoiceDate,
+              },
+              { label: "Due Date", name: "dueDate", state: dueDate },
+            ].map((label) => {
               return (
                 <CalendarDatePicker
-                  date={date}
-                  isValidDate={isValidDate}
-                  label={label}
-                  month={month}
-                  open={open}
-                  setDate={setDate}
-                  setMonth={setMonth}
-                  setOpen={setOpen}
-                  setValue={setValue}
-                  value={value}
-                  key={index}
+                  label={label.label}
+                  key={label.name}
+                  {...label.state}
                 />
               );
             })}

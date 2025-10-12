@@ -27,7 +27,7 @@ export default function CalendarDatePicker({
     <div className="relative flex gap-2">
       <FieldLabel htmlFor="date">{label}</FieldLabel>
       <Input
-        id="date"
+        id={`date-${label}`}
         value={value}
         placeholder={new Date().toISOString().slice(0, 10)}
         className="bg-background pr-10"

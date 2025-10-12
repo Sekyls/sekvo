@@ -44,7 +44,7 @@ export default function AddCustomFields({
                     <InputGroup>
                       <InputGroupInput
                         {...controllerField}
-                        id={`custom-field-${index}`}
+                        id={`custom-field-label-${field.id}`}
                         aria-invalid={fieldState.invalid}
                         placeholder="label"
                         type="text"
@@ -71,7 +71,7 @@ export default function AddCustomFields({
                     <InputGroup>
                       <InputGroupInput
                         {...controllerField}
-                        id={`custom-field-${index}`}
+                        id={`custom-field-content-${field.id}`}
                         aria-invalid={fieldState.invalid}
                         placeholder="enter your info"
                         type="text"

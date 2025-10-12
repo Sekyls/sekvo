@@ -14,10 +14,10 @@ export default function SimpleFormDetailsGroup({
 }: RecipientFieldGroupsProps) {
   return (
     <FieldGroup>
-      {CLIENT_DETAILS_FIELDS.map((item, index) => {
+      {CLIENT_DETAILS_FIELDS.map((item) => {
         return (
           <Controller
-            key={index}
+            key={item.fieldName}
             name={item.fieldName}
             control={formControl}
             render={({ field, fieldState }) => (

@@ -56,7 +56,7 @@ export default function InvoiceItems({
                   <InputGroup>
                     <InputGroupInput
                       {...controllerField}
-                      id={`invoice-items-${index}`}
+                      id={`invoice-items-${index}-item`}
                       aria-invalid={fieldState.invalid}
                       placeholder="Azaar paint"
                       type="text"
@@ -79,7 +79,7 @@ export default function InvoiceItems({
                   <InputGroup>
                     <InputGroupInput
                       {...controllerField}
-                      id={`invoice-items-${index}`}
+                      id={`invoice-items-${index}-quantity`}
                       aria-invalid={fieldState.invalid}
                       placeholder="10 units"
                       type="text"
@@ -101,14 +101,17 @@ export default function InvoiceItems({
                 <FieldContent>
                   <InputGroup>
                     <ButtonGroup>
-                      <ButtonGroup>
+                      <div>
                         <Select value={currency} onValueChange={setCurrency}>
                           <SelectTrigger className="font-mono">
                             {currency}
                           </SelectTrigger>
                           <SelectContent className="min-w-24">
                             {CURRENCIES.map((currency, index) => (
-                              <SelectItem key={index} value={currency.value}>
+                              <SelectItem
+                                key={`${currency.label}-${currency.value}`}
+                                value={currency.value}
+                              >
                                 {currency.value}{" "}
                                 <span className="text-muted-foreground">
                                   {currency.label}
@@ -119,7 +122,7 @@ export default function InvoiceItems({
                         </Select>
                         <InputGroupInput
                           {...controllerField}
-                          id={`invoice-items-${index}`}
+                          id={`invoice-items-${index}-unit-price`}
                           aria-invalid={fieldState.invalid}
                           placeholder="10.00"
                           pattern="[0-9]*"
@@ -127,7 +130,7 @@ export default function InvoiceItems({
                           step="any"
                           autoComplete="on"
                         />
-                      </ButtonGroup>
+                      </div>
                     </ButtonGroup>
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -146,7 +149,7 @@ export default function InvoiceItems({
                   <InputGroup>
                     <InputGroupTextarea
                       {...controllerField}
-                      id={`invoice-items-${index}`}
+                      id={`invoice-items-${index}-description`}
                       aria-invalid={fieldState.invalid}
                       placeholder="Item description"
                       autoComplete="on"

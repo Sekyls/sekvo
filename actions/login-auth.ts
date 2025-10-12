@@ -7,6 +7,7 @@ import { passwordHasher } from "./password-hasher";
 import createUserSession from "./session";
 import { cookies } from "next/headers";
 import { SESSION_EXPIRATION } from "@/lib/constants";
+import { timingSafeEqual } from "crypto";
 
 export async function logUserIn(credentials: z4.infer<typeof LoginDataSchema>) {
   try {
@@ -32,7 +33,25 @@ export async function logUserIn(credentials: z4.infer<typeof LoginDataSchema>) {
       userLoginsFromDB.passwordSalt
     );
 
-    if (hashedSubmittedPassword !== userLoginsFromDB.hashedPassword) {
+    const hashedSubmittedPasswordBuffer = Buffer.from(
+      hashedSubmittedPassword,
+      "hex"
+    );
+    const hashedPasswordFromDBBUffer = Buffer.from(
+      userLoginsFromDB.hashedPassword,
+      "hex"
+    );
+    if (
+      hashedSubmittedPasswordBuffer.length !== hashedPasswordFromDBBUffer.length
+    ) {
+      throw new Error("Invalid password");
+    }
+    const passwordsMatches = timingSafeEqual(
+      hashedSubmittedPasswordBuffer,
+      hashedPasswordFromDBBUffer
+    );
+
+    if (!passwordsMatches) {
       throw new Error("Invalid password");
     }
 

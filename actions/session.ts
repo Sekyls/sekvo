@@ -10,8 +10,8 @@ export default async function createUserSession(
     const sessionID = randomBytes(512).toString("hex");
     await connectRedis();
     await redis.set(
-      `SekvoSID:${sessionID}`,
-      JSON.stringify({ sessionID, userEmail, userID }),
+      `SekvoSID:${userEmail}`,
+      JSON.stringify({ sessionID, userID }),
       { expiration: { type: "EX", value: SESSION_EXPIRATION } }
     );
     return { sessionID };

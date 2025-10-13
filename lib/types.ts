@@ -74,6 +74,7 @@ export interface CalculationSummaryExtras {
   id: string;
   label: string;
   hasToggle: boolean;
+  isChecked: boolean;
   ratioToggleState: boolean | null;
   setRatioToggleState: Dispatch<SetStateAction<boolean>> | null;
   inputState: string;

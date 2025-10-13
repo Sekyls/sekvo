@@ -6,11 +6,18 @@ import {
   FieldDescription,
   FieldError,
   FieldGroup,
+  FieldLabel,
   FieldLegend,
   FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { InputGroupAddon, InputGroupButton } from "@/components/ui/input-group";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupText,
+} from "@/components/ui/input-group";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -38,11 +45,14 @@ export default function InvoiceItems({
 
   return (
     <FieldSet className="gap-4 ">
-      <FieldDescription className="text-foreground">Add your items</FieldDescription>
+      <FieldDescription className="text-foreground">
+        Add your items
+      </FieldDescription>
       {fields.map((field, index) => (
         <FieldGroup key={field.id} className="grid grid-cols-[95%_5%]">
           <div className="space-y-3">
             <div className="flex gap-x-2">
+              {/* Item Name */}
               <Controller
                 name={`invoiceItems.${index}.item`}
                 control={formControl}
@@ -52,6 +62,9 @@ export default function InvoiceItems({
                     data-invalid={fieldState.invalid}
                     className="block space-y-2"
                   >
+                    <FieldLabel htmlFor={`invoice-items-${index}-item`}>
+                      Item
+                    </FieldLabel>
                     <FieldContent>
                       <Input
                         {...controllerField}
@@ -72,6 +85,7 @@ export default function InvoiceItems({
                   </Field>
                 )}
               />
+              {/* Quantity */}
               <Controller
                 name={`invoiceItems.${index}.quantity`}
                 control={formControl}
@@ -81,6 +95,9 @@ export default function InvoiceItems({
                     data-invalid={fieldState.invalid}
                     className="block space-y-2 max-w-3xs"
                   >
+                    <FieldLabel htmlFor={`invoice-items-${index}-quantity`}>
+                      Quantity
+                    </FieldLabel>
                     <FieldContent>
                       <Input
                         {...controllerField}
@@ -101,6 +118,7 @@ export default function InvoiceItems({
                   </Field>
                 )}
               />
+              {/* Unit Price */}
               <Controller
                 name={`invoiceItems.${index}.unitPrice`}
                 control={formControl}
@@ -110,6 +128,9 @@ export default function InvoiceItems({
                     data-invalid={fieldState.invalid}
                     className="max-w-3xs block space-y-2"
                   >
+                    <FieldLabel htmlFor={`invoice-items-${index}-unit-price`}>
+                      Unit Price
+                    </FieldLabel>
                     <FieldContent>
                       <ButtonGroup>
                         <Select value={currency} onValueChange={setCurrency}>
@@ -148,7 +169,28 @@ export default function InvoiceItems({
                   </Field>
                 )}
               />
+
+              {/* Sub-total */}
+              <Field
+                orientation="horizontal"
+                className="max-w-3xs block space-y-2"
+              >
+                <FieldLabel>Sub-total</FieldLabel>
+                <InputGroup className="invoice-bg-light">
+                  <InputGroupAddon>
+                    <InputGroupText>$</InputGroupText>
+                  </InputGroupAddon>
+                  <div className="w-full h-full flex items-center justify-center border-l border-r rounded-md mx-2">
+                    0.00
+                  </div>
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupText>USD</InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
+              </Field>
             </div>
+
+            {/* Item Description */}
             <Controller
               name={`invoiceItems.${index}.description`}
               control={formControl}
@@ -163,7 +205,7 @@ export default function InvoiceItems({
                       {...controllerField}
                       id={`invoice-items-${index}-description`}
                       aria-invalid={fieldState.invalid}
-                      placeholder="Item description"
+                      placeholder="e.g item description"
                       autoComplete="on"
                       className="invoice-bg-light"
                     />
@@ -194,6 +236,8 @@ export default function InvoiceItems({
           )}
         </FieldGroup>
       ))}
+
+      {/* Append Button */}
       <Button
         type="button"
         variant="outline"

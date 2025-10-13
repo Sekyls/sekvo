@@ -36,7 +36,7 @@ export default function AddCustomFields({
   return (
     <FieldSet className="gap-4">
       {showCustomFieldsLabel && (
-        <FieldLegend variant="label">Custom field</FieldLegend>
+        <FieldLegend variant="label">Custom Fields</FieldLegend>
       )}
       <FieldGroup className="gap-4">
         {fields.map((field, index) => (
@@ -113,10 +113,10 @@ export default function AddCustomFields({
           size="sm"
           onClick={() => append({ label: "", content: "" })}
           disabled={fields.length >= 5}
-          className="max-w-sm mx-auto"
+          className="max-w-sm mx-auto mt-5"
         >
           <IconSquarePlus stroke={2} />
-          Add custom field
+          Add a custom field
         </Button>
       </FieldGroup>
       {formState?.errors.customInvoiceFields?.root && (

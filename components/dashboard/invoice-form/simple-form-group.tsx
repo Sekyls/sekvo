@@ -14,10 +14,10 @@ import { useCalendarHook } from "@/hooks/use-calendar";
 import CalendarDatePicker from "./date-picker";
 import { useCalendarHook2 } from "@/hooks/use-calendar2";
 import CalendarDatePicker2 from "./date-picker2";
+import SenderLogo from "./logo-input";
 
 export default function SimpleFormDetailsGroup({
   formControl,
-  formState,
 }: RecipientFieldGroupsProps) {
   const {
     date,
@@ -69,6 +69,7 @@ export default function SimpleFormDetailsGroup({
       })}
       <ContactPerson formControl={formControl} formState={null} />
       <PhoneNumber formControl={formControl} formState={null} />
+      <SenderLogo formControl={formControl} formState={null} />
       <CalendarDatePicker
         date={date}
         isValidDate={isValidDate}

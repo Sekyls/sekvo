@@ -157,4 +157,12 @@ export const InvoiceFormSchema = z.object({
     .max(300, "Notes must not exceed 300 characters")
     .trim()
     .optional(),
+  logo: z
+    .file()
+    .max(5_000_000, "Image size must not exceed 5MB")
+    .mime(
+      ["image/jpeg", "image/png", "image/svg+xml"],
+      "Unsupported file format (Image must be a jpeg, png, or svg)"
+    )
+    .optional(),
 });

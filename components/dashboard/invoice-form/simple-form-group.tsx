@@ -11,10 +11,10 @@ import { Controller } from "react-hook-form";
 import ContactPerson from "./contact-person";
 import PhoneNumber from "./phone-number";
 import { useCalendarHook } from "@/hooks/use-calendar";
-import CalendarDatePicker from "./date-picker";
 import { useCalendarHook2 } from "@/hooks/use-calendar2";
-import CalendarDatePicker2 from "./date-picker2";
 import SenderLogo from "./logo-input";
+import InvoiceDatePicker from "./invoice-date-picker";
+import DueDatePicker from "./due-date-picker";
 
 export default function SimpleFormDetailsGroup({
   formControl,
@@ -70,7 +70,7 @@ export default function SimpleFormDetailsGroup({
       <ContactPerson formControl={formControl} formState={null} />
       <PhoneNumber formControl={formControl} formState={null} />
       <SenderLogo formControl={formControl} formState={null} />
-      <CalendarDatePicker
+      <InvoiceDatePicker
         date={date}
         isValidDate={isValidDate}
         month={month}
@@ -81,7 +81,7 @@ export default function SimpleFormDetailsGroup({
         setValue={setValue}
         value={value}
       />
-      <CalendarDatePicker2
+      <DueDatePicker
         date={calendarDate}
         isValidDate={isValidDate}
         month={calendarMonth}

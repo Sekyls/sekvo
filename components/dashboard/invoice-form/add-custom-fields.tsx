@@ -38,9 +38,9 @@ export default function AddCustomFields({
       {showCustomFieldsLabel && (
         <FieldLegend variant="label">Custom Fields</FieldLegend>
       )}
-      <FieldGroup className="gap-4">
+      <div className="grid grid-cols-2 gap-5 justify-between">
         {fields.map((field, index) => (
-          <FieldGroup className="flex-row gap-x-2! max-w-sm" key={field.id}>
+          <FieldGroup className="flex-row gap-x-2 max-w-sm" key={field.id}>
             <Controller
               name={`customInvoiceFields.${index}.label`}
               control={formControl}
@@ -96,10 +96,11 @@ export default function AddCustomFields({
               <InputGroupAddon align="inline-end">
                 <InputGroupButton
                   type="button"
-                  variant="ghost"
+                  variant="destructive"
                   size="icon-xs"
                   onClick={() => remove(index)}
                   aria-label={`Remove email ${index + 1}`}
+                  className="hover:scale-95"
                 >
                   <Trash2 />
                 </InputGroupButton>
@@ -107,18 +108,18 @@ export default function AddCustomFields({
             )}
           </FieldGroup>
         ))}
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={() => append({ label: "", content: "" })}
-          disabled={fields.length >= 5}
-          className="max-w-sm mx-auto mt-5"
-        >
-          <IconSquarePlus stroke={2} />
-          Add a custom field
-        </Button>
-      </FieldGroup>
+      </div>
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        onClick={() => append({ label: "", content: "" })}
+        disabled={fields.length >= 4}
+        className="max-w-sm mx-auto mt-5 bg-green-800! border-0 hover:scale-95 font-bold transition-all duration-300 ease-in-out"
+      >
+        <IconSquarePlus stroke={2} />
+        Add a custom field
+      </Button>
       {formState?.errors.customInvoiceFields?.root && (
         <FieldError errors={[formState?.errors.customInvoiceFields.root]} />
       )}

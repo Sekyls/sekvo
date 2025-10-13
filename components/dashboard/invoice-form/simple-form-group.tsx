@@ -8,12 +8,40 @@ import { Input } from "@/components/ui/input";
 import { CLIENT_DETAILS_FIELDS } from "@/lib/constants";
 import { RecipientFieldGroupsProps } from "@/lib/types";
 import { Controller } from "react-hook-form";
+import ContactPerson from "./contact-person";
+import PhoneNumber from "./phone-number";
+import { useCalendarHook } from "@/hooks/use-calendar";
+import CalendarDatePicker from "./date-picker";
+import { useCalendarHook2 } from "@/hooks/use-calendar2";
+import CalendarDatePicker2 from "./date-picker2";
 
 export default function SimpleFormDetailsGroup({
   formControl,
+  formState,
 }: RecipientFieldGroupsProps) {
+  const {
+    date,
+    isValidDate,
+    month,
+    open,
+    setDate,
+    setMonth,
+    setOpen,
+    setValue,
+    value,
+  } = useCalendarHook();
+  const {
+    calendarDate,
+    calendarMonth,
+    calendarValue,
+    isopen,
+    setCalendarDate,
+    setCalendarMonth,
+    setCalendarValue,
+    setIsOpen,
+  } = useCalendarHook2();
   return (
-    <FieldGroup>
+    <FieldGroup className="grid grid-cols-2 justify-between">
       {CLIENT_DETAILS_FIELDS.map((item) => {
         return (
           <Controller
@@ -21,14 +49,14 @@ export default function SimpleFormDetailsGroup({
             name={item.fieldName}
             control={formControl}
             render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
+              <Field data-invalid={fieldState.invalid} className="max-w-sm">
                 <FieldLabel htmlFor={item.fieldName}>{item.label}</FieldLabel>
                 <Input
                   {...field}
                   value={field.value as string}
                   id={item.fieldName}
                   aria-invalid={fieldState.invalid}
-                  placeholder={"field placeholder"}
+                  placeholder={item.placeholder}
                   autoComplete="on"
                 />
                 {fieldState.invalid && (
@@ -39,6 +67,30 @@ export default function SimpleFormDetailsGroup({
           />
         );
       })}
+      <ContactPerson formControl={formControl} formState={null} />
+      <PhoneNumber formControl={formControl} formState={null} />
+      <CalendarDatePicker
+        date={date}
+        isValidDate={isValidDate}
+        month={month}
+        open={open}
+        setDate={setDate}
+        setMonth={setMonth}
+        setOpen={setOpen}
+        setValue={setValue}
+        value={value}
+      />
+      <CalendarDatePicker2
+        date={calendarDate}
+        isValidDate={isValidDate}
+        month={calendarMonth}
+        open={isopen}
+        setDate={setCalendarDate}
+        setMonth={setCalendarMonth}
+        setOpen={setIsOpen}
+        setValue={setCalendarValue}
+        value={calendarValue}
+      />
     </FieldGroup>
   );
 }

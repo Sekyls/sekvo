@@ -15,11 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Field, FieldGroup, FieldSet } from "@/components/ui/field";
 import { InvoiceFormSchema } from "@/lib/schema";
-import { useCalendarHook } from "@/hooks/use-calendar";
-import ContactPerson from "./invoice-form/contact-person";
-import PhoneNumber from "./invoice-form/phone-number";
 import SimpleFormDetailsGroup from "./invoice-form/simple-form-group";
-import CalendarDatePicker from "./invoice-form/date-picker";
 import AddCustomFields from "./invoice-form/add-custom-fields";
 import InvoiceItems from "./invoice-form/add-invoice-items";
 import NotesAndTerms from "./invoice-form/notes-terms";
@@ -34,7 +30,9 @@ export default function AggregatedInvoiceForm() {
       companyAddress: "",
       companyEmail: "",
       companyName: "",
-      invoiceItems: [{ description: "", item: "", quantity: "", unitPrice: 0 }],
+      invoiceItems: [
+        { description: "", item: "", quantity: "", unitPrice: "0.00" },
+      ],
       contactPerson: { name: "", title: "" },
       dueDate: "",
       invoiceDate: "",
@@ -45,57 +43,41 @@ export default function AggregatedInvoiceForm() {
       terms: "",
     },
   });
-  const invoiceDate = useCalendarHook();
-  const dueDate = useCalendarHook();
+
   function onSubmit(data: z.infer<typeof InvoiceFormSchema>) {}
 
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Create your invoice</CardTitle>
-        <CardDescription>Fill in your invoice details </CardDescription>
+        <CardTitle className="text-2xl">Start a New Invoice</CardTitle>
+        <CardDescription>Add Client & Payment Details </CardDescription>
       </CardHeader>
       <CardContent>
-        <form id="form-invoice-aggregate" onSubmit={handleSubmit(onSubmit)}>
-          <FieldGroup>
-            <SimpleFormDetailsGroup
-              formControl={control}
-              formState={formState}
-            />
-            <ContactPerson formControl={control} formState={formState} />
-            <PhoneNumber formControl={control} formState={formState} />
-            {[
-              {
-                label: "Invoice Date",
-                name: "invoiceDate",
-                state: invoiceDate,
-              },
-              { label: "Due Date", name: "dueDate", state: dueDate },
-            ].map((label) => {
-              return (
-                <CalendarDatePicker
-                  label={label.label}
-                  key={label.name}
-                  {...label.state}
-                />
-              );
-            })}
-          </FieldGroup>
+        <form
+          id="form-invoice-aggregate"
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-5"
+        >
+          <SimpleFormDetailsGroup formControl={control} formState={formState} />
           <FieldGroup>
             <AddCustomFields formControl={control} formState={formState} />
           </FieldGroup>
           <FieldSet>
             <InvoiceItems formControl={control} formState={formState} />
           </FieldSet>
-          <FieldGroup>
+          <FieldGroup className="flex-row">
             <NotesAndTerms formControl={control} formState={formState} />
           </FieldGroup>
         </form>
       </CardContent>
       <CardFooter>
         <Field orientation="horizontal">
-          <Button type="submit" form="form-invoice-aggregate">
-            Submit
+          <Button
+            type="submit"
+            form="form-invoice-aggregate"
+            className="w-full max-w-3xs mx-auto"
+          >
+            Generate
           </Button>
         </Field>
       </CardFooter>

@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -7,31 +8,39 @@ import {
   FieldLegend,
   FieldSet,
 } from "@/components/ui/field";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-} from "@/components/ui/input-group";
+import { Input } from "@/components/ui/input";
+import { InputGroupAddon, InputGroupButton } from "@/components/ui/input-group";
 import { RecipientFieldGroupsProps } from "@/lib/types";
 import { IconSquarePlus } from "@tabler/icons-react";
 import { Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Controller, useFieldArray } from "react-hook-form";
 
 export default function AddCustomFields({
   formControl,
   formState,
 }: RecipientFieldGroupsProps) {
+  const [showCustomFieldsLabel, setShowCustomFieldsLabel] =
+    useState<boolean>(false);
   const { fields, append, remove } = useFieldArray({
     control: formControl,
     name: "customInvoiceFields",
   });
+  useEffect(() => {
+    if (fields.length < 1) {
+      setShowCustomFieldsLabel(false);
+    } else {
+      setShowCustomFieldsLabel(true);
+    }
+  }, [fields]);
   return (
     <FieldSet className="gap-4">
-      <FieldLegend variant="label">Custom field</FieldLegend>
+      {showCustomFieldsLabel && (
+        <FieldLegend variant="label">Custom field</FieldLegend>
+      )}
       <FieldGroup className="gap-4">
         {fields.map((field, index) => (
-          <FieldGroup className="gap-4" key={field.id}>
+          <FieldGroup className="flex-row gap-x-2! max-w-sm" key={field.id}>
             <Controller
               name={`customInvoiceFields.${index}.label`}
               control={formControl}
@@ -39,18 +48,17 @@ export default function AddCustomFields({
                 <Field
                   orientation="horizontal"
                   data-invalid={fieldState.invalid}
+                  className="max-w-20"
                 >
                   <FieldContent>
-                    <InputGroup>
-                      <InputGroupInput
-                        {...controllerField}
-                        id={`custom-field-label-${field.id}`}
-                        aria-invalid={fieldState.invalid}
-                        placeholder="label"
-                        type="text"
-                        autoComplete="on"
-                      />
-                    </InputGroup>
+                    <Input
+                      {...controllerField}
+                      id={`custom-field-label-${field.id}`}
+                      aria-invalid={fieldState.invalid}
+                      placeholder="label"
+                      type="text"
+                      autoComplete="on"
+                    />
 
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -66,18 +74,17 @@ export default function AddCustomFields({
                 <Field
                   orientation="horizontal"
                   data-invalid={fieldState.invalid}
+                  className="w-full"
                 >
                   <FieldContent>
-                    <InputGroup>
-                      <InputGroupInput
-                        {...controllerField}
-                        id={`custom-field-content-${field.id}`}
-                        aria-invalid={fieldState.invalid}
-                        placeholder="enter your info"
-                        type="text"
-                        autoComplete="on"
-                      />
-                    </InputGroup>
+                    <Input
+                      {...controllerField}
+                      id={`custom-field-content-${field.id}`}
+                      aria-invalid={fieldState.invalid}
+                      placeholder="enter your info"
+                      type="text"
+                      autoComplete="on"
+                    />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
                     )}
@@ -85,7 +92,7 @@ export default function AddCustomFields({
                 </Field>
               )}
             />
-            {fields.length > 1 && (
+            {fields.length >= 1 && (
               <InputGroupAddon align="inline-end">
                 <InputGroupButton
                   type="button"
@@ -106,13 +113,14 @@ export default function AddCustomFields({
           size="sm"
           onClick={() => append({ label: "", content: "" })}
           disabled={fields.length >= 5}
+          className="max-w-sm mx-auto"
         >
           <IconSquarePlus stroke={2} />
           Add custom field
         </Button>
       </FieldGroup>
-      {formState.errors.customInvoiceFields?.root && (
-        <FieldError errors={[formState.errors.customInvoiceFields.root]} />
+      {formState?.errors.customInvoiceFields?.root && (
+        <FieldError errors={[formState?.errors.customInvoiceFields.root]} />
       )}
     </FieldSet>
   );

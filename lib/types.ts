@@ -9,7 +9,7 @@ export interface SekvoOTPEmailProps {
 
 export interface RecipientFieldGroupsProps {
   formControl: Control<z4.infer<typeof InvoiceFormSchema>>;
-  formState: FormState<z4.infer<typeof InvoiceFormSchema>>;
+  formState: FormState<z4.infer<typeof InvoiceFormSchema>> | null;
 }
 
 export interface ClientDetails {
@@ -30,6 +30,7 @@ export interface ClientDetails {
     | `customInvoiceFields.${number}`
     | `customInvoiceFields.${number}.label`;
   label: string;
+  placeholder: string;
   isSimpleForm: boolean;
 }
 
@@ -43,7 +44,6 @@ export interface CalendarProps {
   value: string;
   setValue: React.Dispatch<SetStateAction<string>>;
   isValidDate: (date: Date | undefined) => boolean;
-  label: string;
 }
 
 export type CurrencyOption = {

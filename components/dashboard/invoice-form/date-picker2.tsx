@@ -11,7 +11,7 @@ import { CalendarProps } from "@/lib/types";
 import { formatCalendarDate } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 
-export default function CalendarDatePicker({
+export default function CalendarDatePicker2({
   date,
   isValidDate,
   month,
@@ -24,10 +24,10 @@ export default function CalendarDatePicker({
 }: CalendarProps) {
   return (
     <div className="max-w-sm space-y-2">
-      <FieldLabel htmlFor="invoiceDate">Invoice Date</FieldLabel>
+      <FieldLabel htmlFor="dueDate">Due Date</FieldLabel>
       <FieldGroup className="relative">
         <Input
-          id="invoiceDate"
+          id="dueDate"
           value={value}
           placeholder={new Date().toISOString().slice(0, 10)}
           className="bg-background pr-10"

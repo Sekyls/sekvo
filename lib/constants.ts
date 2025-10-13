@@ -88,11 +88,36 @@ export const SIGNUP_FORM_FIELDS: {
 export const SESSION_EXPIRATION = 60 * 60 * 24 * 7;
 
 export const CLIENT_DETAILS_FIELDS: ClientDetails[] = [
-  { fieldName: "companyName", label: "Company Name", isSimpleForm: true },
-  { fieldName: "companyAddress", label: "Company Address", isSimpleForm: true },
-  { fieldName: "companyEmail", label: "Company Email", isSimpleForm: true },
-  { fieldName: "invoiceNumber", label: "Invoice Number", isSimpleForm: true },
-  { fieldName: "purchaseOrder", label: "Purchase Order", isSimpleForm: true },
+  {
+    fieldName: "companyName",
+    label: "Company Name",
+    placeholder: "e.g. Resolut Corporation",
+    isSimpleForm: true,
+  },
+  {
+    fieldName: "companyAddress",
+    label: "Company Address",
+    placeholder: "e.g. 123 Main Street, Accra",
+    isSimpleForm: true,
+  },
+  {
+    fieldName: "companyEmail",
+    label: "Company Email",
+    placeholder: "e.g. info@resolut.com",
+    isSimpleForm: true,
+  },
+  {
+    fieldName: "invoiceNumber",
+    label: "Invoice Number",
+    placeholder: "e.g. INV-2025-001",
+    isSimpleForm: true,
+  },
+  {
+    fieldName: "purchaseOrder",
+    label: "Purchase Order",
+    placeholder: "e.g. PO-789456",
+    isSimpleForm: true,
+  },
 ];
 
 export const CONTACT_PERSON_TITLES = [

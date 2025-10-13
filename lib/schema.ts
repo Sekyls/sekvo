@@ -140,7 +140,7 @@ export const InvoiceFormSchema = z.object({
     z.object({
       item: z.string().min(1, "Item name is required").trim(),
       quantity: z.string().min(1, "Item name is required").trim(),
-      unitPrice: z.number(),
+      unitPrice: z.string().min(1, "Unit price is required").trim(),
       description: z
         .string()
         .min(5, "Description must exceed 5 characters")

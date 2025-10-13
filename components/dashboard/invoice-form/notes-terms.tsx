@@ -5,6 +5,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { RecipientFieldGroupsProps } from "@/lib/types";
 import { Controller } from "react-hook-form";
 
@@ -19,7 +20,7 @@ export default function NotesAndTerms({
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
             <FieldLabel htmlFor={"notes"}>Notes</FieldLabel>
-            <Input
+            <Textarea
               {...field}
               id={"notes"}
               aria-invalid={fieldState.invalid}
@@ -36,7 +37,7 @@ export default function NotesAndTerms({
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
             <FieldLabel htmlFor={"terms"}>Terms</FieldLabel>
-            <Input
+            <Textarea
               {...field}
               id={"terms"}
               aria-invalid={fieldState.invalid}

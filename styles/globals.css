@@ -196,7 +196,9 @@ small {
   color: black;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15), 0 8px 12px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.15),
+    0 8px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.2s ease;
 }
 
@@ -217,4 +219,10 @@ small {
 
 .primary-gradient:hover {
   opacity: 80%;
+}
+
+.invoice-bg-light {
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 8px 12px rgba(0, 0, 0, 0.05);
 }

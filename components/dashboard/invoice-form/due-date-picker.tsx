@@ -30,7 +30,7 @@ export default function DueDatePicker({
           id="dueDate"
           value={value}
           placeholder={new Date().toISOString().slice(0, 10)}
-          className="bg-background pr-10"
+          className="bg-background pr-10 invoice-bg-light"
           onChange={(e) => {
             const date = new Date(e.target.value);
             setValue(e.target.value);

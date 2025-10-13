@@ -23,7 +23,7 @@ export default function ContactPerson({
           <Field data-invalid={fieldState.invalid} className="w-fit">
             <FieldLabel htmlFor={field.name}>Title</FieldLabel>
             <Select value={field.value} onValueChange={field.onChange}>
-              <SelectTrigger>
+              <SelectTrigger className="invoice-bg-light">
                 {field.value || "Mr"}
               </SelectTrigger>
               <SelectContent className="min-w-24">
@@ -50,6 +50,7 @@ export default function ContactPerson({
               aria-invalid={fieldState.invalid}
               placeholder="e.g. Dennis Sekyi Opoku"
               autoComplete="on"
+              className="invoice-bg-light"
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>

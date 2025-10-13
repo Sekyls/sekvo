@@ -19,8 +19,11 @@ import SimpleFormDetailsGroup from "./invoice-form/simple-form-group";
 import AddCustomFields from "./invoice-form/add-custom-fields";
 import InvoiceItems from "./invoice-form/add-invoice-items";
 import NotesAndTerms from "./invoice-form/notes-terms";
+import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
 
 export default function AggregatedInvoiceForm() {
+  const { theme } = useTheme();
   const { handleSubmit, control, formState } = useForm<
     z.infer<typeof InvoiceFormSchema>
   >({
@@ -47,7 +50,7 @@ export default function AggregatedInvoiceForm() {
   function onSubmit(data: z.infer<typeof InvoiceFormSchema>) {}
 
   return (
-    <Card className="w-full">
+    <Card className="invoice-bg-light border-0 dark:border border-t-2">
       <CardHeader>
         <CardTitle className="text-2xl">Start a New Invoice</CardTitle>
         <CardDescription>Add Client & Payment Details </CardDescription>
@@ -75,7 +78,8 @@ export default function AggregatedInvoiceForm() {
           <Button
             type="submit"
             form="form-invoice-aggregate"
-            className="w-full max-w-3xs mx-auto"
+            className="w-full max-w-3xs mx-auto mt-5"
+            disabled={!formState.isValid || formState.isSubmitting}
           >
             Generate
           </Button>

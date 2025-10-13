@@ -58,6 +58,7 @@ export default function SimpleFormDetailsGroup({
                   aria-invalid={fieldState.invalid}
                   placeholder={item.placeholder}
                   autoComplete="on"
+                  className="invoice-bg-light"
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />

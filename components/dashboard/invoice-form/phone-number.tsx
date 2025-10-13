@@ -24,7 +24,7 @@ export default function PhoneNumber({
             enableSearch={true}
             country={country?.toLocaleLowerCase()}
             countryCodeEditable={false}
-            containerClass="dark:bg-input/30!"
+            containerClass="dark:bg-input/30! bg-transparent!"
           />
           {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
         </Field>

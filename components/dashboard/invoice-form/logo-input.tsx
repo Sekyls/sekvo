@@ -21,6 +21,7 @@ export default function SenderLogo({ formControl }: RecipientFieldGroupsProps) {
             onBlur={field.onBlur}
             disabled={field.disabled}
             onChange={(e) => field.onChange(e.target.files?.[0])}
+            className="invoice-bg-light"
           />
 
           {fieldState.invalid && <FieldError errors={[fieldState.error]} />}

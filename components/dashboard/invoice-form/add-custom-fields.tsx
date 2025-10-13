@@ -58,6 +58,7 @@ export default function AddCustomFields({
                       placeholder="label"
                       type="text"
                       autoComplete="on"
+                      className="invoice-bg-light"
                     />
 
                     {fieldState.invalid && (
@@ -84,6 +85,7 @@ export default function AddCustomFields({
                       placeholder="enter your info"
                       type="text"
                       autoComplete="on"
+                      className="invoice-bg-light"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -100,7 +102,7 @@ export default function AddCustomFields({
                   size="icon-xs"
                   onClick={() => remove(index)}
                   aria-label={`Remove email ${index + 1}`}
-                  className="hover:scale-95"
+                  className="hover:scale-95 invoice-bg-light"
                 >
                   <Trash2 />
                 </InputGroupButton>
@@ -115,7 +117,7 @@ export default function AddCustomFields({
         size="sm"
         onClick={() => append({ label: "", content: "" })}
         disabled={fields.length >= 4}
-        className="max-w-sm mx-auto mt-5 bg-green-800! border-0 hover:scale-95 font-bold transition-all duration-300 ease-in-out"
+        className="max-w-sm mx-auto mt-5 bg-green-800! text-white border-0 hover:scale-95 font-bold transition-all duration-300 ease-in-out"
       >
         <IconSquarePlus stroke={2} />
         Add a custom field

@@ -26,6 +26,7 @@ export default function NotesAndTerms({
               aria-invalid={fieldState.invalid}
               placeholder="Notes for client"
               autoComplete="on"
+              className="invoice-bg-light"
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
@@ -43,6 +44,7 @@ export default function NotesAndTerms({
               aria-invalid={fieldState.invalid}
               placeholder="Terms of service"
               autoComplete="on"
+              className="invoice-bg-light"
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>

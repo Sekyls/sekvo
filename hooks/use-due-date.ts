@@ -3,7 +3,7 @@
 import { formatCalendarDate } from "@/lib/utils";
 import { useState } from "react";
 
-export function useCalendarHook() {
+export function useDueDateHook() {
   const [open, setOpen] = useState<boolean>(false);
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [month, setMonth] = useState<Date | undefined>(date);
@@ -25,5 +25,7 @@ export function useCalendarHook() {
     value,
     setValue,
     isValidDate,
+    label: "Due Date",
+    id: "dueDate",
   };
 }

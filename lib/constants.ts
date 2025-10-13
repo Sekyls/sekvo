@@ -285,3 +285,25 @@ export const CURRENCIES: CurrencyOption[] = [
   { value: "ZK", label: "Zambian Kwacha (ZMW)" },
   { value: "Z$", label: "Zimbabwean Dollar (ZWL)" },
 ];
+
+export const NOTES_TERMS = [
+  { name: "notes", label: "Notes", placeholder: "e.g. notes for client" },
+  { name: "terms", label: "Terms", placeholder: "e.g. terms of service" },
+];
+
+export const INVOICE_FORM_DEFAULTS = {
+  companyAddress: "",
+  companyEmail: "",
+  companyName: "",
+  invoiceItems: [
+    { description: "", item: "", quantity: "", unitPrice: "0.00" },
+  ],
+  contactPerson: { name: "", title: "" },
+  dueDate: "",
+  invoiceDate: "",
+  notes: "",
+  invoiceNumber: "",
+  phoneNumber: "",
+  purchaseOrder: "",
+  terms: "",
+};

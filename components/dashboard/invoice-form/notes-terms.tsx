@@ -1,12 +1,7 @@
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
-import { RecipientFieldGroupsProps } from "@/lib/types";
+import { NOTES_TERMS } from "@/lib/constants";
+import { FieldNames, RecipientFieldGroupsProps } from "@/lib/types";
 import { Controller } from "react-hook-form";
 
 export default function NotesAndTerms({
@@ -14,42 +9,32 @@ export default function NotesAndTerms({
 }: RecipientFieldGroupsProps) {
   return (
     <>
-      <Controller
-        name="notes"
-        control={formControl}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor={"notes"}>Notes</FieldLabel>
-            <Textarea
-              {...field}
-              id={"notes"}
-              aria-invalid={fieldState.invalid}
-              placeholder="Notes for client"
-              autoComplete="on"
-              className="invoice-bg-light"
-            />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-      <Controller
-        name="terms"
-        control={formControl}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor={"terms"}>Terms</FieldLabel>
-            <Textarea
-              {...field}
-              id={"terms"}
-              aria-invalid={fieldState.invalid}
-              placeholder="Terms of service"
-              autoComplete="on"
-              className="invoice-bg-light"
-            />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
+      {NOTES_TERMS.map((item) => {
+        return (
+          <Controller
+            key={item.name}
+            name={item.name as FieldNames}
+            control={formControl}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor={item.name}>{item.label}</FieldLabel>
+                <Textarea
+                  {...field}
+                  value={field.value as string}
+                  id={"notes"}
+                  aria-invalid={fieldState.invalid}
+                  placeholder={item.placeholder}
+                  autoComplete="on"
+                  className="invoice-bg-light"
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+        );
+      })}
     </>
   );
 }

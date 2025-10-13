@@ -10,29 +10,18 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { InputGroupAddon, InputGroupButton } from "@/components/ui/input-group";
+import useAddCustomFields from "@/hooks/use-custom-fields";
 import { RecipientFieldGroupsProps } from "@/lib/types";
 import { IconSquarePlus } from "@tabler/icons-react";
 import { Trash2 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Controller, useFieldArray } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 export default function AddCustomFields({
   formControl,
   formState,
 }: RecipientFieldGroupsProps) {
-  const [showCustomFieldsLabel, setShowCustomFieldsLabel] =
-    useState<boolean>(false);
-  const { fields, append, remove } = useFieldArray({
-    control: formControl,
-    name: "customInvoiceFields",
-  });
-  useEffect(() => {
-    if (fields.length < 1) {
-      setShowCustomFieldsLabel(false);
-    } else {
-      setShowCustomFieldsLabel(true);
-    }
-  }, [fields]);
+  const { append, fields, remove, showCustomFieldsLabel } =
+    useAddCustomFields(formControl);
   return (
     <FieldSet className="gap-4">
       {showCustomFieldsLabel && (

@@ -1,7 +1,7 @@
 import { Control, FormState } from "react-hook-form";
 import z4 from "zod/v4";
 import { InvoiceFormSchema } from "./schema";
-import React, { SetStateAction } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 export interface SekvoOTPEmailProps {
   otp: number;
@@ -11,7 +11,6 @@ export interface RecipientFieldGroupsProps {
   formControl: Control<z4.infer<typeof InvoiceFormSchema>>;
   formState: FormState<z4.infer<typeof InvoiceFormSchema>> | null;
 }
-
 
 export type FieldNames =
   | "companyName"
@@ -55,8 +54,8 @@ export interface CalendarProps {
   value: string;
   setValue: React.Dispatch<SetStateAction<string>>;
   isValidDate: (date: Date | undefined) => boolean;
-  id: string
-  label:string
+  id: string;
+  label: string;
 }
 
 export type CurrencyOption = {
@@ -64,3 +63,20 @@ export type CurrencyOption = {
   label: string;
 };
 
+export interface Switches {
+  id: string;
+  label: string;
+  state: boolean;
+  setState: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface CalculationSummaryExtras {
+  id: string;
+  label: string;
+  hasToggle: boolean;
+  ratioToggleState: boolean | null;
+  setRatioToggleState: Dispatch<SetStateAction<boolean>> | null;
+  inputState: string;
+  setInputState: Dispatch<SetStateAction<string>>;
+  placeholder: string;
+}

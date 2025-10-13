@@ -38,8 +38,7 @@ export default function InvoiceItems({
 
   return (
     <FieldSet className="gap-4 ">
-      <FieldLegend variant="label">Items</FieldLegend>
-      <FieldDescription>Add your items</FieldDescription>
+      <FieldDescription className="text-foreground">Add your items</FieldDescription>
       {fields.map((field, index) => (
         <FieldGroup key={field.id} className="grid grid-cols-[95%_5%]">
           <div className="space-y-3">
@@ -203,7 +202,7 @@ export default function InvoiceItems({
           append({ description: "", item: "", quantity: "", unitPrice: "0.00" })
         }
         // disabled={fields.length >= 5}
-        className="max-w-sm mx-auto bg-green-800! text-white font-bold hover:scale-95 transition-all duration-300 ease-in-out mt-5"
+        className="max-w-sm mx-auto border-0 bg-green-800! text-white font-bold hover:scale-95 transition-all duration-300 ease-in-out mt-5"
       >
         <IconSquarePlus stroke={2} />
         Add more items

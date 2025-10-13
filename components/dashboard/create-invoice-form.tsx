@@ -15,6 +15,7 @@ import AddCustomFields from "./invoice-form/add-custom-fields";
 import InvoiceItems from "./invoice-form/add-invoice-items";
 import NotesAndTerms from "./invoice-form/notes-terms";
 import useInvoiceForm from "@/hooks/use-invoice-form";
+import CalculationSummary from "./invoice-form/calculations-summary";
 
 export default function AggregatedInvoiceForm() {
   const { control, formState, handleSubmit, onSubmit } = useInvoiceForm();
@@ -41,6 +42,9 @@ export default function AggregatedInvoiceForm() {
           <FieldGroup className="flex-row">
             <NotesAndTerms formControl={control} formState={formState} />
           </FieldGroup>
+          <FieldSet>
+            <CalculationSummary />
+          </FieldSet>
         </form>
       </CardContent>
       <CardFooter>

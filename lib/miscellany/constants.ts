@@ -296,7 +296,12 @@ export const INVOICE_FORM_DEFAULTS = {
   companyEmail: "",
   companyName: "",
   invoiceItems: [
-    { description: "", item: "", quantity: "", unitPrice: "0.00" },
+    {
+      description: "",
+      item: "",
+      quantity: "",
+      unitPrice: { currency: "₵", price: "" },
+    },
   ],
   contactPerson: { name: "", title: "" },
   dueDate: "",
@@ -306,4 +311,7 @@ export const INVOICE_FORM_DEFAULTS = {
   phoneNumber: "",
   purchaseOrder: "",
   terms: "",
+  discount: "",
+  tex: "",
+  shipping: "",
 };

@@ -1,15 +1,19 @@
 "use client";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { FieldGroup } from "@/components/ui/field";
+import { Field, FieldError, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { InputGroup, InputGroupAddon } from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import useCalcSummary from "@/hooks/use-calculation-summary";
+import { FieldNames, RecipientFieldGroupsProps } from "@/lib/miscellany/types";
 import { Repeat } from "lucide-react";
 import { Fragment } from "react";
+import { Controller } from "react-hook-form";
 
-export default function CalculationSummary() {
+export default function CalculationSummary({
+  formControl,
+}: RecipientFieldGroupsProps) {
   const { CALCULATION_EXTRAS, SWITCH_ITEMS } = useCalcSummary();
 
   return (
@@ -40,9 +44,33 @@ export default function CalculationSummary() {
                 <div className="grid grid-cols-[0.5fr_2fr] justify-between gap-5">
                   <Label>{item.label}</Label>
                   <InputGroup className="gap-2 invoice-bg-light">
-                    <Input
+                    {/* <Input
                       placeholder={item.placeholder}
                       className="border-0 border-l"
+                    /> */}
+                    <Controller
+                      key={item.id}
+                      name={item.id as FieldNames}
+                      control={formControl}
+                      render={({ field, fieldState }) => (
+                        <Field
+                          data-invalid={fieldState.invalid}
+                          className="max-w-sm"
+                        >
+                          <Input
+                            {...field}
+                            value={field.value as string}
+                            id={item.id}
+                            aria-invalid={fieldState.invalid}
+                            placeholder={item.placeholder}
+                            autoComplete="on"
+                            className="invoice-bg-light"
+                          />
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      )}
                     />
                     {item.hasToggle && (
                       <InputGroupAddon align="inline-start">

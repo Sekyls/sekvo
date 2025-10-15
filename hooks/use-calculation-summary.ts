@@ -15,7 +15,7 @@ export default function useCalcSummary() {
 
   const CALCULATION_EXTRAS: CalculationSummaryExtras[] = [
     {
-      id: "discount-on-total",
+      id: "discount",
       label: "Discount",
       isChecked: discountIsChecked,
       inputState: discount,
@@ -26,7 +26,7 @@ export default function useCalcSummary() {
       placeholder: "e.g. 10% | $50",
     },
     {
-      id: "tax-on-total",
+      id: "tax",
       label: "Tax",
       isChecked: taxIsChecked,
       inputState: tax,
@@ -37,7 +37,7 @@ export default function useCalcSummary() {
       placeholder: "e.g. $100",
     },
     {
-      id: "shipping-on-total",
+      id: "shipping",
       label: "Shipping",
       isChecked: shippingIsChecked,
       inputState: shipping,

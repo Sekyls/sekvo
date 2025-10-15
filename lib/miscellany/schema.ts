@@ -1,10 +1,11 @@
-import { z } from "zod/v4";
+import z4 from "zod/v4";
 import parsePhoneNumber from "libphonenumber-js";
+import { Currency } from "lucide-react";
 
-export const SignupFormSchema = z.object({
-  name: z.string().min(1, "Name is required").trim(),
-  address: z.string().min(5, "Address is required").trim(),
-  phoneNumber: z
+export const SignupFormSchema = z4.object({
+  name: z4.string().min(1, "Name is required").trim(),
+  address: z4.string().min(5, "Address is required").trim(),
+  phoneNumber: z4
     .string()
     .superRefine((value, ctx) => {
       const formattedValue = value.startsWith("+") ? value : `+${value}`;
@@ -21,10 +22,10 @@ export const SignupFormSchema = z.object({
       }
     })
     .trim(),
-  email: z.email().trim(),
-  password: z
+  email: z4.email().trim(),
+  password: z4
     .object({
-      password: z
+      password: z4
         .string()
         .min(8, "Password must be at least 8 characters long")
         .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
@@ -35,7 +36,7 @@ export const SignupFormSchema = z.object({
           "Password must contain at least one special character"
         )
         .trim(),
-      confirmPassword: z.string().trim(),
+      confirmPassword: z4.string().trim(),
     })
     .superRefine((data, ctx) => {
       if (data.password !== data.confirmPassword) {
@@ -46,7 +47,7 @@ export const SignupFormSchema = z.object({
         });
       }
     }),
-  logo: z
+  logo: z4
     .file()
     .max(5_000_000, "Image size must not exceed 5MB")
     .mime(
@@ -56,8 +57,8 @@ export const SignupFormSchema = z.object({
     .optional(),
 });
 
-export const OTPFormSchema = z.object({
-  pin: z
+export const OTPFormSchema = z4.object({
+  pin: z4
     .string()
     .trim()
     .min(6, {
@@ -68,9 +69,9 @@ export const OTPFormSchema = z.object({
     }),
 });
 
-export const LoginDataSchema = z.object({
-  email: z.email().trim(),
-  password: z
+export const LoginDataSchema = z4.object({
+  email: z4.email().trim(),
+  password: z4
     .string()
     .min(8, "Password must be at least 8 characters long")
     .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
@@ -83,24 +84,24 @@ export const LoginDataSchema = z.object({
     .trim(),
 });
 
-export const InvoiceFormSchema = z.object({
-  companyName: z.string().min(1, "Company name is required").trim(),
-  companyAddress: z
+export const InvoiceFormSchema = z4.object({
+  companyName: z4.string().min(1, "Company name is required").trim(),
+  companyAddress: z4
     .string()
     .min(10, "Company address must exceed 10 characters")
     .trim(),
-  companyEmail: z.email().trim().optional(),
-  contactPerson: z
+  companyEmail: z4.email().trim().optional(),
+  contactPerson: z4
     .object({
-      title: z
+      title: z4
         .string()
         .min(2, "Title must exceed 1 character")
         .max(5, "Title must not exceed 5 characters")
         .trim(),
-      name: z.string().min(1, "Name must exceed 1 character").trim(),
+      name: z4.string().min(1, "Name must exceed 1 character").trim(),
     })
     .optional(),
-  phoneNumber: z
+  phoneNumber: z4
     .string()
     .superRefine((value, ctx) => {
       const formattedValue = value.startsWith("+") ? value : `+${value}`;
@@ -118,51 +119,66 @@ export const InvoiceFormSchema = z.object({
     })
     .trim()
     .optional(),
-  purchaseOrder: z.string().trim().optional(),
-  invoiceNumber: z.string().trim(),
-  invoiceDate: z.string().trim(),
-  dueDate: z.string().trim(),
-  customInvoiceFields: z
+  purchaseOrder: z4.string().trim().optional(),
+  invoiceNumber: z4.string().trim(),
+  invoiceDate: z4.string().trim(),
+  dueDate: z4.string().trim(),
+  customInvoiceFields: z4
     .array(
-      z
+      z4
         .object({
-          label: z
+          label: z4
             .string()
             .min(2, "Label must exceed 2 characters")
             .max(10, "Label must not exceed 10 characters")
             .trim(),
-          content: z.string().min(2, "Label must exceed 2 characters").trim(),
+          content: z4.string().min(2, "Label must exceed 2 characters").trim(),
         })
         .required()
     )
     .optional(),
-  invoiceItems: z.array(
-    z.object({
-      item: z.string().min(1, "Item name is required").trim(),
-      quantity: z.string().min(1, "Item name is required").trim(),
-      unitPrice: z.string().min(1, "Unit price is required").trim(),
-      description: z
+  invoiceItems: z4.array(
+    z4.object({
+      item: z4.string().min(1, "Item name is required").trim(),
+      quantity: z4.string().min(1, "Item name is required").trim(),
+      unitPrice: z4.object({
+        currency: z4.string(),
+        price: z4.string().min(1, "Unit price is required").trim(),
+      }),
+      description: z4
         .string()
         .min(5, "Description must exceed 5 characters")
         .max(250, "Description must not exceed 250 characters"),
     })
   ),
-  notes: z
+  notes: z4
     .string()
     .max(300, "Notes must not exceed 300 characters")
     .trim()
     .optional(),
-  terms: z
+  terms: z4
     .string()
     .max(300, "Notes must not exceed 300 characters")
     .trim()
     .optional(),
-  logo: z
+  logo: z4
     .file()
     .max(5_000_000, "Image size must not exceed 5MB")
     .mime(
       ["image/jpeg", "image/png", "image/svg+xml"],
       "Unsupported file format (Image must be a jpeg, png, or svg)"
     )
+    .optional(),
+  discount: z4
+    .string()
+    .trim()
+    .optional(),
+  tax: z4
+    .string()
+    .trim()
+    .optional(),
+  shipping: z4
+    .string()
+    .trim()
     .optional(),
 });

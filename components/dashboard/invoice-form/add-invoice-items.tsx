@@ -7,7 +7,6 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
-  FieldLegend,
   FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -17,7 +16,6 @@ import {
   InputGroupButton,
   InputGroupText,
 } from "@/components/ui/input-group";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -28,15 +26,24 @@ import { Textarea } from "@/components/ui/textarea";
 import { CURRENCIES } from "@/lib/miscellany/constants";
 import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
 import { IconSquarePlus } from "@tabler/icons-react";
-import { Trash2 } from "lucide-react";
-import { useState } from "react";
+import { SearchIcon, Trash2 } from "lucide-react";
+import { useMemo, useState } from "react";
 import { Controller, useFieldArray } from "react-hook-form";
 
 export default function InvoiceItems({
   formControl,
   formState,
 }: RecipientFieldGroupsProps) {
-  const [currency, setCurrency] = useState("$");
+  const [search, setSearch] = useState<string>("");
+
+  // Filter currencies dynamically
+  const filteredCurrencies = useMemo(() => {
+    return CURRENCIES.filter(
+      (c) =>
+        c.label.toLowerCase().includes(search.toLowerCase()) ||
+        c.value.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [search]);
 
   const { fields, append, remove } = useFieldArray({
     control: formControl,
@@ -118,57 +125,108 @@ export default function InvoiceItems({
                   </Field>
                 )}
               />
+
               {/* Unit Price */}
-              <Controller
-                name={`invoiceItems.${index}.unitPrice`}
-                control={formControl}
-                render={({ field: controllerField, fieldState }) => (
-                  <Field
-                    orientation="horizontal"
-                    data-invalid={fieldState.invalid}
-                    className="max-w-3xs block space-y-2"
-                  >
-                    <FieldLabel htmlFor={`invoice-items-${index}-unit-price`}>
-                      Unit Price
-                    </FieldLabel>
-                    <FieldContent>
-                      <ButtonGroup>
-                        <Select value={currency} onValueChange={setCurrency}>
-                          <SelectTrigger className="invoice-bg-light">
-                            {currency}
-                          </SelectTrigger>
-                          <SelectContent className="min-w-24">
-                            {CURRENCIES.map((currency, index) => (
-                              <SelectItem
-                                key={`${currency.label}-${currency.value}`}
-                                value={currency.value}
+              <FieldSet
+                id={`invoice-items-${index}-unit-price`}
+                className="max-w-3xs w-full gap-0 space-y-2"
+              >
+                <FieldLabel htmlFor={`invoice-items-${index}-unit-price`}>
+                  Unit Price
+                </FieldLabel>
+                <FieldGroup className="flex-row gap-0 gap-x-1">
+                  {/* Currency */}
+                  <Controller
+                    name={`invoiceItems.${index}.unitPrice.currency`}
+                    control={formControl}
+                    render={({ field: controllerField, fieldState }) => (
+                      <Field
+                        orientation="vertical"
+                        data-invalid={fieldState.invalid}
+                        className="w-fit"
+                      >
+                        <FieldContent>
+                          <Select
+                            value={controllerField.value}
+                            onValueChange={controllerField.onChange}
+                            defaultValue="₵"
+                          >
+                            <SelectTrigger className="invoice-bg-light w-fit focus:border-0 focus:ring-0 focus-visible:border-0 focus-visible:ring-0">
+                              {controllerField.value}
+                            </SelectTrigger>
+                            <SelectContent className="min-w-24 max-h-96">
+                              <ButtonGroup
+                                className="fixed w-[98%] top-0 z-10 invoice-bg-light bg-background rounded-md border-0 px-5 items-center"
+                                orientation="horizontal"
                               >
-                                {currency.value}{" "}
-                                <span className="text-muted-foreground">
-                                  {currency.label}
-                                </span>
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <Input
-                          {...controllerField}
-                          id={`invoice-items-${index}-unit-price`}
-                          aria-invalid={fieldState.invalid}
-                          autoComplete="on"
-                          className="invoice-bg-light"
-                        />
-                      </ButtonGroup>
-                    </FieldContent>
-                    {fieldState.invalid && (
-                      <FieldError
-                        errors={[fieldState.error]}
-                        className="text-center"
-                      />
+                                <SearchIcon className="size-4 border-0 text-accent" />
+                                <Input
+                                  placeholder="Search currency..."
+                                  value={search}
+                                  onChange={(e) => setSearch(e.target.value)}
+                                  className="border-0 shadow-none"
+                                />
+                              </ButtonGroup>
+
+                              {filteredCurrencies.length > 0 ? (
+                                filteredCurrencies.map((currency) => (
+                                  <SelectItem
+                                    key={`${currency.label}-${currency.value}`}
+                                    value={currency.value}
+                                  >
+                                    {currency.value}{" "}
+                                    <span className="text-muted-foreground">
+                                      {currency.label}
+                                    </span>
+                                  </SelectItem>
+                                ))
+                              ) : (
+                                <div className="p-2 text-sm text-muted-foreground">
+                                  No currency found.
+                                </div>
+                              )}
+                            </SelectContent>
+                          </Select>
+                        </FieldContent>
+                        {fieldState.invalid && (
+                          <FieldError
+                            errors={[fieldState.error]}
+                            className="text-center"
+                          />
+                        )}
+                      </Field>
                     )}
-                  </Field>
-                )}
-              />
+                  />
+                  {/* Price */}
+                  <Controller
+                    name={`invoiceItems.${index}.unitPrice.price`}
+                    control={formControl}
+                    render={({ field: controllerField, fieldState }) => (
+                      <Field
+                        orientation="vertical"
+                        data-invalid={fieldState.invalid}
+                      >
+                        <FieldContent>
+                          <Input
+                            {...controllerField}
+                            id={`invoice-items-${index}-unit-price`}
+                            aria-invalid={fieldState.invalid}
+                            placeholder="e.g 0.00"
+                            autoComplete="on"
+                            className="invoice-bg-light w-full!"
+                          />
+                        </FieldContent>
+                        {fieldState.invalid && (
+                          <FieldError
+                            errors={[fieldState.error]}
+                            className="text-center"
+                          />
+                        )}
+                      </Field>
+                    )}
+                  />
+                </FieldGroup>
+              </FieldSet>
 
               {/* Sub-total */}
               <Field
@@ -180,7 +238,7 @@ export default function InvoiceItems({
                   <InputGroupAddon>
                     <InputGroupText>$</InputGroupText>
                   </InputGroupAddon>
-                  <div className="w-full h-full flex items-center justify-center border-l border-r rounded-md mx-2">
+                  <div className="w-full h-full flex items-center justify-center border-l border-r mx-2">
                     0.00
                   </div>
                   <InputGroupAddon align="inline-end">
@@ -243,9 +301,13 @@ export default function InvoiceItems({
         variant="outline"
         size="sm"
         onClick={() =>
-          append({ description: "", item: "", quantity: "", unitPrice: "0.00" })
+          append({
+            description: "",
+            item: "",
+            quantity: "",
+            unitPrice: { currency: "₵", price: "" },
+          })
         }
-        // disabled={fields.length >= 5}
         className="max-w-sm mx-auto border-0 bg-green-800! text-white font-bold hover:scale-95 transition-all duration-300 ease-in-out mt-5"
       >
         <IconSquarePlus stroke={2} />

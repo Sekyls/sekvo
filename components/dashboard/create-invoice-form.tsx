@@ -16,9 +16,12 @@ import InvoiceItems from "./invoice-form/add-invoice-items";
 import NotesAndTerms from "./invoice-form/notes-terms";
 import useInvoiceForm from "@/hooks/use-invoice-form";
 import CalculationSummary from "./invoice-form/calculations-summary";
+import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
 
-export default function AggregatedInvoiceForm() {
-  const { control, formState, handleSubmit, onSubmit } = useInvoiceForm();
+export default function AggregatedInvoiceForm({
+  ...data
+}: RecipientFieldGroupsProps) {
+  const { handleSubmit, onSubmit } = useInvoiceForm();
 
   return (
     <Card className="invoice-bg-light border-0 dark:border border-t-2">
@@ -32,18 +35,18 @@ export default function AggregatedInvoiceForm() {
           onSubmit={handleSubmit(onSubmit)}
           className="space-y-5"
         >
-          <SimpleFormDetailsGroup formControl={control} formState={formState} />
+          <SimpleFormDetailsGroup {...data} />
           <FieldGroup>
-            <AddCustomFields formControl={control} formState={formState} />
+            <AddCustomFields {...data} />
           </FieldGroup>
           <FieldSet>
-            <InvoiceItems formControl={control} formState={formState} />
+            <InvoiceItems {...data} />
           </FieldSet>
           <FieldGroup className="flex-row">
-            <NotesAndTerms formControl={control} formState={formState} />
+            <NotesAndTerms {...data} />
           </FieldGroup>
           <FieldSet>
-            <CalculationSummary />
+            <CalculationSummary {...data} />
           </FieldSet>
         </form>
       </CardContent>
@@ -53,7 +56,7 @@ export default function AggregatedInvoiceForm() {
             type="submit"
             form="form-invoice-aggregate"
             className="w-full max-w-3xs mx-auto mt-5"
-            disabled={!formState.isValid || formState.isSubmitting}
+            disabled={!data.formState?.isValid || data.formState?.isSubmitting}
           >
             Generate
           </Button>

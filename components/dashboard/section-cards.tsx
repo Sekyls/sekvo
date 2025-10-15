@@ -38,6 +38,7 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "../ui/input";
 import { useRef } from "react";
+import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
 
 function ExportDropdownMenu() {
   return (
@@ -202,11 +203,18 @@ function SelectLanguage() {
   );
 }
 
-export default function SectionCards() {
+export default function SectionCards({
+  formControl,
+}: RecipientFieldGroupsProps) {
   const fileUploadRef = useRef<HTMLInputElement>(null);
   return (
     <div className="flex gap-x-2 justify-between max-w-4xl">
-      <Button className="w-fit gap-1">
+      <Button
+        className="w-fit gap-1"
+        onClick={() => {
+          formControl._reset();
+        }}
+      >
         <IconFilePlus stroke={2} className="size-5" />
         New invoice
       </Button>

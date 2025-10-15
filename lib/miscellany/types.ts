@@ -10,6 +10,7 @@ export interface SekvoOTPEmailProps {
 export interface RecipientFieldGroupsProps {
   formControl: Control<z4.infer<typeof InvoiceFormSchema>>;
   formState: FormState<z4.infer<typeof InvoiceFormSchema>> | null;
+  index?: number;
 }
 
 export type FieldNames =
@@ -27,6 +28,10 @@ export type FieldNames =
   | "notes"
   | "terms"
   | "logo"
+  | "discount"
+  | "tax"
+  | "shipping"
+  | `invoiceItems.${number}.unitPrice.price`
   | "contactPerson.title"
   | "contactPerson.name"
   | `customInvoiceFields.${number}`
@@ -35,7 +40,9 @@ export type FieldNames =
   | `invoiceItems.${number}`
   | `invoiceItems.${number}.item`
   | `invoiceItems.${number}.quantity`
-  | `invoiceItems.${number}.unitPrice`;
+  | `invoiceItems.${number}.unitPrice`
+  | `invoiceItems.${number}.description`
+  | `invoiceItems.${number}.unitPrice.currency`;
 
 export interface ClientDetails {
   fieldName: FieldNames;

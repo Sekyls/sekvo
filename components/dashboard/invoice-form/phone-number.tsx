@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form";
 import PhoneInput from "react-phone-input-2";
 import "@/styles/react-phone-input-2.css";
 import useGeolocation from "@/hooks/use-geolocation";
-import { RecipientFieldGroupsProps } from "@/lib/types";
+import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
 
 export default function PhoneNumber({
   formControl,

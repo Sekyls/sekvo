@@ -1,5 +1,5 @@
 "use client";
-import { CalculationSummaryExtras, Switches } from "@/lib/types";
+import { CalculationSummaryExtras, Switches } from "@/lib/miscellany/types";
 import { useState } from "react";
 
 export default function useCalcSummary() {

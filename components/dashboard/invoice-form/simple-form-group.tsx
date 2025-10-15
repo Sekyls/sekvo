@@ -5,8 +5,8 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { CLIENT_DETAILS_FIELDS } from "@/lib/constants";
-import { RecipientFieldGroupsProps } from "@/lib/types";
+import { CLIENT_DETAILS_FIELDS } from "@/lib/miscellany/constants";
+import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
 import { Controller } from "react-hook-form";
 import ContactPerson from "./contact-person";
 import PhoneNumber from "./phone-number";

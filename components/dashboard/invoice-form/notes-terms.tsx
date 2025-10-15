@@ -1,7 +1,7 @@
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
-import { NOTES_TERMS } from "@/lib/constants";
-import { FieldNames, RecipientFieldGroupsProps } from "@/lib/types";
+import { NOTES_TERMS } from "@/lib/miscellany/constants";
+import { FieldNames, RecipientFieldGroupsProps } from "@/lib/miscellany/types";
 import { Controller } from "react-hook-form";
 
 export default function NotesAndTerms({

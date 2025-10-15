@@ -19,11 +19,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useSignupForm from "@/hooks/use-signup-form";
-import { SIGNUP_FORM_FIELDS } from "@/lib/constants";
+import { SIGNUP_FORM_FIELDS } from "@/lib/miscellany/constants";
 import Image from "next/image";
 import Link from "next/link";
 import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+import "@/styles/react-phone-input-2.css";
 import useGeolocation from "@/hooks/use-geolocation";
 import PasswordToggle from "../shared/password-toggle";
 import { useState } from "react";
@@ -77,10 +77,7 @@ export default function SignUpForm() {
                             onBlur={field.onBlur}
                             enableSearch={true}
                             country={country?.toLocaleLowerCase()}
-                            containerClass="dark:bg-input/30 border-input w-full min-w-0 rounded-md border shadow-xs transition-[color,box-shadow] outline-none"
-                            inputClass="placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground border-none w-full min-w-0 rounded-md bg-transparent text-base transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-0 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
-                            buttonClass="border-r border-input pr-0.5!"
-                            searchClass="z-50"
+                            containerClass="dark:bg-input/30! bg-transparent! shadow-none!"
                             countryCodeEditable={false}
                           />
                         ) : (

@@ -7,8 +7,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CalendarProps } from "@/lib/types";
-import { formatCalendarDate } from "@/lib/utils";
+import { CalendarProps } from "@/lib/miscellany/types";
+import { formatCalendarDate } from "@/lib/miscellany/utils";
 import { CalendarIcon } from "lucide-react";
 
 export default function DatePicker({
@@ -22,7 +22,7 @@ export default function DatePicker({
   setValue,
   value,
   label,
-  id
+  id,
 }: CalendarProps) {
   return (
     <div className="max-w-sm space-y-2">

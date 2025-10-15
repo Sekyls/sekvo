@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import { inter, spaceGrotesk } from "@/lib/fonts";
-import { appMetaData } from "@/lib/metadata";
+import { inter, spaceGrotesk } from "@/lib/miscellany/fonts";
+import { appMetaData } from "@/lib/miscellany/metadata";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 export const metadata: Metadata = appMetaData;

@@ -1,14 +1,14 @@
 "use client";
 
-import { OTPFormSchema } from "@/lib/schema";
+import { OTPFormSchema } from "@/lib/miscellany/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod/v4";
 import { useRouter, useSearchParams } from "next/navigation";
-import { toastError, toastSuccess } from "@/lib/toast-config";
-import resendOTP from "@/actions/otp-regenerator";
+import { toastError, toastSuccess } from "@/lib/miscellany/toast-config";
+import { resendOTP } from "@/actions/auth/otp";
 import { useState } from "react";
-import setVerifiedUser from "@/actions/set-verified-user";
+import setVerifiedUser from "@/actions/db/set-verified-user";
 
 export default function useOTPForm() {
   const router = useRouter();
@@ -55,18 +55,13 @@ export default function useOTPForm() {
           window.location.reload();
         },
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
+      window.location.reload();
     } catch (error) {
       if (error instanceof Error) {
         toastError("Internal server error", undefined, {
           label: "Forbidden",
           onClick() {},
         });
-        setTimeout(() => {
-          window.location.reload();
-        }, 5000);
       }
     }
   }

@@ -7,8 +7,8 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { CONTACT_PERSON_TITLES } from "@/lib/constants";
-import { RecipientFieldGroupsProps } from "@/lib/types";
+import { CONTACT_PERSON_TITLES } from "@/lib/miscellany/constants";
+import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
 import { Controller } from "react-hook-form";
 
 export default function ContactPerson({

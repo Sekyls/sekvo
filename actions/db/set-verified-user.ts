@@ -1,8 +1,8 @@
 "use server";
 
 import z4 from "zod/v4";
-import { otpValidator } from "./otp-validator";
-import { OTPFormSchema } from "@/lib/schema";
+import { otpValidator } from "@/actions/auth/otp";
+import { OTPFormSchema } from "@/lib/miscellany/schema";
 import { prisma } from "@/lib/clients/prisma";
 
 export default async function setVerifiedUser(

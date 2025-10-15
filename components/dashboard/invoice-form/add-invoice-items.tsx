@@ -25,8 +25,8 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { CURRENCIES } from "@/lib/constants";
-import { RecipientFieldGroupsProps } from "@/lib/types";
+import { CURRENCIES } from "@/lib/miscellany/constants";
+import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
 import { IconSquarePlus } from "@tabler/icons-react";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";

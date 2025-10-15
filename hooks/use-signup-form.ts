@@ -1,11 +1,11 @@
 "use client";
-import { SignupFormSchema } from "@/lib/schema";
+import { SignupFormSchema } from "@/lib/miscellany/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import setPendingUser from "@/actions/set-pending-user";
-import { toastError, toastSuccess } from "@/lib/toast-config";
+import setPendingUser from "@/actions/db/set-pending-user";
+import { toastError, toastSuccess } from "@/lib/miscellany/toast-config";
 
 export default function useSignupForm() {
   const router = useRouter();

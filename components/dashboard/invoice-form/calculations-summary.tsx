@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import useCalcSummary from "@/hooks/use-calculation-summary";
 import { Repeat } from "lucide-react";
+import { Fragment } from "react";
 
 export default function CalculationSummary() {
   const { CALCULATION_EXTRAS, SWITCH_ITEMS } = useCalcSummary();
@@ -34,12 +35,9 @@ export default function CalculationSummary() {
       <FieldGroup className="max-w-sm">
         {CALCULATION_EXTRAS.map((item) => {
           return (
-            <>
+            <Fragment key={item.id}>
               {item.isChecked && (
-                <div
-                  className="grid grid-cols-[0.5fr_2fr] justify-between gap-5"
-                  key={item.id}
-                >
+                <div className="grid grid-cols-[0.5fr_2fr] justify-between gap-5">
                   <Label>{item.label}</Label>
                   <InputGroup className="gap-2 invoice-bg-light">
                     <Input
@@ -54,7 +52,7 @@ export default function CalculationSummary() {
                   </InputGroup>
                 </div>
               )}
-            </>
+            </Fragment>
           );
         })}
       </FieldGroup>

@@ -1,6 +1,6 @@
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { RecipientFieldGroupsProps } from "@/lib/types";
+import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
 import { Controller } from "react-hook-form";
 
 export default function SenderLogo({ formControl }: RecipientFieldGroupsProps) {

@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import {
@@ -24,30 +25,29 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { CURRENCIES } from "@/lib/miscellany/constants";
-import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
+import { InvoiceFormSchema } from "@/lib/miscellany/schema";
 import { IconSquarePlus } from "@tabler/icons-react";
 import { SearchIcon, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Controller, useFieldArray } from "react-hook-form";
+import { Controller, useFieldArray, useFormContext } from "react-hook-form";
+import z4 from "zod/v4";
 
-export default function InvoiceItems({
-  formControl,
-  formState,
-}: RecipientFieldGroupsProps) {
-  const [search, setSearch] = useState<string>("");
+export default function InvoiceItems() {
+  const { control, formState } =
+    useFormContext<z4.infer<typeof InvoiceFormSchema>>();
+  const [searchCurrency, setSearchCurrency] = useState<string>("");
 
-  // Filter currencies dynamically
   const filteredCurrencies = useMemo(() => {
     return CURRENCIES.filter(
       (c) =>
-        c.label.toLowerCase().includes(search.toLowerCase()) ||
-        c.value.toLowerCase().includes(search.toLowerCase())
+        c.label.toLowerCase().includes(searchCurrency.toLowerCase()) ||
+        c.value.toLowerCase().includes(searchCurrency.toLowerCase())
     );
-  }, [search]);
+  }, [searchCurrency]);
 
   const { fields, append, remove } = useFieldArray({
-    control: formControl,
     name: "invoiceItems",
+    control,
   });
 
   return (
@@ -62,7 +62,7 @@ export default function InvoiceItems({
               {/* Item Name */}
               <Controller
                 name={`invoiceItems.${index}.item`}
-                control={formControl}
+                control={control}
                 render={({ field: controllerField, fieldState }) => (
                   <Field
                     orientation="horizontal"
@@ -95,7 +95,7 @@ export default function InvoiceItems({
               {/* Quantity */}
               <Controller
                 name={`invoiceItems.${index}.quantity`}
-                control={formControl}
+                control={control}
                 render={({ field: controllerField, fieldState }) => (
                   <Field
                     orientation="horizontal"
@@ -138,7 +138,7 @@ export default function InvoiceItems({
                   {/* Currency */}
                   <Controller
                     name={`invoiceItems.${index}.unitPrice.currency`}
-                    control={formControl}
+                    control={control}
                     render={({ field: controllerField, fieldState }) => (
                       <Field
                         orientation="vertical"
@@ -162,8 +162,10 @@ export default function InvoiceItems({
                                 <SearchIcon className="size-4 border-0 text-accent" />
                                 <Input
                                   placeholder="Search currency..."
-                                  value={search}
-                                  onChange={(e) => setSearch(e.target.value)}
+                                  value={searchCurrency}
+                                  onChange={(e) =>
+                                    setSearchCurrency(e.target.value)
+                                  }
                                   className="border-0 shadow-none"
                                 />
                               </ButtonGroup>
@@ -200,7 +202,7 @@ export default function InvoiceItems({
                   {/* Price */}
                   <Controller
                     name={`invoiceItems.${index}.unitPrice.price`}
-                    control={formControl}
+                    control={control}
                     render={({ field: controllerField, fieldState }) => (
                       <Field
                         orientation="vertical"
@@ -251,7 +253,7 @@ export default function InvoiceItems({
             {/* Item Description */}
             <Controller
               name={`invoiceItems.${index}.description`}
-              control={formControl}
+              control={control}
               render={({ field: controllerField, fieldState }) => (
                 <Field
                   orientation="horizontal"
@@ -313,7 +315,7 @@ export default function InvoiceItems({
         <IconSquarePlus stroke={2} />
         Add more items
       </Button>
-      {formState?.errors.invoiceItems?.root && (
+      {formState.errors.invoiceItems?.root && (
         <FieldError errors={[formState.errors.invoiceItems.root]} />
       )}
     </FieldSet>

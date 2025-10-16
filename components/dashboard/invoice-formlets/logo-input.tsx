@@ -1,13 +1,17 @@
+"use client";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
-import { Controller } from "react-hook-form";
+import { InvoiceFormSchema } from "@/lib/miscellany/schema";
+import { Controller, useFormContext } from "react-hook-form";
+import z4 from "zod/v4";
 
-export default function SenderLogo({ formControl }: RecipientFieldGroupsProps) {
+export default function SenderLogo() {
+  const { control } = useFormContext<z4.infer<typeof InvoiceFormSchema>>();
+
   return (
     <Controller
       name="logo"
-      control={formControl}
+      control={control}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid} className="max-w-sm">
           <FieldLabel htmlFor="Sender Logo">Sender's Logo</FieldLabel>

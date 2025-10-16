@@ -1,3 +1,4 @@
+"use client";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -8,17 +9,19 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { CONTACT_PERSON_TITLES } from "@/lib/miscellany/constants";
+import { InvoiceFormSchema } from "@/lib/miscellany/schema";
 import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
+import z4 from "zod/v4";
 
-export default function ContactPerson({
-  formControl,
-}: RecipientFieldGroupsProps) {
+export default function ContactPerson() {
+  const { control } = useFormContext<z4.infer<typeof InvoiceFormSchema>>();
+
   return (
     <ButtonGroup className="w-full max-w-sm gap-x-2">
       <Controller
         name="contactPerson.title"
-        control={formControl}
+        control={control}
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid} className="w-fit">
             <FieldLabel htmlFor={field.name}>Title</FieldLabel>
@@ -40,7 +43,7 @@ export default function ContactPerson({
       />
       <Controller
         name="contactPerson.name"
-        control={formControl}
+        control={control}
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
             <FieldLabel htmlFor={field.name}>Contact Person</FieldLabel>

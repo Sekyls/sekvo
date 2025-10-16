@@ -6,14 +6,16 @@ import { InputGroup, InputGroupAddon } from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import useCalcSummary from "@/hooks/use-calculation-summary";
-import { FieldNames, RecipientFieldGroupsProps } from "@/lib/miscellany/types";
+import { InvoiceFormSchema } from "@/lib/miscellany/schema";
+import { FieldNames } from "@/lib/miscellany/types";
 import { Repeat } from "lucide-react";
 import { Fragment } from "react";
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
+import z4 from "zod/v4";
 
-export default function CalculationSummary({
-  formControl,
-}: RecipientFieldGroupsProps) {
+export default function CalculationSummary() {
+  const { control } = useFormContext<z4.infer<typeof InvoiceFormSchema>>();
+
   const { CALCULATION_EXTRAS, SWITCH_ITEMS } = useCalcSummary();
 
   return (
@@ -44,14 +46,10 @@ export default function CalculationSummary({
                 <div className="grid grid-cols-[0.5fr_2fr] justify-between gap-5">
                   <Label>{item.label}</Label>
                   <InputGroup className="gap-2 invoice-bg-light">
-                    {/* <Input
-                      placeholder={item.placeholder}
-                      className="border-0 border-l"
-                    /> */}
                     <Controller
                       key={item.id}
                       name={item.id as FieldNames}
-                      control={formControl}
+                      control={control}
                       render={({ field, fieldState }) => (
                         <Field
                           data-invalid={fieldState.invalid}

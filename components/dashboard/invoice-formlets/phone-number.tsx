@@ -1,19 +1,21 @@
+"use client";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import PhoneInput from "react-phone-input-2";
 import "@/styles/react-phone-input-2.css";
 import useGeolocation from "@/hooks/use-geolocation";
-import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
+import z4 from "zod/v4";
+import { InvoiceFormSchema } from "@/lib/miscellany/schema";
 
-export default function PhoneNumber({
-  formControl,
-}: RecipientFieldGroupsProps) {
+export default function PhoneNumber() {
+  const { control } = useFormContext<z4.infer<typeof InvoiceFormSchema>>();
+
   const country = useGeolocation();
 
   return (
     <Controller
       name="phoneNumber"
-      control={formControl}
+      control={control}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid} className="max-w-sm">
           <FieldLabel htmlFor="phoneNumber">Phone Number</FieldLabel>

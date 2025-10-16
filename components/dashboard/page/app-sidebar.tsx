@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "../ui/sidebar";
+} from "../../ui/sidebar";
 import { IconInnerShadowTop } from "@tabler/icons-react";
 import { NavUser } from "./nav-user";
 

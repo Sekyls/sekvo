@@ -9,17 +9,13 @@ export default function useCalcSummary() {
   const [discountRatioTypeToggle, setDiscountRatioTypeToggle] =
     useState<boolean>(false);
   const [taxRatioTypeToggle, setTaxRatioTypeToggle] = useState<boolean>(false);
-  const [discount, setDiscount] = useState<string>("");
-  const [tax, setTax] = useState<string>("");
-  const [shipping, setShipping] = useState<string>("");
+  
 
   const CALCULATION_EXTRAS: CalculationSummaryExtras[] = [
     {
       id: "discount",
       label: "Discount",
       isChecked: discountIsChecked,
-      inputState: discount,
-      setInputState: setDiscount,
       hasToggle: true,
       ratioToggleState: discountRatioTypeToggle,
       setRatioToggleState: setDiscountRatioTypeToggle,
@@ -29,8 +25,6 @@ export default function useCalcSummary() {
       id: "tax",
       label: "Tax",
       isChecked: taxIsChecked,
-      inputState: tax,
-      setInputState: setTax,
       hasToggle: true,
       ratioToggleState: taxRatioTypeToggle,
       setRatioToggleState: setTaxRatioTypeToggle,
@@ -40,8 +34,6 @@ export default function useCalcSummary() {
       id: "shipping",
       label: "Shipping",
       isChecked: shippingIsChecked,
-      inputState: shipping,
-      setInputState: setShipping,
       hasToggle: false,
       ratioToggleState: null,
       setRatioToggleState: null,

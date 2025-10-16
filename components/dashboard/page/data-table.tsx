@@ -53,16 +53,16 @@ import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { useIsMobile } from "../../hooks/use-mobile";
-import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
+import { useIsMobile } from "../../../hooks/use-mobile";
+import { Badge } from "../../ui/badge";
+import { Button } from "../../ui/button";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "../ui/chart";
-import { Checkbox } from "../ui/checkbox";
+} from "../../ui/chart";
+import { Checkbox } from "../../ui/checkbox";
 import {
   Drawer,
   DrawerClose,
@@ -72,7 +72,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../ui/drawer";
+} from "../../ui/drawer";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -80,17 +80,17 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+} from "../../ui/dropdown-menu";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
-import { Separator } from "../ui/separator";
+} from "../../ui/select";
+import { Separator } from "../../ui/separator";
 import {
   Table,
   TableBody,
@@ -98,8 +98,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+} from "../../ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
 
 export const schema = z.object({
   id: z.number(),

@@ -11,17 +11,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { InputGroupAddon, InputGroupButton } from "@/components/ui/input-group";
 import useAddCustomFields from "@/hooks/use-custom-fields";
-import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
+import { InvoiceFormSchema } from "@/lib/miscellany/schema";
 import { IconSquarePlus } from "@tabler/icons-react";
 import { Trash2 } from "lucide-react";
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
+import z4 from "zod/v4";
 
-export default function AddCustomFields({
-  formControl,
-  formState,
-}: RecipientFieldGroupsProps) {
+export default function AddCustomFields() {
+  const { control, formState } =
+    useFormContext<z4.infer<typeof InvoiceFormSchema>>();
   const { append, fields, remove, showCustomFieldsLabel } =
-    useAddCustomFields(formControl);
+    useAddCustomFields(control);
   return (
     <FieldSet className="gap-4">
       {showCustomFieldsLabel && (
@@ -32,7 +32,7 @@ export default function AddCustomFields({
           <FieldGroup className="flex-row gap-x-2 max-w-sm" key={field.id}>
             <Controller
               name={`customInvoiceFields.${index}.label`}
-              control={formControl}
+              control={control}
               render={({ field: controllerField, fieldState }) => (
                 <Field
                   orientation="horizontal"
@@ -59,7 +59,7 @@ export default function AddCustomFields({
             />
             <Controller
               name={`customInvoiceFields.${index}.content`}
-              control={formControl}
+              control={control}
               render={({ field: controllerField, fieldState }) => (
                 <Field
                   orientation="horizontal"
@@ -111,8 +111,8 @@ export default function AddCustomFields({
         <IconSquarePlus stroke={2} />
         Add a custom field
       </Button>
-      {formState?.errors.customInvoiceFields?.root && (
-        <FieldError errors={[formState?.errors.customInvoiceFields.root]} />
+      {formState.errors.customInvoiceFields?.root && (
+        <FieldError errors={[formState.errors.customInvoiceFields.root]} />
       )}
     </FieldSet>
   );

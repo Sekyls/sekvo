@@ -12,7 +12,5 @@ export default function useInvoiceForm() {
     mode: "onChange",
     defaultValues: INVOICE_FORM_DEFAULTS,
   });
-
-  function onSubmit(data: z4.infer<typeof InvoiceFormSchema>) {}
-  return { ...methods, onSubmit };
+  return { ...methods };
 }

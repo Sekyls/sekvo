@@ -1,9 +1,9 @@
 "use client";
 import { IconLogout } from "@tabler/icons-react";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
-import { SidebarTrigger } from "../ui/sidebar";
-import { ModeToggle } from "../ui/mode-toggle";
+import { Button } from "../../ui/button";
+import { Separator } from "../../ui/separator";
+import { SidebarTrigger } from "../../ui/sidebar";
+import { ModeToggle } from "../../ui/mode-toggle";
 import Link from "next/link";
 import Image from "next/image";
 import { toastError } from "@/lib/miscellany/toast-config";

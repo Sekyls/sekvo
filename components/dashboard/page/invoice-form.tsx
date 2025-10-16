@@ -10,18 +10,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Field, FieldGroup, FieldSet } from "@/components/ui/field";
-import SimpleFormDetailsGroup from "./invoice-form/simple-form-group";
-import AddCustomFields from "./invoice-form/add-custom-fields";
-import InvoiceItems from "./invoice-form/add-invoice-items";
-import NotesAndTerms from "./invoice-form/notes-terms";
-import useInvoiceForm from "@/hooks/use-invoice-form";
-import CalculationSummary from "./invoice-form/calculations-summary";
-import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
+import SimpleFormDetailsGroup from "../invoice-formlets/simple-form-group";
+import AddCustomFields from "../invoice-formlets/add-custom-fields";
+import InvoiceItems from "../invoice-formlets/add-invoice-items";
+import NotesAndTerms from "../invoice-formlets/notes-terms";
+import CalculationSummary from "../invoice-formlets/calculations-summary";
+import { useFormContext } from "react-hook-form";
+import { InvoiceFormSchema } from "@/lib/miscellany/schema";
+import z4 from "zod/v4";
 
-export default function AggregatedInvoiceForm({
-  ...data
-}: RecipientFieldGroupsProps) {
-  const { handleSubmit, onSubmit } = useInvoiceForm();
+export default function AggregatedInvoiceForm() {
+  const { handleSubmit, formState } =
+    useFormContext<z4.infer<typeof InvoiceFormSchema>>();
+  function onSubmit(data: z4.infer<typeof InvoiceFormSchema>) {}
 
   return (
     <Card className="invoice-bg-light border-0 dark:border border-t-2">
@@ -35,18 +36,18 @@ export default function AggregatedInvoiceForm({
           onSubmit={handleSubmit(onSubmit)}
           className="space-y-5"
         >
-          <SimpleFormDetailsGroup {...data} />
+          <SimpleFormDetailsGroup />
           <FieldGroup>
-            <AddCustomFields {...data} />
+            <AddCustomFields />
           </FieldGroup>
           <FieldSet>
-            <InvoiceItems {...data} />
+            <InvoiceItems />
           </FieldSet>
           <FieldGroup className="flex-row">
-            <NotesAndTerms {...data} />
+            <NotesAndTerms />
           </FieldGroup>
           <FieldSet>
-            <CalculationSummary {...data} />
+            <CalculationSummary />
           </FieldSet>
         </form>
       </CardContent>
@@ -56,7 +57,7 @@ export default function AggregatedInvoiceForm({
             type="submit"
             form="form-invoice-aggregate"
             className="w-full max-w-3xs mx-auto mt-5"
-            disabled={!data.formState?.isValid || data.formState?.isSubmitting}
+            disabled={!formState.isValid || formState.isSubmitting}
           >
             Generate
           </Button>

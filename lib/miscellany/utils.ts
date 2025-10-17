@@ -23,3 +23,12 @@ export function formatCalendarDate(date: Date | undefined) {
     year: "numeric",
   });
 }
+
+export function getInvoiceNumber() {
+  return Math.random()
+    .toString(36)
+    .substring(2, 2 + 6)
+    .match(/.{1,2}/g)
+    ?.join("-")
+    .toLocaleUpperCase();
+}

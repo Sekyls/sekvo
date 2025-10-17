@@ -226,3 +226,17 @@ small {
     0 4px 6px rgba(0, 0, 0, 0.1),
     0 8px 12px rgba(0, 0, 0, 0.05);
 }
+
+/* Hide number input arrows across*/
+input[type="number"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+/* WebKit browsers */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

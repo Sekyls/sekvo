@@ -1,4 +1,5 @@
 import { ClientDetails, CurrencyOption } from "./types";
+import { formatCalendarDate, getInvoiceNumber } from "./utils";
 
 export const FOOTER_LINKS = [
   {
@@ -293,25 +294,18 @@ export const NOTES_TERMS = [
 
 export const INVOICE_FORM_DEFAULTS = {
   companyAddress: "",
-  companyEmail: "",
   companyName: "",
   invoiceItems: [
     {
-      description: "",
       item: "",
-      quantity: "",
-      unitPrice: { currency: "₵", price: "" },
+      quantity: "1",
+      unitPrice: { currency: "₵", price: "0.00" },
+      subTotal: "0.00",
     },
   ],
-  contactPerson: { name: "", title: "" },
-  dueDate: "",
-  invoiceDate: "",
-  notes: "",
-  invoiceNumber: "",
-  phoneNumber: "",
-  purchaseOrder: "",
-  terms: "",
-  discount: "",
-  tex: "",
-  shipping: "",
+  contactPerson: { name: "", title: "Mr" },
+  dueDate: formatCalendarDate(new Date()) as string,
+  invoiceDate: formatCalendarDate(new Date()) as string,
+  invoiceNumber: getInvoiceNumber() as string,
+  purchaseOrder: getInvoiceNumber() as string,
 };

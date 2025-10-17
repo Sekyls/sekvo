@@ -1,4 +1,7 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
+import { FieldArrayWithId, UseFieldArrayRemove } from "react-hook-form";
+import z4 from "zod/v4";
+import { InvoiceFormSchema } from "./schema";
 
 export interface SekvoOTPEmailProps {
   otp: number;
@@ -78,4 +81,11 @@ export interface CalculationSummaryExtras {
 
 export interface InvoiceFormProviderProps {
   children: ReactNode;
+}
+
+export interface InvoiceFieldItemsProps {
+  index: number;
+  field: FieldArrayWithId<z4.infer<typeof InvoiceFormSchema>>;
+  fields: FieldArrayWithId<z4.infer<typeof InvoiceFormSchema>>[];
+  remove: UseFieldArrayRemove;
 }

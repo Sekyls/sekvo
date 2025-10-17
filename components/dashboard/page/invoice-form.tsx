@@ -12,7 +12,7 @@ import {
 import { Field, FieldGroup, FieldSet } from "@/components/ui/field";
 import SimpleFormDetailsGroup from "../invoice-formlets/simple-form-group";
 import AddCustomFields from "../invoice-formlets/add-custom-fields";
-import InvoiceItems from "../invoice-formlets/add-invoice-items";
+import InvoiceItems from "../invoice-formlets/aggregate-invoice-items";
 import NotesAndTerms from "../invoice-formlets/notes-terms";
 import CalculationSummary from "../invoice-formlets/calculations-summary";
 import { useFormContext } from "react-hook-form";
@@ -22,7 +22,9 @@ import z4 from "zod/v4";
 export default function AggregatedInvoiceForm() {
   const { handleSubmit, formState } =
     useFormContext<z4.infer<typeof InvoiceFormSchema>>();
-  function onSubmit(data: z4.infer<typeof InvoiceFormSchema>) {}
+  function onSubmit(data: z4.infer<typeof InvoiceFormSchema>) {
+    console.log(data);
+  }
 
   return (
     <Card className="invoice-bg-light border-0 dark:border border-t-2">
@@ -56,7 +58,7 @@ export default function AggregatedInvoiceForm() {
           <Button
             type="submit"
             form="form-invoice-aggregate"
-            className="w-full max-w-3xs mx-auto mt-5"
+            className="w-full max-w-3xs mx-auto mt-5 bg-green-800 font-bold tracking-wider text-md hover:scale-90 hover:bg-green-700"
             disabled={!formState.isValid || formState.isSubmitting}
           >
             Generate

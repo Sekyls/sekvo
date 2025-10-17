@@ -140,15 +140,17 @@ export const InvoiceFormSchema = z4.object({
   invoiceItems: z4.array(
     z4.object({
       item: z4.string().min(1, "Item name is required").trim(),
-      quantity: z4.string().min(1, "Item name is required").trim(),
+      quantity: z4.string().min(1, "Quantity is required").trim(),
       unitPrice: z4.object({
-        currency: z4.string(),
+        currency: z4.string().trim(),
         price: z4.string().min(1, "Unit price is required").trim(),
       }),
+      subTotal: z4.string().min(1).trim(),
       description: z4
         .string()
-        .min(5, "Description must exceed 5 characters")
-        .max(250, "Description must not exceed 250 characters"),
+        .max(250, "Description must not exceed 250 characters")
+        .trim()
+        .optional(),
     })
   ),
   notes: z4
@@ -169,16 +171,7 @@ export const InvoiceFormSchema = z4.object({
       "Unsupported file format (Image must be a jpeg, png, or svg)"
     )
     .optional(),
-  discount: z4
-    .string()
-    .trim()
-    .optional(),
-  tax: z4
-    .string()
-    .trim()
-    .optional(),
-  shipping: z4
-    .string()
-    .trim()
-    .optional(),
+  discount: z4.string().trim().optional(),
+  tax: z4.string().trim().optional(),
+  shipping: z4.string().trim().optional(),
 });

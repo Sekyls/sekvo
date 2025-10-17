@@ -7,11 +7,9 @@ import { cookies } from "next/headers";
 export async function createUserSession(userEmail: string, userID: string) {
   const sessionID = randomBytes(512).toString("hex");
   await connectRedis();
-  await redis.set(
-    `SekvoSID:${userEmail}`,
-    JSON.stringify({ sessionID, userID }),
-    { expiration: { type: "EX", value: SESSION_EXPIRATION } }
-  );
+  await redis.set(`SekvoSID:${userEmail}`, sessionID, {
+    expiration: { type: "EX", value: SESSION_EXPIRATION },
+  });
   return { sessionID };
 }
 

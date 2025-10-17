@@ -74,8 +74,8 @@ export interface CalculationSummaryExtras {
   label: string;
   hasToggle: boolean;
   isChecked: boolean;
-  ratioToggleState: boolean | null;
-  setRatioToggleState: Dispatch<SetStateAction<boolean>> | null;
+  utilisePercentage: boolean | null;
+  setUtilisePercentage: Dispatch<SetStateAction<boolean>> | null;
   placeholder: string;
 }
 

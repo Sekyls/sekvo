@@ -8,15 +8,16 @@ import { Switch } from "@/components/ui/switch";
 import useCalcSummary from "@/hooks/use-calculation-summary";
 import { InvoiceFormSchema } from "@/lib/miscellany/schema";
 import { FieldNames } from "@/lib/miscellany/types";
-import { Repeat } from "lucide-react";
+import { cn } from "@/lib/miscellany/utils";
+import { DecimalsArrowLeft, Percent, Repeat } from "lucide-react";
 import { Fragment } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import z4 from "zod/v4";
 
 export default function CalculationSummary() {
-  const { control } = useFormContext<z4.infer<typeof InvoiceFormSchema>>();
-
-  const { CALCULATION_EXTRAS, SWITCH_ITEMS } = useCalcSummary();
+  const { control, watch } =
+    useFormContext<z4.infer<typeof InvoiceFormSchema>>();
+  const { CALCULATION_EXTRAS, SWITCH_ITEMS, grandTotal } = useCalcSummary();
 
   return (
     <FieldGroup>
@@ -46,6 +47,20 @@ export default function CalculationSummary() {
                 <div className="grid grid-cols-[0.5fr_2fr] justify-between gap-5">
                   <Label>{item.label}</Label>
                   <InputGroup className="gap-2 invoice-bg-light">
+                    {item.hasToggle && (
+                      <InputGroupAddon align="inline-start">
+                        <Repeat
+                          onClick={() => {
+                            if (item.setUtilisePercentage) {
+                              item.setUtilisePercentage(
+                                !item.utilisePercentage
+                              );
+                            }
+                          }}
+                          className="text-amber-600 hover:cursor-default hover:scale-110 hover:text-green-800 hover:rotate-180 transition-all duration-300 ease-in-out"
+                        />
+                      </InputGroupAddon>
+                    )}
                     <Controller
                       key={item.id}
                       name={item.id as FieldNames}
@@ -62,7 +77,9 @@ export default function CalculationSummary() {
                             aria-invalid={fieldState.invalid}
                             placeholder={item.placeholder}
                             autoComplete="on"
-                            className="invoice-bg-light"
+                            type="number"
+                            step="0.01"
+                            className={cn(item.hasToggle ? "rounded-none" : "")}
                           />
                           {fieldState.invalid && (
                             <FieldError errors={[fieldState.error]} />
@@ -70,9 +87,14 @@ export default function CalculationSummary() {
                         </Field>
                       )}
                     />
-                    {item.hasToggle && (
-                      <InputGroupAddon align="inline-start">
-                        <Repeat className="text-amber-600 hover:cursor-default hover:scale-110 hover:text-green-800 hover:rotate-180 transition-all duration-300 ease-in-out" />
+                    {item.hasToggle && item.utilisePercentage && (
+                      <InputGroupAddon align="inline-end">
+                        <Percent className="text-amber-600" />
+                      </InputGroupAddon>
+                    )}
+                    {item.hasToggle && !item.utilisePercentage && (
+                      <InputGroupAddon align="inline-end">
+                        <DecimalsArrowLeft className="text-amber-600" />
                       </InputGroupAddon>
                     )}
                   </InputGroup>
@@ -83,8 +105,10 @@ export default function CalculationSummary() {
         })}
       </FieldGroup>
       <div className="flex justify-between gap-5 font-bold border-t border-b py-2">
-        <p>Total Amount</p>
-        <p className="text-imperial-red">EUR 10</p>
+        <p>Grand Total</p>
+        <p className="text-imperial-red">
+          {watch("invoiceItems.0.unitPrice.currency")} {grandTotal}
+        </p>
       </div>
     </FieldGroup>
   );

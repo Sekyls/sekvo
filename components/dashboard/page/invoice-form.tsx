@@ -18,12 +18,16 @@ import CalculationSummary from "../invoice-formlets/calculations-summary";
 import { useFormContext } from "react-hook-form";
 import { InvoiceFormSchema } from "@/lib/miscellany/schema";
 import z4 from "zod/v4";
+import useCalcSummary from "@/hooks/use-calculation-summary";
 
 export default function AggregatedInvoiceForm() {
   const { handleSubmit, formState } =
     useFormContext<z4.infer<typeof InvoiceFormSchema>>();
+  const { grandTotal } = useCalcSummary();
+
   function onSubmit(data: z4.infer<typeof InvoiceFormSchema>) {
-    console.log(data);
+    const invoiceFormData = { ...data, grandTotal };
+    console.log(invoiceFormData);
   }
 
   return (

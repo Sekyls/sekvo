@@ -17,7 +17,15 @@ import z4 from "zod/v4";
 export default function CalculationSummary() {
   const { control, watch } =
     useFormContext<z4.infer<typeof InvoiceFormSchema>>();
-  const { CALCULATION_EXTRAS, SWITCH_ITEMS, grandTotal } = useCalcSummary();
+  const {
+    CALCULATION_EXTRAS,
+    SWITCH_ITEMS,
+    grandTotal,
+    discount,
+    shipping,
+    tax,
+    utiliseTaxableShipping,
+  } = useCalcSummary();
 
   return (
     <FieldGroup>

@@ -2,8 +2,9 @@
 import { InvoiceFormSchema } from "@/lib/miscellany/schema";
 import { CalculationSummaryExtras, Switches } from "@/lib/miscellany/types";
 import { useEffect, useState } from "react";
-import { useFormContext, useWatch } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import z4 from "zod/v4";
+import useInvoiceItems from "./use-invoice-items";
 
 export default function useCalcSummary() {
   const [discountIsChecked, setDiscountIsChecked] = useState<boolean>(false);
@@ -12,76 +13,107 @@ export default function useCalcSummary() {
   const [utilisePercentDiscount, setUtilisePercentDiscount] =
     useState<boolean>(false);
   const [utilisePercentTax, setUtilisePercentTax] = useState<boolean>(false);
-  const [grandTotal, setGrandTotal] = useState<number>();
-  const { watch, control } =
-    useFormContext<z4.infer<typeof InvoiceFormSchema>>();
-  const invoiceItems = useWatch({ control, name: "invoiceItems" });
-  const discount = watch("discount");
-  const tax = watch("tax");
-  const shipping = watch("shipping");
+  const [utiliseTaxableShipping, setUtiliseTaxableShipping] =
+    useState<boolean>(true);
+  const { watch } = useFormContext<z4.infer<typeof InvoiceFormSchema>>();
+  const { fields } = useInvoiceItems();
+  const receivedDiscount = watch("discount");
+  const receivedTax = watch("tax");
+  const receivedShipping = watch("shipping");
+  const [aggregateSubTotals, setAggregateSubTotals] = useState<number>(0);
+  const [discount, setDiscount] = useState<number>(0);
+  const [tax, setTax] = useState<number>(0);
+  const [shipping, setShipping] = useState<number>(0);
+  const [grandTotal, setGrandTotal] = useState<number>(0);
+  const invoiceItemsSubTotals = fields.map((_, index) => {
+    return watch(`invoiceItems.${index}.subTotal`);
+  });
 
+  // calculate raw items total price aggregate
   useEffect(() => {
     let subTotalsAggregate: number = 0;
-    invoiceItems.forEach((item) => {
-      const subTotal = parseFloat(item.subTotal);
-      subTotalsAggregate += subTotal;
+    invoiceItemsSubTotals.forEach((item) => {
+      subTotalsAggregate += parseFloat(item);
     });
+    setAggregateSubTotals(subTotalsAggregate);
+  }, [invoiceItemsSubTotals]);
+
+  // calculate discount amount
+  useEffect(() => {
     if (
-      discountIsChecked &&
-      discount &&
-      parseFloat(discount) > 0 &&
+      receivedDiscount &&
+      parseFloat(receivedDiscount) > 0 &&
       utilisePercentDiscount &&
-      subTotalsAggregate > 0
+      aggregateSubTotals > 0
     ) {
-      subTotalsAggregate += (parseFloat(discount) / 100) * subTotalsAggregate;
+      setDiscount((parseFloat(receivedDiscount) / 100) * aggregateSubTotals);
     }
     if (
-      discountIsChecked &&
-      discount &&
-      parseFloat(discount) > 0 &&
+      receivedDiscount &&
+      parseFloat(receivedDiscount) > 0 &&
       !utilisePercentDiscount &&
-      subTotalsAggregate > 0
+      aggregateSubTotals > 0
     ) {
-      subTotalsAggregate += parseFloat(discount);
+      setDiscount(parseFloat(receivedDiscount));
     }
+  }, [receivedDiscount, utilisePercentDiscount, aggregateSubTotals]);
+
+  // calculate tax amount
+  useEffect(() => {
+    // calculate tax amount with Taxable Shipping
     if (
-      taxIsChecked &&
-      tax &&
-      parseFloat(tax) > 0 &&
+      receivedTax &&
+      parseFloat(receivedTax) > 0 &&
+      aggregateSubTotals > 0 &&
+      discount > 0 &&
       utilisePercentTax &&
-      subTotalsAggregate > 0
+      utiliseTaxableShipping
     ) {
-      subTotalsAggregate += (parseFloat(tax) / 100) * subTotalsAggregate;
+      setTax(
+        (parseFloat(receivedTax) / 100) *
+          (aggregateSubTotals - discount + shipping)
+      );
+    }
+
+    // calculate tax amount without Taxable Shipping
+    if (
+      receivedTax &&
+      parseFloat(receivedTax) > 0 &&
+      aggregateSubTotals > 0 &&
+      discount > 0 &&
+      utilisePercentTax &&
+      !utiliseTaxableShipping
+    ) {
+      setTax((parseFloat(receivedTax) / 100) * (aggregateSubTotals - discount));
     }
     if (
-      taxIsChecked &&
-      tax &&
-      parseFloat(tax) > 0 &&
-      !utilisePercentTax &&
-      subTotalsAggregate > 0
+      receivedTax &&
+      parseFloat(receivedTax) > 0 &&
+      aggregateSubTotals > 0 &&
+      discount > 0 &&
+      !utilisePercentTax
     ) {
-      subTotalsAggregate += parseFloat(tax);
+      setTax(parseFloat(receivedTax));
     }
-    if (
-      shippingIsChecked &&
-      shipping &&
-      parseFloat(shipping) > 0 &&
-      subTotalsAggregate > 0
-    ) {
-      subTotalsAggregate += parseFloat(shipping);
-    }
-    setGrandTotal(subTotalsAggregate);
   }, [
-    invoiceItems,
+    receivedTax,
+    aggregateSubTotals,
     discount,
-    tax,
-    shipping,
-    discountIsChecked,
-    taxIsChecked,
-    shippingIsChecked,
-    utilisePercentDiscount,
     utilisePercentTax,
+    utiliseTaxableShipping,
+    shipping,
   ]);
+
+  // calculate shipping
+  useEffect(() => {
+    if (receivedShipping && parseFloat(receivedShipping) > 0) {
+      setShipping(parseFloat(receivedShipping));
+    }
+  }, [receivedShipping]);
+
+  useEffect(() => {
+    setGrandTotal(aggregateSubTotals - discount + tax + shipping);
+  }, [aggregateSubTotals, discount, tax, shipping]);
 
   const CALCULATION_EXTRAS: CalculationSummaryExtras[] = [
     {
@@ -141,6 +173,10 @@ export default function useCalcSummary() {
   return {
     CALCULATION_EXTRAS,
     SWITCH_ITEMS,
+    tax,
+    discount,
+    shipping,
+    utiliseTaxableShipping,
     grandTotal,
   };
 }

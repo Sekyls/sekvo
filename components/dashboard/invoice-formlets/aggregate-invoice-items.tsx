@@ -1,21 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { FieldDescription, FieldError, FieldSet } from "@/components/ui/field";
-import { InvoiceFormSchema } from "@/lib/miscellany/schema";
 import { IconSquarePlus } from "@tabler/icons-react";
-import { useFieldArray, useFormContext } from "react-hook-form";
-import z4 from "zod/v4";
 import InvoiceFieldItem from "./invoice-field-item";
+import useInvoiceItems from "@/hooks/use-invoice-items";
 
 export default function InvoiceItems() {
-  const { control, formState, watch } =
-    useFormContext<z4.infer<typeof InvoiceFormSchema>>();
-
-  const { fields, append, remove } = useFieldArray({
-    name: "invoiceItems",
-    control,
-  });
-
+  const { append, fields, formState, remove, watch } = useInvoiceItems();
   return (
     <FieldSet className="gap-4 ">
       <FieldDescription className="text-foreground">

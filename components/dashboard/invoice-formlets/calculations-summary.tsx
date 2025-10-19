@@ -5,18 +5,38 @@ import { Input } from "@/components/ui/input";
 import { InputGroup, InputGroupAddon } from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import useCalcSummary from "@/hooks/use-calculation-summary";
 import { InvoiceFormSchema } from "@/lib/miscellany/schema";
 import { FieldNames } from "@/lib/miscellany/types";
-import { cn } from "@/lib/miscellany/utils";
-import { DecimalsArrowLeft, Percent, Repeat } from "lucide-react";
+import {
+  BadgeTurkishLira,
+  BadgeX,
+  DecimalsArrowLeft,
+  Percent,
+  Repeat,
+} from "lucide-react";
 import { Fragment } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import z4 from "zod/v4";
+import InfoPopover from "./info";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export default function CalculationSummary() {
-  const { control, watch } =
-    useFormContext<z4.infer<typeof InvoiceFormSchema>>();
+  const { control } = useFormContext<z4.infer<typeof InvoiceFormSchema>>();
   const {
     CALCULATION_EXTRAS,
     SWITCH_ITEMS,
@@ -24,7 +44,7 @@ export default function CalculationSummary() {
     discount,
     shipping,
     tax,
-    utiliseTaxableShipping,
+    currency,
   } = useCalcSummary();
 
   return (
@@ -53,22 +73,36 @@ export default function CalculationSummary() {
             <Fragment key={item.id}>
               {item.isChecked && (
                 <div className="grid grid-cols-[0.5fr_2fr] justify-between gap-5">
-                  <Label>{item.label}</Label>
+                  <div className="flex items-center gap-x-1">
+                    <Label>{item.label}</Label>
+                    <InfoPopover
+                      title={item.infoTitle}
+                      description={item.infoDescription}
+                      id={item.id}
+                    />
+                  </div>
                   <InputGroup className="gap-2 invoice-bg-light">
-                    {item.hasToggle && (
-                      <InputGroupAddon align="inline-start">
-                        <Repeat
-                          onClick={() => {
-                            if (item.setUtilisePercentage) {
-                              item.setUtilisePercentage(
-                                !item.utilisePercentage
-                              );
-                            }
-                          }}
-                          className="text-amber-600 hover:cursor-default hover:scale-110 hover:text-green-800 hover:rotate-180 transition-all duration-300 ease-in-out"
-                        />
-                      </InputGroupAddon>
-                    )}
+                    <InputGroupAddon align="inline-start">
+                      <Repeat
+                        onClick={() => {
+                          if (
+                            item.utilisePercentage !== null &&
+                            item.setUtilisePercentage !== null
+                          ) {
+                            item.setUtilisePercentage(!item.utilisePercentage);
+                          }
+                          if (
+                            item.utiliseTaxableShipping !== null &&
+                            item.setUtiliseTaxableShipping !== null
+                          ) {
+                            item.setUtiliseTaxableShipping(
+                              !item.utiliseTaxableShipping
+                            );
+                          }
+                        }}
+                        className="text-amber-600 hover:cursor-default hover:scale-110 hover:text-green-800 hover:rotate-180 transition-all duration-300 ease-in-out size-4"
+                      />
+                    </InputGroupAddon>
                     <Controller
                       key={item.id}
                       name={item.id as FieldNames}
@@ -87,7 +121,7 @@ export default function CalculationSummary() {
                             autoComplete="on"
                             type="number"
                             step="0.01"
-                            className={cn(item.hasToggle ? "rounded-none" : "")}
+                            className="rounded-none"
                           />
                           {fieldState.invalid && (
                             <FieldError errors={[fieldState.error]} />
@@ -95,14 +129,52 @@ export default function CalculationSummary() {
                         </Field>
                       )}
                     />
-                    {item.hasToggle && item.utilisePercentage && (
+                    {item.utilisePercentage === true && (
                       <InputGroupAddon align="inline-end">
-                        <Percent className="text-amber-600" />
+                        <Popover>
+                          <PopoverTrigger>
+                            <Percent className="text-amber-600 size-5" />
+                          </PopoverTrigger>
+                          <PopoverContent className="w-fit text-xs p-2">
+                            Percentage | Rate{" "}
+                          </PopoverContent>
+                        </Popover>
                       </InputGroupAddon>
                     )}
-                    {item.hasToggle && !item.utilisePercentage && (
+                    {item.utilisePercentage === false && (
                       <InputGroupAddon align="inline-end">
-                        <DecimalsArrowLeft className="text-amber-600" />
+                        <Popover>
+                          <PopoverTrigger>
+                            <DecimalsArrowLeft className="text-amber-600 size-5" />
+                          </PopoverTrigger>
+                          <PopoverContent className="w-fit text-xs p-2">
+                            Fixed amount
+                          </PopoverContent>
+                        </Popover>
+                      </InputGroupAddon>
+                    )}
+                    {item.utiliseTaxableShipping === true && (
+                      <InputGroupAddon align="inline-end">
+                        <Popover>
+                          <PopoverTrigger>
+                            <BadgeTurkishLira className="text-amber-600 size-5" />
+                          </PopoverTrigger>
+                          <PopoverContent className="w-fit text-xs p-2">
+                            Taxable shipping{" "}
+                          </PopoverContent>
+                        </Popover>
+                      </InputGroupAddon>
+                    )}
+                    {item.utiliseTaxableShipping === false && (
+                      <InputGroupAddon align="inline-end">
+                        <Popover>
+                          <PopoverTrigger>
+                            <BadgeX className="text-amber-600 size-5" />
+                          </PopoverTrigger>
+                          <PopoverContent className="w-fit text-xs p-2">
+                            Non-Taxable shipping{" "}
+                          </PopoverContent>
+                        </Popover>
                       </InputGroupAddon>
                     )}
                   </InputGroup>
@@ -112,12 +184,47 @@ export default function CalculationSummary() {
           );
         })}
       </FieldGroup>
-      <div className="flex justify-between gap-5 font-bold border-t border-b py-2">
-        <p>Grand Total</p>
-        <p className="text-imperial-red">
-          {watch("invoiceItems.0.unitPrice.currency")} {grandTotal}
-        </p>
-      </div>
+      <Table>
+        <TableCaption>Invoice summary</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="font-bold">Invoice</TableHead>
+            <TableHead className="text-right font-bold">Amount</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableHead>Discount</TableHead>
+            <TableCell className="text-right">
+              {currency}
+              {discount.toLocaleString()}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableHead>Tax</TableHead>
+            <TableCell className="text-right">
+              {currency}
+              {tax.toLocaleString()}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableHead>Shipping</TableHead>
+            <TableCell className="text-right">
+              {currency}
+              {shipping.toLocaleString()}
+            </TableCell>
+          </TableRow>
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableHead>Total</TableHead>
+            <TableCell className="text-right">
+              {currency}
+              {grandTotal.toLocaleString()}
+            </TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
     </FieldGroup>
   );
 }

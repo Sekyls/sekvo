@@ -9,7 +9,7 @@ import z4 from "zod/v4";
 export default function useInvoiceForm() {
   const methods = useForm<z4.infer<typeof InvoiceFormSchema>>({
     resolver: zodResolver(InvoiceFormSchema),
-    mode: "onChange",
+    mode: "all",
     defaultValues: INVOICE_FORM_DEFAULTS,
   });
   return { ...methods };

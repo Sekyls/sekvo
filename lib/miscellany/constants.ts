@@ -293,19 +293,39 @@ export const NOTES_TERMS = [
 ];
 
 export const INVOICE_FORM_DEFAULTS = {
-  companyAddress: "",
   companyName: "",
+  companyAddress: "",
+  companyEmail: "",
+  contactPerson: {
+    title: "Mr",
+    name: "",
+  },
+  phoneNumber: "",
+  purchaseOrder: getInvoiceNumber(),
+  invoiceNumber: getInvoiceNumber(),
+  invoiceDate: formatCalendarDate(new Date()),
+  dueDate: formatCalendarDate(new Date()),
+
+  customInvoiceFields: [],
+
   invoiceItems: [
     {
       item: "",
       quantity: "1",
-      unitPrice: { currency: "₵", price: "0.00" },
+      unitPrice: {
+        currency: "₵",
+        price: "0.00",
+      },
       subTotal: "0.00",
+      description: "",
     },
   ],
-  contactPerson: { name: "", title: "Mr" },
-  dueDate: formatCalendarDate(new Date()) as string,
-  invoiceDate: formatCalendarDate(new Date()) as string,
-  invoiceNumber: getInvoiceNumber() as string,
-  purchaseOrder: getInvoiceNumber() as string,
+
+  notes: "",
+  terms: "",
+  logo: undefined,
+
+  discount: "",
+  tax: "",
+  shipping: "",
 };

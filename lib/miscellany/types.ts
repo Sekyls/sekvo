@@ -72,11 +72,14 @@ export interface Switches {
 export interface CalculationSummaryExtras {
   id: string;
   label: string;
-  hasToggle: boolean;
   isChecked: boolean;
   utilisePercentage: boolean | null;
   setUtilisePercentage: Dispatch<SetStateAction<boolean>> | null;
   placeholder: string;
+  infoTitle: string;
+  infoDescription: string[];
+  utiliseTaxableShipping: boolean | null;
+  setUtiliseTaxableShipping: Dispatch<SetStateAction<boolean>> | null;
 }
 
 export interface InvoiceFormProviderProps {

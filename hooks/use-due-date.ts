@@ -1,4 +1,5 @@
 "use client";
+import { FieldNames } from "@/lib/miscellany/types";
 import { useState } from "react";
 
 export function useDueDateHook() {
@@ -21,6 +22,6 @@ export function useDueDateHook() {
     setMonth,
     isValidDate,
     label: "Due Date",
-    fieldName: "dueDate",
+    fieldName: "dueDate" as FieldNames,
   };
 }

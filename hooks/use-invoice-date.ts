@@ -1,4 +1,5 @@
 "use client";
+import { FieldNames } from "@/lib/miscellany/types";
 import { useState } from "react";
 
 export function useInvoiceDateHook() {
@@ -21,6 +22,6 @@ export function useInvoiceDateHook() {
     setMonth,
     isValidDate,
     label: "Invoice Date",
-    fieldName: "invoiceDate",
+    fieldName: "invoiceDate" as FieldNames,
   };
 }

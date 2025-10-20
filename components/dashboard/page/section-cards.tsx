@@ -38,7 +38,6 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "../../ui/input";
 import { useRef } from "react";
-import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
 import { useFormContext } from "react-hook-form";
 
 function ExportDropdownMenu() {

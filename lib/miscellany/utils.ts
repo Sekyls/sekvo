@@ -6,10 +6,10 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getFormattedCountDown(milliseconds: number) {
-  let totalSeconds = Math.floor(milliseconds / 1000);
-  let totalMinutes = Math.floor(totalSeconds / 60);
-  let seconds = totalSeconds % 60;
-  let minutes = totalMinutes % 60;
+  const totalSeconds = Math.floor(milliseconds / 1000);
+  const totalMinutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const minutes = totalMinutes % 60;
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 

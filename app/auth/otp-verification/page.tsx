@@ -1,4 +1,6 @@
-"use client";
+export const dynamic = "force-dynamic";
+("use client");
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -41,7 +43,9 @@ export default function InputOTPForm() {
   return (
     <Suspense
       fallback={
-        <Spinner className="flex justify-center items-center size-5 " />
+        <div className="w-full h-screen flex justify-center items-center">
+          <Spinner className=" size-6 " />
+        </div>
       }
     >
       <Form {...otpForm}>

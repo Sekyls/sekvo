@@ -27,6 +27,7 @@ import Image from "next/image";
 import { Spinner } from "@/components/ui/spinner";
 import Timer from "@/components/authentication/timer";
 import useOTPForm from "@/hooks/use-otp-form";
+import { Suspense } from "react";
 
 export default function InputOTPForm() {
   const {
@@ -77,9 +78,11 @@ export default function InputOTPForm() {
                       </InputOTPGroup>
                     </InputOTP>
                   </FormControl>
-                  <FormDescription className="text-sm! mt-2 sm:mt-0">
-                    {`Please enter the OTP sent to ${email}`}
-                  </FormDescription>
+                  <Suspense fallback="Please enter the OTP sent to your email">
+                    <FormDescription className="text-sm! mt-2 sm:mt-0">
+                      {`Please enter the OTP sent to ${email}`}
+                    </FormDescription>
+                  </Suspense>
                   <FormMessage className="text-sm!" />
                   <Timer
                     duration={2 * 60 * 1000}

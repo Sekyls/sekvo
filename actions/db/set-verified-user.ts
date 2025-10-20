@@ -22,7 +22,6 @@ export default async function setVerifiedUser(
       name,
       phoneNumber,
       email,
-      passwordSalt,
     } = await otpValidator(pin, formEmail);
     await prisma.verifiedUsers.create({
       data: {
@@ -30,7 +29,6 @@ export default async function setVerifiedUser(
         email,
         hashedPassword,
         name,
-        passwordSalt,
         phoneNumber,
         logo,
       },

@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/select";
 import { CONTACT_PERSON_TITLES } from "@/lib/miscellany/constants";
 import { InvoiceFormSchema } from "@/lib/miscellany/schema";
-import { RecipientFieldGroupsProps } from "@/lib/miscellany/types";
 import { Controller, useFormContext } from "react-hook-form";
 import z4 from "zod/v4";
 

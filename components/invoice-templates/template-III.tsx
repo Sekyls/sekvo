@@ -1,5 +1,4 @@
 import React from "react";
-import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { MapPin, Phone, Mail } from "lucide-react";
 
@@ -85,7 +84,7 @@ export default function InvoiceTemplateIII() {
               <div className="grid grid-cols-12 gap-4 items-center">
                 <div className="col-span-6">
                   <h4 className="font-bold text-slate-800 mb-1">
-                    [FURN_8999] Three-seet Sofa
+                    FURN_8999 Three-seet Sofa
                   </h4>
                   <p className="text-sm text-gray-600">
                     Three Stetter Sofa with Lounger in Steel Grey Colour

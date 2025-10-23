@@ -178,13 +178,10 @@ export default function InvoiceTemplateIV() {
           <h3 className="font-bold text-gray-800 mb-3">NOTES</h3>
           <div className="space-y-3 text-sm text-gray-600 leading-relaxed">
             <p>
-              Arya hated them making fun of Needle. "It's castle-forged steel,
-              you stupid," she snapped, turning in the saddle to glare at them,
-              "and you better shut your mouth."
+              Arya hated them making fun of Needle. 
             </p>
             <p>
-              The orphan boys hooted. "Where'd you get a blade like that,
-              Lumpyface?" Hot Pie wanted to know.
+              The orphan boys hooted. 
             </p>
             <p>Thank you and have a nice day.</p>
           </div>

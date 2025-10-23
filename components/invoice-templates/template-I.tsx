@@ -105,7 +105,7 @@ export default function InvoiceTemplateI() {
             </div>
 
             <div className="grid grid-cols-2 py-3 bg-gray-50 px-4 rounded">
-              <div className="font-semibold text-gray-700">Advance [x%]</div>
+              <div className="font-semibold text-gray-700">Advance x%</div>
               <div className="text-right font-semibold text-gray-700">
                 INR 0000.00
               </div>

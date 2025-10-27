@@ -3,7 +3,6 @@ import { getFormattedCountDown } from "@/lib/miscellany/utils";
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Hourglass, RefreshCcw } from "lucide-react";
-// import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 export default function Timer({
   duration,
@@ -32,12 +31,6 @@ export default function Timer({
     <>
       {!countDownComplete && (
         <div className="flex w-fit items-center overflow-hidden text-accent font-semibold">
-          {/* <DotLottieReact
-            src="/animations/timer.lottie"
-            loop
-            autoplay
-            className="w-7 -ml-1"
-          /> */}
           <Hourglass className="size-4 text-green-500 animate-spin mr-2" />
           {getFormattedCountDown(countDown)}
         </div>

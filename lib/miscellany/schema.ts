@@ -199,3 +199,26 @@ export const InvoiceFormSchema = z4.object({
     .transform((val) => (val === "" ? undefined : val))
     .optional(),
 });
+
+export const CalculationSchema = z4.object({
+  grandTotal: z4.number(),
+  aggregateSubTotals: z4.number(),
+  calculatedDiscount: z4.number(),
+  calculatedTax: z4.number(),
+  utilisePercentDiscount: z4.boolean(),
+  utilisePercentTax: z4.boolean(),
+  utiliseTaxableShipping: z4.boolean(),
+  currency: z4.string(),
+});
+
+export const UserObject = z4.object({
+  userEmail: z4.string(),
+  userName: z4.string(),
+  userPhoneNumber: z4.string(),
+  userLogo: z4.file(),
+  userAddress: z4.string(),
+});
+
+export const TemplateDataSchema = InvoiceFormSchema.safeExtend(
+  CalculationSchema.shape
+);

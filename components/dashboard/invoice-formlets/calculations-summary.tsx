@@ -36,7 +36,10 @@ import {
 } from "@/components/ui/popover";
 
 export default function CalculationSummary() {
-  const { control } = useFormContext<z4.infer<typeof InvoiceFormSchema>>();
+  const { control, watch } =
+    useFormContext<z4.infer<typeof InvoiceFormSchema>>();
+  const percentDiscount = watch("discount");
+  const percentTax = watch("tax");
   const {
     CALCULATION_EXTRAS,
     SWITCH_ITEMS,
@@ -45,6 +48,10 @@ export default function CalculationSummary() {
     shipping,
     tax,
     currency,
+    aggregateSubTotals,
+    utilisePercentDiscount,
+    utilisePercentTax,
+    utiliseTaxableShipping,
   } = useCalcSummary();
 
   return (
@@ -194,21 +201,38 @@ export default function CalculationSummary() {
         </TableHeader>
         <TableBody>
           <TableRow>
-            <TableHead>Discount</TableHead>
+            <TableHead>Sub-totals</TableHead>
+            <TableCell className="text-right">
+              {currency}
+              {aggregateSubTotals.toLocaleString()}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableHead>
+              {utilisePercentDiscount
+                ? "Discount " + `${percentDiscount}` + "%"
+                : "Discount"}
+            </TableHead>
             <TableCell className="text-right">
               {currency}
               {discount.toLocaleString()}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableHead>Tax</TableHead>
+            <TableHead>
+              {utilisePercentTax ? "Tax " + `${percentTax}` + "%" : "Tax"}
+            </TableHead>
             <TableCell className="text-right">
               {currency}
               {tax.toLocaleString()}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableHead>Shipping</TableHead>
+            <TableHead>
+              {utiliseTaxableShipping
+                ? "Shipping (Taxable)"
+                : "Shipping (Non-taxable)"}
+            </TableHead>
             <TableCell className="text-right">
               {currency}
               {shipping.toLocaleString()}

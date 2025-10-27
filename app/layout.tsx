@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import { inter, spaceGrotesk } from "@/lib/miscellany/fonts";
+import { inter, spaceGrotesk, roboto } from "@/lib/miscellany/fonts";
 import { appMetaData } from "@/lib/miscellany/metadata";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.className} ${spaceGrotesk.variable} antialiased overflow-x-hidden`}
+        className={`${inter.className} ${spaceGrotesk.variable} ${roboto.variable}  antialiased overflow-x-hidden`}
       >
         <ThemeProvider
           attribute="class"

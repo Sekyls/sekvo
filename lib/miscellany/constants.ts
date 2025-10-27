@@ -329,3 +329,68 @@ export const INVOICE_FORM_DEFAULTS = {
   tax: "",
   shipping: "",
 };
+
+const dummyFile = new File(["dummy"], "logo.png", { type: "image/png" });
+
+export const dummyData = {
+  // ---------------- USER OBJECT ----------------
+  userEmail: "user@example.com",
+  userName: "Dennis Sekyi Opoku",
+  userPhoneNumber: "+233201234567",
+  userLogo: dummyFile,
+  userAddress: "123 Liberation Avenue, Accra, Ghana",
+
+  // ---------------- INVOICE FORM ----------------
+  companyName: "Sekvo Technologies Ltd.",
+  companyAddress: "15 Independence Street, Accra, Ghana",
+  companyEmail: "info@sekvotech.com",
+  contactPerson: {
+    title: "Mr.",
+    name: "John Doe",
+  },
+  phoneNumber: "+233501234567",
+  purchaseOrder: "PO-78910",
+  invoiceNumber: "INV-2025-001",
+  invoiceDate: "2025-10-24",
+  dueDate: "2025-11-07",
+
+  customInvoiceFields: [
+    { label: "Project", content: "Website Redesign" },
+    { label: "Department", content: "Engineering" },
+  ],
+
+  invoiceItems: [
+    {
+      item: "UI Design",
+      quantity: "2",
+      unitPrice: { currency: "USD", price: "500" },
+      subTotal: "1000",
+      description: "Complete UI/UX design package",
+    },
+    {
+      item: "Backend Development",
+      quantity: "1",
+      unitPrice: { currency: "USD", price: "1500" },
+      subTotal: "1500",
+      description: "API and database setup",
+    },
+  ],
+
+  notes: "Thank you for your business!",
+  terms: "Payment due within 14 days.",
+  logo: dummyFile,
+
+  discount: "10",
+  tax: "15",
+  shipping: "50",
+
+  // ---------------- CALCULATIONS ----------------
+  grandTotal: 2295,
+  aggregateSubTotals: 2500,
+  calculatedDiscount: 250,
+  calculatedTax: 95,
+  utilisePercentDiscount: true,
+  utilisePercentTax: true,
+  utiliseTaxableShipping: false,
+  currency: "USD",
+};

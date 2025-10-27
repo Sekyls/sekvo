@@ -3,10 +3,7 @@ import { prisma } from "@/lib/clients/prisma";
 import argon2 from "argon2";
 import { createUserSession } from "./session";
 
-export async function logUserIn(
-  email: string,
-  password: string
-): Promise<string> {
+export async function logUserIn(email: string, password: string) {
   try {
     const userLoginsFromDB = await prisma.verifiedUsers.findUnique({
       where: {
@@ -19,7 +16,7 @@ export async function logUserIn(
       },
     });
 
-    if (!userLoginsFromDB) {
+    if (userLoginsFromDB === null) {
       throw new Error("Email does not exist");
     }
     const passwordIsMatch = await argon2.verify(
@@ -34,6 +31,8 @@ export async function logUserIn(
     const { sessionID } = await createUserSession(email, userLoginsFromDB.id);
     return sessionID;
   } catch (error) {
-    throw error;
+    if (error instanceof Error) {
+      throw error;
+    }
   }
 }

@@ -19,8 +19,10 @@ export default function useLoginUser() {
         body: JSON.stringify(formData),
         credentials: "same-origin",
       });
-      if (!response.ok) {
-        throw new Error("Internal server error");
+      const data: { success: boolean; status: number; error: string | null } =
+        await response.json();
+      if (!response.ok || data.success === false) {
+        throw new Error(data.error || "Internal server error");
       }
       toastSuccess("Login successful", undefined, {
         label: "Success!",
@@ -29,7 +31,7 @@ export default function useLoginUser() {
         },
       });
       setIsLoading(false);
-      
+
       router.replace("/dashboard");
     } catch (error) {
       if (error instanceof Error) {

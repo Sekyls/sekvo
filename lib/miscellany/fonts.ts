@@ -1,4 +1,4 @@
-import { Space_Grotesk, Inter } from "next/font/google";
+import { Space_Grotesk, Inter, Roboto } from "next/font/google";
 
 export const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -7,5 +7,9 @@ export const spaceGrotesk = Space_Grotesk({
 
 export const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+});
+export const roboto = Roboto({
+  variable: "--font-roboto",
   subsets: ["latin"],
 });

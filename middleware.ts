@@ -4,18 +4,18 @@ import { redis } from "./lib/clients/redis";
 
 export default async function middleware(request: NextRequest) {
   // OTP PAGE
-  if (request.nextUrl.pathname.startsWith("/auth/otp-verification")) {
-    const email = request.nextUrl.searchParams.get("email")?.concat(".com");
-    console.log(email);
-    const checkID = await prisma.pendingUsers.findUnique({
-      where: { email },
-      select: { id: true },
-    });
-    if (!checkID) {
-      return NextResponse.redirect(new URL("/auth/signup", request.url));
-    }
-    return NextResponse.next();
-  }
+  // if (request.nextUrl.pathname.startsWith("/auth/otp-verification")) {
+  //   const email = request.nextUrl.searchParams.get("email")?.concat(".com");
+  //   console.log(email);
+  //   const checkID = await prisma.pendingUsers.findUnique({
+  //     where: { email },
+  //     select: { id: true },
+  //   });
+  //   if (!checkID) {
+  //     return NextResponse.redirect(new URL("/auth/signup", request.url));
+  //   }
+  //   return NextResponse.next();
+  // }
 
   // DASHBOARD
   if (request.nextUrl.pathname.startsWith("/dashboard")) {
@@ -43,6 +43,7 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // LOGIN
   if (request.nextUrl.pathname.startsWith("/auth/login")) {
     const requestToken = request.cookies.get("SID")?.value;
     const requestEmail = request.cookies.get("email")?.value;
@@ -73,7 +74,7 @@ export default async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/auth/otp-verification/:path*",
+    // "/auth/otp-verification/:path*",
     "/dashboard/:path*",
     "/auth/login/:path*",
   ],

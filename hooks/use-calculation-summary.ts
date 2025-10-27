@@ -200,5 +200,9 @@ export default function useCalcSummary() {
     shipping,
     grandTotal,
     currency,
+    utilisePercentDiscount,
+    utilisePercentTax,
+    utiliseTaxableShipping,
+    aggregateSubTotals,
   };
 }

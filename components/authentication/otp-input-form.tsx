@@ -28,7 +28,6 @@ import Image from "next/image";
 import { Spinner } from "@/components/ui/spinner";
 import Timer from "@/components/authentication/timer";
 import useOTPForm from "@/hooks/use-otp-form";
-// import { Suspense } from "react";
 
 export default function InputOTPForm() {
   const {
@@ -40,13 +39,6 @@ export default function InputOTPForm() {
     setResendingOTP,
   } = useOTPForm();
   return (
-    // <Suspense
-    //   fallback={
-    //     <div className="w-full h-screen flex justify-center items-center">
-    //       <Spinner className=" size-6 " />
-    //     </div>
-    //   }
-    // >
       <Form {...otpForm}>
         <form
           onSubmit={otpForm.handleSubmit(onSubmit)}
@@ -117,6 +109,5 @@ export default function InputOTPForm() {
           </Card>
         </form>
       </Form>
-    // </Suspense>
   );
 }

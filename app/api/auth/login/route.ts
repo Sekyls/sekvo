@@ -8,24 +8,30 @@ export async function POST(req: Request) {
     const reqBody = await req.json();
     const { email, password } = await LoginDataSchema.parseAsync(reqBody);
     const sessionID = await logUserIn(email, password);
-    const response = NextResponse.json({ success: true });
-    response.cookies.set({
-      name: "SID",
-      value: sessionID,
-      httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-      maxAge: SESSION_EXPIRATION,
-    });
-    response.cookies.set({
-      name: "email",
-      value: email,
-      httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-      maxAge: SESSION_EXPIRATION,
-    });
-    return response;
+    if (sessionID) {
+      const response = NextResponse.json({
+        success: true,
+        status: 201,
+        error: null,
+      });
+      response.cookies.set({
+        name: "SID",
+        value: sessionID,
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: SESSION_EXPIRATION,
+      });
+      response.cookies.set({
+        name: "email",
+        value: email,
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: SESSION_EXPIRATION,
+      });
+      return response;
+    }
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({

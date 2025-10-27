@@ -26,17 +26,13 @@ export default function useSignupForm() {
     }
     try {
       await setPendingUser(values);
+      localStorage.setItem("email", values.email);
       toastSuccess(`Check your email`, undefined, {
         label: "Success!",
-        onClick: () =>
-          router.push(
-            `/auth/otp-verification?email=${values.email.replace(".com", "")}`
-          ),
+        onClick: () => router.push("/auth/otp-verification"),
       });
       form.reset();
-      router.push(
-        `/auth/otp-verification?email=${values.email.replace(".com", "")}`
-      );
+      router.push("/auth/otp-verification");
     } catch (error) {
       toastError("Failed to sign you up", undefined, {
         label: "Retry",

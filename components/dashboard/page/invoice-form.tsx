@@ -19,15 +19,42 @@ import AddCustomFields from "../invoice-formlets/add-custom-fields";
 import InvoiceItems from "../invoice-formlets/aggregate-invoice-items";
 import NotesAndTerms from "../invoice-formlets/notes-terms";
 import CalculationSummary from "../invoice-formlets/calculations-summary";
+import PaymentMethods from "../invoice-formlets/payment-methods";
 
 export default function AggregatedInvoiceForm() {
   const { handleSubmit, formState } =
     useFormContext<z4.infer<typeof InvoiceFormSchema>>();
-  const { grandTotal } = useCalcSummary();
+  const {
+    grandTotal,
+    aggregateSubTotals,
+    discount: calculatedDiscount,
+    tax: calculatedTax,
+    utilisePercentDiscount,
+    utilisePercentTax,
+    utiliseTaxableShipping,
+    currency,
+  } = useCalcSummary();
 
-  function onSubmit(data: z4.infer<typeof InvoiceFormSchema>) {
-    const invoiceFormData = { ...data, grandTotal };
-    console.log(invoiceFormData);
+  async function onSubmit(data: z4.infer<typeof InvoiceFormSchema>) {
+    try {
+      const invoiceFormData = {
+        ...data,
+        grandTotal,
+        aggregateSubTotals,
+        calculatedDiscount,
+        calculatedTax,
+        utilisePercentDiscount,
+        utilisePercentTax,
+        utiliseTaxableShipping,
+        currency,
+      };
+      const result = await fetch("/api/generate-invoice", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(invoiceFormData),
+      });
+      console.log(invoiceFormData);
+    } catch (error) {}
   }
 
   return (
@@ -43,6 +70,7 @@ export default function AggregatedInvoiceForm() {
           className="space-y-5"
         >
           <SimpleFormDetailsGroup />
+          <PaymentMethods />
           <FieldGroup>
             <AddCustomFields />
           </FieldGroup>

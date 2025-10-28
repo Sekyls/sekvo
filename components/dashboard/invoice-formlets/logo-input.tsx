@@ -14,7 +14,7 @@ export default function SenderLogo() {
       control={control}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid} className="max-w-sm">
-          <FieldLabel htmlFor="Sender Logo">Sender&apos; Logo</FieldLabel>
+          <FieldLabel htmlFor="Sender Logo">Issuer Brand Logo</FieldLabel>
           <Input
             id="Sender Logo"
             aria-invalid={fieldState.invalid}

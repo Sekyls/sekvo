@@ -91,19 +91,19 @@ export const SESSION_EXPIRATION = 60 * 60 * 24 * 7;
 export const CLIENT_DETAILS_FIELDS: ClientDetails[] = [
   {
     fieldName: "companyName",
-    label: "Company Name",
+    label: "Recipient Name",
     placeholder: "e.g. Resolut Corporation",
     isSimpleForm: true,
   },
   {
     fieldName: "companyAddress",
-    label: "Company Address",
+    label: "Recipient Address",
     placeholder: "e.g. 123 Main Street, Accra",
     isSimpleForm: true,
   },
   {
     fieldName: "companyEmail",
-    label: "Company Email",
+    label: "Recipient Email",
     placeholder: "e.g. info@resolut.com",
     isSimpleForm: true,
   },
@@ -301,10 +301,12 @@ export const INVOICE_FORM_DEFAULTS = {
     name: "",
   },
   phoneNumber: "",
-  purchaseOrder: getInvoiceNumber(),
+  purchaseOrder: "",
   invoiceNumber: getInvoiceNumber(),
   invoiceDate: formatCalendarDate(new Date()),
   dueDate: formatCalendarDate(new Date()),
+
+  issuer: { name: "", role: "", signature: undefined },
 
   customInvoiceFields: [],
 
@@ -328,7 +330,36 @@ export const INVOICE_FORM_DEFAULTS = {
   discount: "",
   tax: "",
   shipping: "",
+
+  paymentMethods: {
+    mtnMobileMoney: { checked: false, accountName: "", accountNumber: "" },
+    telecelCash: { checked: false, accountName: "", accountNumber: "" },
+    atMoney: { checked: false, accountName: "", accountNumber: "" },
+    bankTransfer: {
+      checked: false,
+      accountName: "",
+      accountNumber: "",
+      branch: "",
+    },
+    paymentGateway: { checked: false, link: "" },
+    others: { checked: false, specifyOther: "" },
+    cash: { checked: false },
+    cheque: { checked: false },
+  },
 };
+
+export const SIGNATURE_BLOCK = [
+  {
+    name: "issuer.name",
+    label: "Issuer Name",
+    placeholder: "e.g Dennis Sekyi",
+  },
+  {
+    name: "issuer.role",
+    label: "Issuer Role",
+    placeholder: "e.g Accounts Manager",
+  },
+];
 
 const dummyFile = new File(["dummy"], "logo.png", { type: "image/png" });
 

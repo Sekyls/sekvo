@@ -1,7 +1,13 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Field, FieldLabel, FieldSet } from "@/components/ui/field";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldSet,
+} from "@/components/ui/field";
 import { Label } from "@/components/ui/label";
 import {
   Popover,
@@ -10,70 +16,17 @@ import {
 } from "@/components/ui/popover";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
-import PaymentMethodDetails from "./payment-method-details";
+import { Controller } from "react-hook-form";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { FieldNames } from "@/lib/miscellany/types";
+import usePaymentMethod from "@/hooks/use-payment-method";
 
 export default function PaymentMethods() {
-  const [mtnMomo, setMtnMomo] = useState<boolean>(false);
-  const [tCash, setTCash] = useState<boolean>(false);
-  const [atCash, setATCash] = useState<boolean>(false);
-  const [bank, setBank] = useState<boolean>(false);
-  const [paymentGateway, setPaymentGateway] = useState<boolean>(false);
-  const [cheque, setCheque] = useState<boolean>(false);
-  const [cash, setCash] = useState<boolean>(false);
-  const [other, setOther] = useState<boolean>(false);
-
-  const PAYMENT_METHOD_CHECKLIST = [
-    {
-      label: "MTN MoMo",
-      icon: "/payments/momo.png",
-      state: mtnMomo,
-      setState: setMtnMomo,
-    },
-    {
-      label: "Telecel Cash",
-      icon: "/payments/tcash.png",
-      state: tCash,
-      setState: setTCash,
-    },
-    {
-      label: "AirtelTigo Money",
-      icon: "/payments/atmoney.png",
-      state: atCash,
-      setState: setATCash,
-    },
-    {
-      label: "Bank Transfer",
-      icon: "/payments/banks.png",
-      state: bank,
-      setState: setBank,
-    },
-    {
-      label: "Payment Gateway",
-      icon: "/payments/gateways.png",
-      state: paymentGateway,
-      setState: setPaymentGateway,
-    },
-    {
-      label: "Cheque",
-      icon: "/payments/cheque.png",
-      state: cheque,
-      setState: setCheque,
-    },
-    {
-      label: "Cash",
-      icon: "/payments/cash.png",
-      state: cash,
-      setState: setCash,
-    },
-    {
-      label: "Other",
-      icon: "/payments/others.png",
-      state: other,
-      setState: setOther,
-    },
-  ];
-
+  const { PAYMENT_METHODS, control, setValue } = usePaymentMethod();
   return (
     <FieldSet className="gap-0 space-y-5">
       <Popover>
@@ -87,125 +40,84 @@ export default function PaymentMethods() {
           </Button>
         </PopoverTrigger>
         <PopoverContent className="space-y-2">
-          {PAYMENT_METHOD_CHECKLIST.map((item, index) => {
+          {PAYMENT_METHODS.map((item, index) => {
             return (
               <Field orientation="horizontal" key={index}>
                 <Checkbox
                   checked={item.state}
                   onCheckedChange={() => {
+                    setValue(item.checked as FieldNames, !item.state);
                     item.setState(!item.state);
                   }}
                 />
                 <FieldLabel
-                  htmlFor={item.label}
+                  htmlFor={item.inputFieldLabel}
                   className="font-normal flex items-center"
                 >
-                  {item.label}
+                  {item.inputFieldLabel}
                 </FieldLabel>
               </Field>
             );
           })}
         </PopoverContent>
       </Popover>
-      {mtnMomo && (
-        <div className="mt-2">
-          <Label className="mb-5 text-lg flex items-center">
-            <span className="block">MTN Mobile Money</span>
-            <Image
-              src="/payments/momo.png"
-              alt="MoMo"
-              width={24}
-              height={24}
-              className="invoice-bg-light"
-            />
-          </Label>
-          <PaymentMethodDetails
-            showAccountName={true}
-            showAccountNumber={true}
-          />
-        </div>
-      )}
-      {tCash && (
-        <div className="mt-2">
-          <Label className="mb-5 text-lg flex items-center">
-            <span className="block">Telcel Cash</span>
-            <Image
-              src="/payments/tcash.png"
-              alt="TCash"
-              width={24}
-              height={24}
-              className="invoice-bg-light"
-            />
-          </Label>
-          <PaymentMethodDetails
-            showAccountName={true}
-            showAccountNumber={true}
-          />
-        </div>
-      )}
-      {atCash && (
-        <div className="mt-2">
-          <Label className="mb-5 text-lg flex items-center">
-            <span className="block">AirtelTigo Money</span>
-            <Image
-              src="/payments/atmoney.png"
-              alt="ATMoney"
-              width={24}
-              height={24}
-            />
-          </Label>
-          <PaymentMethodDetails
-            showAccountName={true}
-            showAccountNumber={true}
-          />
-        </div>
-      )}
-      {bank && (
-        <div className="mt-2">
-          <Label className="mb-5 text-lg flex items-center">
-            <span className="block">Bank Transfer</span>
-            <Image
-              src="/payments/banks.png"
-              alt="bank"
-              width={24}
-              height={24}
-            />
-          </Label>
-          <PaymentMethodDetails
-            showAccountName={true}
-            showAccountNumber={true}
-            showBranch={true}
-          />
-        </div>
-      )}
-      {paymentGateway && (
-        <div className="mt-2">
-          <Label className="mb-5 text-lg flex items-center">
-            <span className="block">Payment Gateways</span>
-            <Image
-              src="/payments/gateways.png"
-              alt="payment-gateways"
-              width={24}
-              height={24}
-            />
-          </Label>
-          <PaymentMethodDetails showGateway={true} />
-        </div>
-      )}
-      {other && (
-        <div className="mt-2">
-          <Label className="mb-5 text-lg flex items-center">
-            <span className="block">Others</span>
-            <Image
-              src="/payments/others.png"
-              alt="others"
-              width={24}
-              height={24}
-            />
-          </Label>
-          <PaymentMethodDetails showOthers={true} />
-        </div>
-      )}
+      <FieldGroup className="space-y-5">
+        {PAYMENT_METHODS.map((method, index) => {
+          return (
+            method.showInput &&
+            method.state && (
+              <section key={index} className="space-y-2">
+                <FieldLabel>
+                  {method.inputFieldLabel}
+                  <Image src={method.icon} alt="" width={24} height={24} />
+                </FieldLabel>
+                <div className="flex gap-x-5">
+                  {method.inputFields &&
+                    method.inputFields.map((input, index) => {
+                      return (
+                        <Controller
+                          key={index}
+                          name={input.name as FieldNames}
+                          control={control}
+                          render={({ field, fieldState }) => (
+                            <Field
+                              data-invalid={fieldState.invalid}
+                              className="max-w-sm"
+                            >
+                              {input.label && (
+                                <FieldLabel htmlFor={input.name}>
+                                  {input.label}
+                                </FieldLabel>
+                              )}
+
+                              <InputGroup className="invoice-bg-light">
+                                <InputGroupInput
+                                  {...field}
+                                  value={field.value as string}
+                                  id={input.name}
+                                  aria-invalid={fieldState.invalid}
+                                  autoComplete="on"
+                                  type={input.type}
+                                  placeholder={input.placeholder}
+                                />
+                                <InputGroupAddon className="border-r pr-2">
+                                  {input.icon}
+                                </InputGroupAddon>
+                              </InputGroup>
+                              {fieldState.invalid && (
+                                <FieldError errors={[fieldState.error]} />
+                              )}
+                            </Field>
+                          )}
+                        />
+                      );
+                    })}
+                </div>
+              </section>
+            )
+          );
+        })}
+      </FieldGroup>
     </FieldSet>
   );
 }

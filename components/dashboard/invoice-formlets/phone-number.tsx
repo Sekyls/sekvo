@@ -18,7 +18,9 @@ export default function PhoneNumber() {
       control={control}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid} className="max-w-sm">
-          <FieldLabel htmlFor="phoneNumber">Phone Number</FieldLabel>
+          <FieldLabel htmlFor="phoneNumber">
+            Recipient Telephone
+          </FieldLabel>
           <PhoneInput
             value={field.value as string}
             onChange={(value) => field.onChange(value)}

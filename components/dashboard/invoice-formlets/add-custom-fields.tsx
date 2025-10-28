@@ -37,7 +37,7 @@ export default function AddCustomFields() {
                 <Field
                   orientation="horizontal"
                   data-invalid={fieldState.invalid}
-                  className="max-w-20"
+                  className="max-w-20 block space-y-2"
                 >
                   <FieldContent>
                     <Input
@@ -49,11 +49,10 @@ export default function AddCustomFields() {
                       autoComplete="on"
                       className="invoice-bg-light"
                     />
-
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
                   </FieldContent>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
                 </Field>
               )}
             />
@@ -64,7 +63,7 @@ export default function AddCustomFields() {
                 <Field
                   orientation="horizontal"
                   data-invalid={fieldState.invalid}
-                  className="w-full"
+                  className="w-full block space-y-2"
                 >
                   <FieldContent>
                     <Input
@@ -76,15 +75,15 @@ export default function AddCustomFields() {
                       autoComplete="on"
                       className="invoice-bg-light"
                     />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
                   </FieldContent>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
                 </Field>
               )}
             />
             {fields.length >= 1 && (
-              <InputGroupAddon align="inline-end">
+              <InputGroupAddon align="inline-end" className="self-start">
                 <InputGroupButton
                   type="button"
                   variant="destructive"

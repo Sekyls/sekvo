@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
-import { FieldArrayWithId, UseFieldArrayRemove } from "react-hook-form";
+import { FieldArrayWithId, Path, UseFieldArrayRemove } from "react-hook-form";
 import z4 from "zod/v4";
 import { InvoiceFormSchema } from "./schema";
 
@@ -7,36 +7,7 @@ export interface SekvoOTPEmailProps {
   otp: number;
 }
 
-export type FieldNames =
-  | "companyName"
-  | "companyAddress"
-  | "companyEmail"
-  | "contactPerson"
-  | "phoneNumber"
-  | "purchaseOrder"
-  | "invoiceNumber"
-  | "invoiceDate"
-  | "dueDate"
-  | "customInvoiceFields"
-  | "invoiceItems"
-  | "notes"
-  | "terms"
-  | "logo"
-  | "discount"
-  | "tax"
-  | "shipping"
-  | `invoiceItems.${number}.unitPrice.price`
-  | "contactPerson.title"
-  | "contactPerson.name"
-  | `customInvoiceFields.${number}`
-  | `customInvoiceFields.${number}.label`
-  | `customInvoiceFields.${number}.content`
-  | `invoiceItems.${number}`
-  | `invoiceItems.${number}.item`
-  | `invoiceItems.${number}.quantity`
-  | `invoiceItems.${number}.unitPrice`
-  | `invoiceItems.${number}.description`
-  | `invoiceItems.${number}.unitPrice.currency`;
+export type FieldNames = Path<z4.infer<typeof InvoiceFormSchema>>;
 
 export interface ClientDetails {
   fieldName: FieldNames;
@@ -93,4 +64,10 @@ export interface InvoiceFieldItemsProps {
   remove: UseFieldArrayRemove;
 }
 
-
+export interface PaymentMethodDetailsProps {
+  showAccountName?: boolean;
+  showAccountNumber?: boolean;
+  showBranch?: boolean;
+  showGateway?: boolean;
+  showOthers?: boolean;
+}

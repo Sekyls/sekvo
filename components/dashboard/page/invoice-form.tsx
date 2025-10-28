@@ -20,6 +20,7 @@ import InvoiceItems from "../invoice-formlets/aggregate-invoice-items";
 import NotesAndTerms from "../invoice-formlets/notes-terms";
 import CalculationSummary from "../invoice-formlets/calculations-summary";
 import PaymentMethods from "../invoice-formlets/payment-methods";
+import SignatureBlock from "../invoice-formlets/signature-block";
 
 export default function AggregatedInvoiceForm() {
   const { handleSubmit, formState } =
@@ -71,6 +72,7 @@ export default function AggregatedInvoiceForm() {
         >
           <SimpleFormDetailsGroup />
           <PaymentMethods />
+          <SignatureBlock />
           <FieldGroup>
             <AddCustomFields />
           </FieldGroup>

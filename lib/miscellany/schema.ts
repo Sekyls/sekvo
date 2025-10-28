@@ -101,6 +101,18 @@ export const InvoiceFormSchema = z4.object({
     })
     .optional(),
 
+  issuer: z4.object({
+    name: z4.string("Required").min(2, "Required").trim(),
+    role: z4.string("Required").min(2, "Required").trim(),
+    signature: z4
+      .file("Select a file")
+      .max(5_000_000, "Image size must not exceed 5MB")
+      .mime(
+        ["image/jpeg", "image/png", "image/svg+xml"],
+        "Unsupported file format (Image must be a jpeg, png, or svg)"
+      ),
+  }),
+
   phoneNumber: z4
     .string()
     .trim()
@@ -198,6 +210,143 @@ export const InvoiceFormSchema = z4.object({
     .trim()
     .transform((val) => (val === "" ? undefined : val))
     .optional(),
+
+  paymentMethods: z4.object({
+    mtnMobileMoney: z4
+      .object({
+        checked: z4.boolean(),
+        accountName: z4.string().trim(),
+        accountNumber: z4.string().trim(),
+      })
+      .superRefine((data, ctx) => {
+        if (data.checked && data.accountName === "") {
+          ctx.addIssue({
+            code: "custom",
+            message: "Account name is required",
+            path: ["paymentMethods", "mtnMobileMoney", "accountName"],
+          });
+        }
+        if (data.checked && data.accountNumber === "") {
+          ctx.addIssue({
+            code: "custom",
+            message: "Account number is required",
+            path: ["paymentMethods", "mtnMobileMoney", "accountNumber"],
+          });
+        }
+      }),
+    telecelCash: z4
+      .object({
+        checked: z4.boolean(),
+        accountName: z4.string().trim(),
+        accountNumber: z4.string().trim(),
+      })
+      .superRefine((data, ctx) => {
+        if (data.checked && data.accountName === "") {
+          ctx.addIssue({
+            code: "custom",
+            message: "Account name is required",
+            path: ["paymentMethods", "telecelCash", "accountName"],
+          });
+        }
+        if (data.checked && data.accountNumber === "") {
+          ctx.addIssue({
+            code: "custom",
+            message: "Account number is required",
+            path: ["paymentMethods", "telecelCash", "accountNumber"],
+          });
+        }
+      }),
+    atMoney: z4
+      .object({
+        checked: z4.boolean(),
+        accountName: z4.string().trim(),
+        accountNumber: z4.string().trim(),
+      })
+      .superRefine((data, ctx) => {
+        if (data.checked && data.accountName === "") {
+          ctx.addIssue({
+            code: "custom",
+            message: "Account name is required",
+            path: ["paymentMethods", "atMoney", "accountName"],
+          });
+        }
+        if (data.checked && data.accountNumber === "") {
+          ctx.addIssue({
+            code: "custom",
+            message: "Account number is required",
+            path: ["paymentMethods", "atMoney", "accountNumber"],
+          });
+        }
+      }),
+    bankTransfer: z4
+      .object({
+        checked: z4.boolean(),
+        accountName: z4.string().trim(),
+        accountNumber: z4.string().trim(),
+        branch: z4.string().trim(),
+      })
+      .superRefine((data, ctx) => {
+        if (data.checked && data.accountName === "") {
+          ctx.addIssue({
+            code: "custom",
+            message: "Account name is required",
+            path: ["paymentMethods", "bankTransfer", "accountName"],
+          });
+        }
+        if (data.checked && data.accountNumber === "") {
+          ctx.addIssue({
+            code: "custom",
+            message: "Account number is required",
+            path: ["paymentMethods", "bankTransfer", "accountNumber"],
+          });
+        }
+        if (data.checked && data.branch === "") {
+          ctx.addIssue({
+            code: "custom",
+            message: "Branch is required",
+            path: ["paymentMethods", "bankTransfer", "branch"],
+          });
+        }
+      }),
+    paymentGateway: z4
+      .object({
+        checked: z4.boolean(),
+        link: z4.string().trim(),
+      })
+      .superRefine((data, ctx) => {
+        const linkValidation = z4.url();
+        if (data.checked) {
+          const validLink = linkValidation.safeParse(data.link);
+          if (!validLink.success) {
+            ctx.addIssue({
+              code: "custom",
+              message: "Input a valid URL",
+              path: ["paymentMethods", "paymentGateway", "link"],
+            });
+          }
+        }
+      }),
+    others: z4
+      .object({
+        checked: z4.boolean(),
+        specifyOther: z4.string().trim(),
+      })
+      .superRefine((data, ctx) => {
+        if (data.checked && data.specifyOther === "") {
+          ctx.addIssue({
+            code: "custom",
+            message: "Required",
+            path: ["paymentMethods", "others", "specifyOther"],
+          });
+        }
+      }),
+    cash: z4.object({
+      checked: z4.boolean(),
+    }),
+    cheque: z4.object({
+      checked: z4.boolean(),
+    }),
+  }),
 });
 
 export const CalculationSchema = z4.object({

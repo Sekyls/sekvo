@@ -31,10 +31,17 @@ export default function SimpleFormDetailsGroup() {
             control={control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid} className="max-w-sm">
-                <FieldLabel htmlFor={item.fieldName}>{item.label}</FieldLabel>
+                <FieldLabel htmlFor={item.fieldName}>
+                  {item.label}
+                  {item.isRequired && (
+                    <span className="text-imperial-red font-black">*</span>
+                  )}
+                </FieldLabel>
                 <Input
-                  {...field}
-                  value={field.value as string}
+                  ref={field.ref}
+                  onBlur={field.onBlur}
+                  onChange={field.onChange}
+                  value={(field.value as string) ?? ""}
                   id={item.fieldName}
                   aria-invalid={fieldState.invalid}
                   placeholder={item.placeholder}

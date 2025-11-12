@@ -11,7 +11,10 @@ import {
 } from "@/components/ui/card";
 import { Field, FieldGroup, FieldSet } from "@/components/ui/field";
 import { useFormContext } from "react-hook-form";
-import { InvoiceFormSchema } from "@/lib/miscellany/schema";
+import {
+  InvoiceFormDataSchema,
+  InvoiceFormSchema,
+} from "@/lib/miscellany/schema";
 import useCalcSummary from "@/hooks/use-calculation-summary";
 import z4 from "zod/v4";
 import SimpleFormDetailsGroup from "../invoice-formlets/simple-form-group";
@@ -21,6 +24,7 @@ import NotesAndTerms from "../invoice-formlets/notes-terms";
 import CalculationSummary from "../invoice-formlets/calculations-summary";
 import PaymentMethods from "../invoice-formlets/payment-methods";
 import SignatureBlock from "../invoice-formlets/signature-block";
+import { toastError } from "@/lib/miscellany/toast-config";
 
 export default function AggregatedInvoiceForm() {
   const { handleSubmit, formState } =
@@ -38,7 +42,14 @@ export default function AggregatedInvoiceForm() {
 
   async function onSubmit(data: z4.infer<typeof InvoiceFormSchema>) {
     try {
-      const invoiceFormData = {
+      const methodIsSelected = Object.values(data.paymentMethods).filter(
+        (method) => method.checked === true
+      );
+      if (methodIsSelected.length < 1) {
+        throw new Error("Select at least one payment method");
+      }
+
+      const invoiceFormData: z4.infer<typeof InvoiceFormDataSchema> = {
         ...data,
         grandTotal,
         aggregateSubTotals,
@@ -49,13 +60,11 @@ export default function AggregatedInvoiceForm() {
         utiliseTaxableShipping,
         currency,
       };
-      const result = await fetch("/api/generate-invoice", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(invoiceFormData),
-      });
-      console.log(invoiceFormData);
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        toastError(error.message, undefined, undefined);
+      }
+    }
   }
 
   return (

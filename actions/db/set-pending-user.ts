@@ -10,8 +10,6 @@ export default async function setPendingUser(
   data: z4.infer<typeof SignupFormSchema>
 ) {
   try {
-    console.log("running");
-
     const { address, email, name, password, phoneNumber, logo } =
       await SignupFormSchema.parseAsync(data);
     async function convertToBuffer(file: File) {

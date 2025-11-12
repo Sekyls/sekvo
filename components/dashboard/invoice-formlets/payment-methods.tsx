@@ -30,7 +30,9 @@ export default function PaymentMethods() {
   return (
     <FieldSet className="gap-0 space-y-5">
       <Popover>
-        <Label className="max-w-sm mb-2">Payment Method</Label>
+        <Label className="max-w-sm mb-2">
+          Payment Method<span className="text-imperial-red font-black">*</span>
+        </Label>
         <PopoverTrigger
           asChild
           className="max-w-sm flex bg-transparent items-center gap-x-1 text-foreground invoice-bg-light hover:bg-transparent justify-between"
@@ -87,6 +89,9 @@ export default function PaymentMethods() {
                               {input.label && (
                                 <FieldLabel htmlFor={input.name}>
                                   {input.label}
+                                  <span className="text-imperial-red font-black">
+                                    *
+                                  </span>
                                 </FieldLabel>
                               )}
 

@@ -1,5 +1,12 @@
 "use client";
-import { Binary, Ellipsis, Link, ShieldUser, Split } from "lucide-react";
+import {
+  Banknote,
+  Binary,
+  Ellipsis,
+  Link,
+  ShieldUser,
+  Split,
+} from "lucide-react";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import z4 from "zod/v4";
@@ -95,6 +102,13 @@ export default function usePaymentMethod() {
       inputFieldLabel: "Bank Transfer",
       inputFields: [
         {
+          name: "paymentMethods.bankTransfer.bankName",
+          label: "Bank Name",
+          icon: <Banknote />,
+          type: "text",
+          placeholder: "e.g. GCB",
+        },
+        {
           name: "paymentMethods.bankTransfer.accountName",
           label: "Account Name",
           icon: <ShieldUser />,
@@ -113,7 +127,7 @@ export default function usePaymentMethod() {
           label: "Branch",
           icon: <Split />,
           type: "text",
-          placeholder: "enter your bank branch",
+          placeholder: "e.g. Prempeh II ST",
         },
       ],
       icon: "/payments/banks.png",

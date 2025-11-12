@@ -25,7 +25,9 @@ export default function AddCustomFields() {
   return (
     <FieldSet className="gap-4">
       {showCustomFieldsLabel && (
-        <FieldLegend variant="label">Custom Fields</FieldLegend>
+        <FieldLegend variant="label">
+          Custom Fields <span className="text-imperial-red font-black">*</span>
+        </FieldLegend>
       )}
       <div className="grid grid-cols-2 gap-5 justify-between">
         {fields.map((field, index) => (

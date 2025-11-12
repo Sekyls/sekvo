@@ -1,7 +1,7 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { FieldArrayWithId, Path, UseFieldArrayRemove } from "react-hook-form";
 import z4 from "zod/v4";
-import { InvoiceFormSchema } from "./schema";
+import { InvoiceFormDataSchema, InvoiceFormSchema } from "./schema";
 
 export interface SekvoOTPEmailProps {
   otp: number;
@@ -9,11 +9,12 @@ export interface SekvoOTPEmailProps {
 
 export type FieldNames = Path<z4.infer<typeof InvoiceFormSchema>>;
 
-export interface ClientDetails {
+export interface RecipientDetails {
   fieldName: FieldNames;
   label: string;
   placeholder: string;
   isSimpleForm: boolean;
+  isRequired: boolean;
 }
 
 export interface CalendarProps {
@@ -71,3 +72,14 @@ export interface PaymentMethodDetailsProps {
   showGateway?: boolean;
   showOthers?: boolean;
 }
+
+type UserObject = {
+  email: string;
+  name: string;
+  phoneNumber: string;
+  logo: Uint8Array<ArrayBufferLike> | null;
+  address: string;
+} | null;
+
+export type InvoiceTemplateData = z4.infer<typeof InvoiceFormDataSchema> &
+  UserObject;

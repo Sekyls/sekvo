@@ -7,26 +7,96 @@ datasource db {
   url      = env("PRISMA_POSTGRES_DATABASE_URL")
 }
 
-model PendingUsers{
-  id String @id @default(cuid())
-  name String
-  address String
-  email String @unique
-  phoneNumber String
+model PendingUsers {
+  id             String   @id @default(cuid())
+  name           String
+  address        String
+  email          String   @unique
+  phoneNumber    String
   hashedPassword String
-  hashedOTP String
-  logo  Bytes?
-  createdAt DateTime @default(now())
-  expiresAt DateTime @default(dbgenerated("(now()+ interval '2 minutes')"))
+  hashedOTP      String
+  logo           Bytes?
+  createdAt      DateTime @default(now())
+  expiresAt      DateTime @default(dbgenerated("(now()+ interval '2 minutes')"))
 }
-model VerifiedUsers{
-  id String @id @default(cuid())
-  name String
-  address String
-  email String @unique
-  phoneNumber String
+
+model VerifiedUsers {
+  id             String     @id @default(cuid())
+  name           String
+  address        String
+  email          String     @unique
+  phoneNumber    String
   hashedPassword String
-  logo  Bytes?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  logo           Bytes?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  invoices       Invoices[]
+}
+
+model Invoices {
+  id                     String          @id @default(cuid())
+  recipientName          String
+  recipientAddress       String
+  recipientEmail         String?
+  recipientContactPerson Json?
+  recipientPhoneNumber   String?
+  purchaseOrder          String?
+  invoiceNumber          String
+  invoiceDate            String
+  dueDate                String
+  customInvoiceFields    Json?
+  notes                  String?
+  terms                  String?
+  issuerBrandLogo        Bytes?
+  discount               String?
+  tax                    String?
+  shipping               String?
+  grandTotal             Decimal         @db.Decimal(10, 2)
+  aggregateSubTotals     Decimal         @db.Decimal(10, 2)
+  calculatedDiscount     Decimal         @db.Decimal(10, 2)
+  calculatedTax          Decimal         @db.Decimal(10, 2)
+  utilisePercentDiscount Boolean
+  utilisePercentTax      Boolean
+  utiliseTaxableShipping Boolean
+  currency               String
+  ownerID                String
+  invoiceItems           InvoiceItems[]
+  issuerRelation         Issuers?
+  ownerRelation          VerifiedUsers   @relation(fields: [ownerID], references: [id])
+  paymentMethods         PaymentMethods?
+}
+
+model Issuers {
+  id               String   @id @default(cuid())
+  name             String
+  role             String
+  signature        Bytes
+  relatedInvoiceID String   @unique
+  invoiceRelation  Invoices @relation(fields: [relatedInvoiceID], references: [id], onDelete: Cascade)
+}
+
+model InvoiceItems {
+  id               String   @id @default(cuid())
+  item             String
+  quantity         String
+  currency         String
+  unitPrice        String
+  subTotal         String
+  description      String?
+  relatedInvoiceID String
+  invoiceRelation  Invoices @relation(fields: [relatedInvoiceID], references: [id], onDelete: Cascade)
+}
+
+model PaymentMethods {
+  id               String   @id @default(cuid())
+  mtnMobileMoney   Json?
+  telecelCash      Json?
+  atMoney          Json?
+  bankTransfer     Json?
+  paymentGateway   Json?
+  others           Json?
+  cash             Json?
+  cheque           Json?
+  relatedInvoiceID String   @unique
+  invoiceRelation  Invoices @relation(fields: [relatedInvoiceID], references: [id], onDelete: Cascade)
 }

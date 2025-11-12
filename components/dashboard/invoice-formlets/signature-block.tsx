@@ -28,7 +28,10 @@ export default function SignatureBlock() {
               control={control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid} className="max-w-sm">
-                  <FieldLabel htmlFor={item.name}>{item.label}</FieldLabel>
+                  <FieldLabel htmlFor={item.name}>
+                    {item.label}
+                    <span className="text-imperial-red font-black">*</span>
+                  </FieldLabel>
                   <Input
                     {...field}
                     value={field.value as string}
@@ -54,6 +57,7 @@ export default function SignatureBlock() {
             <Field data-invalid={fieldState.invalid} className="max-w-sm">
               <FieldLabel htmlFor="signature">
                 Issuer Signature
+                <span className="text-imperial-red font-black">*</span>
               </FieldLabel>
               <Input
                 id="signature"

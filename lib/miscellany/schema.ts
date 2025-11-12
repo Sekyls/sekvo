@@ -78,19 +78,19 @@ export const LoginDataSchema = z4.object({
 });
 
 export const InvoiceFormSchema = z4.object({
-  companyName: z4.string().min(1, "Company name is required").trim(),
-  companyAddress: z4
+  recipientName: z4.string().min(1, "Company name is required").trim(),
+  recipientAddress: z4
     .string()
     .min(10, "Company address must exceed 10 characters")
     .trim(),
 
-  companyEmail: z4
+  recipientEmail: z4
     .email()
     .trim()
     .transform((val) => (val === "" ? undefined : val))
     .optional(),
 
-  contactPerson: z4
+  recipientContactPerson: z4
     .object({
       title: z4
         .string()
@@ -113,7 +113,7 @@ export const InvoiceFormSchema = z4.object({
       ),
   }),
 
-  phoneNumber: z4
+  recipientPhoneNumber: z4
     .string()
     .trim()
     .transform((val) => (val === "" ? undefined : val))
@@ -184,7 +184,7 @@ export const InvoiceFormSchema = z4.object({
     .transform((val) => (val === "" ? undefined : val))
     .optional(),
 
-  logo: z4
+  issuerBrandLogo: z4
     .file()
     .max(5_000_000, "Image size must not exceed 5MB")
     .mime(
@@ -281,6 +281,7 @@ export const InvoiceFormSchema = z4.object({
     bankTransfer: z4
       .object({
         checked: z4.boolean(),
+        bankName: z4.string().trim(),
         accountName: z4.string().trim(),
         accountNumber: z4.string().trim(),
         branch: z4.string().trim(),
@@ -305,6 +306,13 @@ export const InvoiceFormSchema = z4.object({
             code: "custom",
             message: "Branch is required",
             path: ["paymentMethods", "bankTransfer", "branch"],
+          });
+        }
+        if (data.checked && data.bankName === "") {
+          ctx.addIssue({
+            code: "custom",
+            message: "Bank Name is required",
+            path: ["paymentMethods", "bankTransfer", "bankName"],
           });
         }
       }),
@@ -360,14 +368,6 @@ export const CalculationSchema = z4.object({
   currency: z4.string(),
 });
 
-export const UserObject = z4.object({
-  userEmail: z4.string(),
-  userName: z4.string(),
-  userPhoneNumber: z4.string(),
-  userLogo: z4.file(),
-  userAddress: z4.string(),
-});
-
-export const TemplateDataSchema = InvoiceFormSchema.safeExtend(
+export const InvoiceFormDataSchema = InvoiceFormSchema.safeExtend(
   CalculationSchema.shape
 );

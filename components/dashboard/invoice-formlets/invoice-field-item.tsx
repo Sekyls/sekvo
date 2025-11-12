@@ -82,7 +82,7 @@ export default function InvoiceFieldItem({
                 className="block space-y-2"
               >
                 <FieldLabel htmlFor={`invoice-items-${index}-item`}>
-                  Item
+                  Item <span className="text-imperial-red font-black">*</span>
                 </FieldLabel>
                 <FieldContent>
                   <Input
@@ -115,7 +115,8 @@ export default function InvoiceFieldItem({
                 className="block space-y-2 max-w-3xs"
               >
                 <FieldLabel htmlFor={`invoice-items-${index}-quantity`}>
-                  Quantity
+                  Quantity{" "}
+                  <span className="text-imperial-red font-black">*</span>
                 </FieldLabel>
                 <FieldContent>
                   <Input
@@ -144,7 +145,7 @@ export default function InvoiceFieldItem({
             className="max-w-3xs w-full gap-0 space-y-2"
           >
             <FieldLabel htmlFor={`invoice-items-${index}-unit-price`}>
-              Unit Price
+              Unit Price <span className="text-imperial-red font-black">*</span>
             </FieldLabel>
             <FieldGroup className="flex-row gap-0 gap-x-1">
               {/* Currency */}

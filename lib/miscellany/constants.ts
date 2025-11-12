@@ -1,4 +1,5 @@
-import { ClientDetails, CurrencyOption } from "./types";
+import { tree } from "next/dist/build/templates/app-page";
+import { CurrencyOption, RecipientDetails } from "./types";
 import { formatCalendarDate, getInvoiceNumber } from "./utils";
 
 export const FOOTER_LINKS = [
@@ -88,36 +89,41 @@ export const SIGNUP_FORM_FIELDS: {
 
 export const SESSION_EXPIRATION = 60 * 60 * 24 * 7;
 
-export const CLIENT_DETAILS_FIELDS: ClientDetails[] = [
+export const CLIENT_DETAILS_FIELDS: RecipientDetails[] = [
   {
-    fieldName: "companyName",
+    fieldName: "recipientName",
     label: "Recipient Name",
     placeholder: "e.g. Resolut Corporation",
     isSimpleForm: true,
+    isRequired: true,
   },
   {
-    fieldName: "companyAddress",
+    fieldName: "recipientAddress",
     label: "Recipient Address",
     placeholder: "e.g. 123 Main Street, Accra",
     isSimpleForm: true,
+    isRequired: true,
   },
   {
-    fieldName: "companyEmail",
+    fieldName: "recipientEmail",
     label: "Recipient Email",
     placeholder: "e.g. info@resolut.com",
     isSimpleForm: true,
+    isRequired: false,
   },
   {
     fieldName: "invoiceNumber",
     label: "Invoice Number",
     placeholder: "e.g. INV-2025-001",
     isSimpleForm: true,
+    isRequired: true,
   },
   {
     fieldName: "purchaseOrder",
     label: "Purchase Order",
     placeholder: "e.g. PO-789456",
     isSimpleForm: true,
+    isRequired: false,
   },
 ];
 
@@ -337,6 +343,7 @@ export const INVOICE_FORM_DEFAULTS = {
     atMoney: { checked: false, accountName: "", accountNumber: "" },
     bankTransfer: {
       checked: false,
+      bankName: "",
       accountName: "",
       accountNumber: "",
       branch: "",
@@ -362,24 +369,30 @@ export const SIGNATURE_BLOCK = [
 ];
 
 const dummyFile = new File(["dummy"], "logo.png", { type: "image/png" });
+const buffer = new ArrayBuffer(8);
+const view = new Uint8Array(buffer);
+for (let i = 0; i < view.length; i++) {
+  view[i] = i * 10;
+}
+const dummyUint8Array: Uint8Array<ArrayBufferLike> = view;
 
 export const dummyData = {
   // ---------------- USER OBJECT ----------------
-  userEmail: "user@example.com",
-  userName: "Dennis Sekyi Opoku",
-  userPhoneNumber: "+233201234567",
-  userLogo: dummyFile,
-  userAddress: "123 Liberation Avenue, Accra, Ghana",
+  email: "user@example.com",
+  name: "Dennis Sekyi Opoku",
+  phoneNumber: "+233201234567",
+  logo: dummyUint8Array,
+  address: "123 Liberation Avenue, Accra, Ghana",
 
   // ---------------- INVOICE FORM ----------------
-  companyName: "Sekvo Technologies Ltd.",
-  companyAddress: "15 Independence Street, Accra, Ghana",
-  companyEmail: "info@sekvotech.com",
+  recipientName: "Sekvo Technologies Ltd.",
+  recipientAddress: "15 Independence Street, Accra, Ghana",
+  recipientEmail: "info@sekvotech.com",
   contactPerson: {
     title: "Mr.",
     name: "John Doe",
   },
-  phoneNumber: "+233501234567",
+  recipientPhoneNumber: "+233501234567",
   purchaseOrder: "PO-78910",
   invoiceNumber: "INV-2025-001",
   invoiceDate: "2025-10-24",
@@ -409,7 +422,13 @@ export const dummyData = {
 
   notes: "Thank you for your business!",
   terms: "Payment due within 14 days.",
-  logo: dummyFile,
+  issuerBrandLogo: dummyFile,
+
+  issuer: {
+    name: "Kofi Manu",
+    role: "Accounts Manager",
+    signature: dummyFile,
+  },
 
   discount: "10",
   tax: "15",
@@ -424,4 +443,43 @@ export const dummyData = {
   utilisePercentTax: true,
   utiliseTaxableShipping: false,
   currency: "USD",
+
+  paymentMethods: {
+    mtnMobileMoney: {
+      checked: true,
+      accountName: "Dennis O. Sekyi",
+      accountNumber: "0244123456",
+    },
+    telecelCash: {
+      checked: true,
+      accountName: "Dennis O. Sekyi",
+      accountNumber: "0244123456",
+    },
+    atMoney: {
+      checked: true,
+      accountName: "Dennis Sekyi",
+      accountNumber: "0269876543",
+    },
+    bankTransfer: {
+      checked: true,
+      bankName: "ABSA GH",
+      accountName: "Resolut Ventures Ltd",
+      accountNumber: "123456789012",
+      branch: "Accra Main",
+    },
+    paymentGateway: {
+      checked: true,
+      link: "https://pay.resolutventures.com",
+    },
+    others: {
+      checked: true,
+      specifyOther: "",
+    },
+    cash: {
+      checked: true,
+    },
+    cheque: {
+      checked: true,
+    },
+  },
 };

@@ -43,7 +43,10 @@ export default function DatePicker({
           data-invalid={fieldState.invalid}
           className="block space-y-2"
         >
-          <FieldLabel htmlFor={fieldName}>{label}</FieldLabel>
+          <FieldLabel htmlFor={fieldName}>
+            {label}
+            <span className="text-imperial-red font-black">*</span>
+          </FieldLabel>
           <FieldContent className="max-w-sm space-y-2">
             <FieldGroup className="relative">
               <Input

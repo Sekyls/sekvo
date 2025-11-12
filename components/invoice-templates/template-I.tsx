@@ -1,6 +1,4 @@
-import { TemplateDataSchema, UserObject } from "@/lib/miscellany/schema";
-import z4 from "zod/v4";
-import { AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarImage } from "../ui/avatar";
 import { Mail, MapPin, Phone } from "lucide-react";
 import {
   Table,
@@ -10,31 +8,29 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Avatar } from "@radix-ui/react-avatar";
+import { InvoiceTemplateData } from "@/lib/miscellany/types";
+import Image from "next/image";
+import { Field, FieldLabel, FieldTitle } from "../ui/field";
 
-export default function TemplateI({
-  data,
-}: {
-  data: z4.infer<typeof TemplateDataSchema> & z4.infer<typeof UserObject>;
-}) {
+export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
   const {
+    address,
+    email,
+    name,
+    recipientAddress,
+    recipientName,
+    issuerBrandLogo,
+    recipientContactPerson,
+    recipientEmail,
+    recipientPhoneNumber,
     logo,
-    userLogo,
-    userName,
     notes,
     terms,
-    userAddress,
-    userEmail,
-    userPhoneNumber,
     invoiceNumber,
     invoiceDate,
     dueDate,
     purchaseOrder,
     customInvoiceFields,
-    companyAddress,
-    companyName,
-    companyEmail,
-    contactPerson,
     currency,
     grandTotal,
     invoiceItems,
@@ -48,12 +44,15 @@ export default function TemplateI({
     phoneNumber,
     shipping,
     tax,
+    issuer,
+    paymentMethods,
   } = data;
+
   return (
     <div className="w-[794px] print:w-auto min-h-[1123px] print:h-auto mx-auto print:m-auto p-12 print:p-0 font-roboto text-32 border print:border-0 text-base overflow-x-hidden">
       <header className="flex justify-between font-roboto gap-x-20 print:hidden">
         <div className="text-invoice-templateI font-black font-roboto text-2xl">
-          {userName}
+          {name}
         </div>
         <div className="size-3 grow bg-invoice-templateI [clip-path:polygon(12_0,100%_0,100%_100%,0_100%)]"></div>
       </header>
@@ -64,15 +63,15 @@ export default function TemplateI({
           <div className="text-32 font-roboto space-y-2">
             <div className="flex gap-x-2 items-center">
               <MapPin fill="#323232" color="#ffff" className="-ml-1" />
-              <span className="text-base">{userAddress}</span>
+              <span className="text-base">{address}</span>
             </div>
             <div className="flex gap-x-2 items-center">
               <Phone fill="#323232" color="#ffff" size={20} />
-              <span className="text-base">{userPhoneNumber}</span>
+              <span className="text-base">{phoneNumber}</span>
             </div>
             <div className="flex gap-x-2 items-center">
               <Mail size={20} />
-              <span className="text-base">{userEmail}</span>
+              <span className="text-base">{email}</span>
             </div>
           </div>
           {/* Right section */}
@@ -106,19 +105,19 @@ export default function TemplateI({
           <div className="grid grid-cols-[5%_95%] items-center">
             <div className="h-full w-1 bg-invoice-templateI"></div>
             <div className="font-roboto text-32">
-              <p className="font-bold">{companyName}</p>
-              <span className="text-base block">{companyAddress}</span>
-              {companyEmail && (
-                <span className="text-base block">{companyEmail}</span>
+              <p className="font-bold">{recipientName}</p>
+              <span className="text-base block">{recipientAddress}</span>
+              {recipientEmail && (
+                <span className="text-base block">{recipientEmail}</span>
               )}
-              {contactPerson && contactPerson.name && (
+              {recipientContactPerson && recipientContactPerson.name && (
                 <span className="text-base block text-muted-foreground italic">
-                  {contactPerson.title} {contactPerson.name}
+                  {recipientContactPerson.title} {recipientContactPerson.name}
                 </span>
               )}
-              {phoneNumber && (
+              {recipientPhoneNumber && (
                 <span className="text-base block text-muted-foreground italic">
-                  {phoneNumber}
+                  {recipientPhoneNumber}
                 </span>
               )}
             </div>
@@ -190,10 +189,144 @@ export default function TemplateI({
         <div className="grid grid-cols-2 gap-x-10 mt-5">
           {/* Left section */}
           <section className="space-y-2">
-            <div className="bg-[#C4C4C4] py-1">
-              <span className="text-base block text-center">
-                Payment Method
-              </span>
+            <span className="text-lg block text-center bg-[#C4C4C4] font-bold rounded">
+              Payment Method
+            </span>
+            <div className="py-1 space-y-3">
+              {/* Payment Options */}
+              {paymentMethods.mtnMobileMoney.checked && (
+                <Field className="gap-1">
+                  <FieldTitle className="text-base">
+                    MTN Mobile Money{" "}
+                    <Image
+                      src="/payments/momo.png"
+                      alt=""
+                      width={18}
+                      height={18}
+                    />
+                  </FieldTitle>
+                  <FieldLabel className="text-base">
+                    {paymentMethods.mtnMobileMoney.accountName} |{" "}
+                    {paymentMethods.mtnMobileMoney.accountNumber}
+                  </FieldLabel>
+                </Field>
+              )}{" "}
+              {paymentMethods.telecelCash.checked && (
+                <Field className="gap-1">
+                  <FieldTitle className="text-base">
+                    Telecel Cash{" "}
+                    <Image
+                      src="/payments/tcash.png"
+                      alt=""
+                      width={24}
+                      height={24}
+                    />
+                  </FieldTitle>
+                  <FieldLabel className="text-base">
+                    {paymentMethods.telecelCash.accountName} |{" "}
+                    {paymentMethods.telecelCash.accountNumber}
+                  </FieldLabel>
+                </Field>
+              )}
+              {paymentMethods.atMoney.checked && (
+                <Field className="gap-1">
+                  <FieldTitle className="text-base">
+                    AirtelTigo Money{" "}
+                    <Image
+                      src="/payments/atmoney.png"
+                      alt=""
+                      width={18}
+                      height={18}
+                    />
+                  </FieldTitle>
+                  <FieldLabel className="text-base">
+                    {paymentMethods.atMoney.accountName} |{" "}
+                    {paymentMethods.atMoney.accountNumber}
+                  </FieldLabel>
+                </Field>
+              )}
+              {paymentMethods.bankTransfer.checked && (
+                <Field className="gap-1">
+                  <FieldTitle className="text-base">
+                    Bank Transfer{" "}
+                    <Image
+                      src="/payments/banks.png"
+                      alt=""
+                      width={24}
+                      height={24}
+                    />
+                  </FieldTitle>
+                  <FieldLabel className="text-base">
+                    {paymentMethods.bankTransfer.bankName} ,{" "}
+                    {paymentMethods.bankTransfer.branch} |{" "}
+                    {paymentMethods.bankTransfer.accountName}
+                  </FieldLabel>
+                  <FieldLabel className="text-base">
+                    Account No. | {paymentMethods.bankTransfer.accountNumber}
+                  </FieldLabel>
+                </Field>
+              )}
+              {paymentMethods.paymentGateway.checked && (
+                <Field className="gap-1">
+                  <FieldTitle className="text-base">
+                    Payment Gateway{" "}
+                    <Image
+                      src="/payments/gateways.png"
+                      alt=""
+                      width={18}
+                      height={18}
+                    />
+                  </FieldTitle>
+                  <FieldLabel className="text-base">
+                    {paymentMethods.paymentGateway.link}
+                  </FieldLabel>
+                </Field>
+              )}
+              {paymentMethods.others.checked && (
+                <Field className="gap-1">
+                  <FieldTitle className="text-base">
+                    Others{" "}
+                    <Image
+                      src="/payments/others.png"
+                      alt=""
+                      width={18}
+                      height={18}
+                    />
+                  </FieldTitle>
+                  <FieldLabel className="text-base">
+                    {paymentMethods.others.specifyOther}
+                  </FieldLabel>
+                </Field>
+              )}
+              <div className="flex w-fit">
+                {paymentMethods.cash.checked && (
+                  <Field className="gap-1">
+                    <FieldTitle className="text-base">
+                      Cash{" "}
+                      <Image
+                        src="/payments/cash.png"
+                        alt=""
+                        width={18}
+                        height={18}
+                      />
+                    </FieldTitle>
+                  </Field>
+                )}{" "}
+                {paymentMethods.cheque.checked && (
+                  <Field className="gap-1">
+                    <FieldTitle className="text-base">
+                      Cheque
+                      <Image
+                        src="/payments/cheque.png"
+                        alt=""
+                        width={18}
+                        height={18}
+                        className="mt-0.5"
+                      />
+                    </FieldTitle>
+                  </Field>
+                )}
+              </div>
             </div>
           </section>
           {/* Right section */}
@@ -241,25 +374,36 @@ export default function TemplateI({
             </div>
           </section>
         </div>
-        <section>
+
+        <section className="mt-10">
           <div className="space-y-2">
-            <span className="text-base block text-muted-foreground">Role</span>
-            <span className="text-base block font-medium">{userName}</span>
-            <span className="text-base block">Sign</span>
+            <span className="text-base block text-muted-foreground">
+              {issuer.role}
+            </span>
+            <span className="text-base block">
+              <Image src={""} alt="" width={24} height={24} />
+            </span>
+            <span className="text-base block font-medium">{issuer.name}</span>
             <span className="text-base block text-muted-foreground">
               Thank you for doing business with us!
             </span>
           </div>
         </section>
+
         <section className={!terms || !notes ? "hidden" : "block mt-10"}>
           {terms && (
             <span className="text-xs block pb-1 font-medium">
-              Terms: <span className="text-muted-foreground font-normal"> {terms}</span>
+              Terms:{" "}
+              <span className="text-muted-foreground font-normal">
+                {" "}
+                {terms}
+              </span>
             </span>
           )}
           {notes && (
             <span className="text-xs block font-medium ">
-              Notes: <span className="text-muted-foreground font-normal">{notes}</span>
+              Notes:{" "}
+              <span className="text-muted-foreground font-normal">{notes}</span>
             </span>
           )}
         </section>
@@ -267,13 +411,13 @@ export default function TemplateI({
       <footer className="mt-10 print:hidden">
         <section className="border-t border-dashed flex justify-between items-center border-black/30 mt-5 pt-2">
           <div className="text-invoice-templateI font-black font-roboto text-2xl">
-            {userName}
+            {name}
           </div>
           <div>
-            <span className="text-base block">{userAddress}</span>
-            <span className="text-center text-base block">{userEmail}</span>
+            <span className="text-base block">{address}</span>
+            <span className="text-center text-base block">{email}</span>
           </div>
-          {logo || userLogo ? (
+          {logo || issuerBrandLogo ? (
             <Avatar>
               <AvatarImage
                 src="https://github.com/shadcn.png"

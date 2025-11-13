@@ -54,6 +54,22 @@ export const SignupFormSchema = z4.object({
     .optional(),
 });
 
+export const SignupFormDataSchema = SignupFormSchema.omit({
+  password: true,
+}).extend({
+  password: z4
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(
+      /[^A-Za-z0-9]/,
+      "Password must contain at least one special character"
+    )
+    .trim(),
+});
+
 export const OTPFormSchema = z4.object({
   pin: z4
     .string()

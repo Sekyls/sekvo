@@ -83,3 +83,14 @@ type UserObject = {
 
 export type InvoiceTemplateData = z4.infer<typeof InvoiceFormDataSchema> &
   UserObject;
+
+export interface HTTPResponseType {
+  success: boolean;
+  message?: string;
+  data?: object | string | number | null;
+  error?: {
+    code: number;
+    message: string;
+    details: string;
+  };
+}

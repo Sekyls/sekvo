@@ -24,10 +24,13 @@ import NotesAndTerms from "../invoice-formlets/notes-terms";
 import CalculationSummary from "../invoice-formlets/calculations-summary";
 import PaymentMethods from "../invoice-formlets/payment-methods";
 import SignatureBlock from "../invoice-formlets/signature-block";
-import { toastError } from "@/lib/miscellany/toast-config";
+import { toastError, toastSuccess } from "@/lib/miscellany/toast-config";
+import { HTTPResponseType } from "@/lib/miscellany/types";
+import { Spinner } from "@/components/ui/spinner";
+import { cn } from "@/lib/miscellany/utils";
 
 export default function AggregatedInvoiceForm() {
-  const { handleSubmit, formState } =
+  const { handleSubmit, formState, reset } =
     useFormContext<z4.infer<typeof InvoiceFormSchema>>();
   const {
     grandTotal,
@@ -40,17 +43,17 @@ export default function AggregatedInvoiceForm() {
     currency,
   } = useCalcSummary();
 
-  async function onSubmit(data: z4.infer<typeof InvoiceFormSchema>) {
+  async function onSubmit(values: z4.infer<typeof InvoiceFormSchema>) {
     try {
-      const methodIsSelected = Object.values(data.paymentMethods).filter(
+      const methodIsSelected = Object.values(values.paymentMethods).filter(
         (method) => method.checked === true
       );
       if (methodIsSelected.length < 1) {
         throw new Error("Select at least one payment method");
       }
 
-      const invoiceFormData: z4.infer<typeof InvoiceFormDataSchema> = {
-        ...data,
+      const data: z4.infer<typeof InvoiceFormDataSchema> = {
+        ...values,
         grandTotal,
         aggregateSubTotals,
         calculatedDiscount,
@@ -60,6 +63,26 @@ export default function AggregatedInvoiceForm() {
         utiliseTaxableShipping,
         currency,
       };
+
+      const invoiceFormData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (typeof value === "object" && value instanceof File) {
+          invoiceFormData.append(key, value);
+        } else {
+          invoiceFormData.append(key, JSON.stringify(value));
+        }
+      });
+      const response = await fetch("/api/invoice/save-invoice", {
+        method: "POST",
+        body: invoiceFormData,
+      });
+      const parsedResponse: HTTPResponseType = await response.json();
+      if (!response.ok || !parsedResponse.success) {
+        toastError(parsedResponse.error?.message || "", undefined, undefined);
+      }
+      toastSuccess(parsedResponse.message || "", undefined, undefined);
+      reset();
+      window.open(`/invoive-preview/${parsedResponse.data}`, "_blank");
     } catch (error) {
       if (error instanceof Error) {
         toastError(error.message, undefined, undefined);
@@ -104,7 +127,13 @@ export default function AggregatedInvoiceForm() {
             className="w-full max-w-3xs mx-auto mt-5 bg-green-800 font-bold tracking-wider text-md hover:scale-90 hover:bg-green-700"
             disabled={!formState.isValid || formState.isSubmitting}
           >
-            Generate
+            Generate{" "}
+            <Spinner
+              className={cn(
+                "hidden",
+                formState.isLoading || formState.isSubmitting ? "block" : ""
+              )}
+            />
           </Button>
         </Field>
       </CardFooter>

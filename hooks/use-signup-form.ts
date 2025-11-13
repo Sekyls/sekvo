@@ -2,9 +2,8 @@
 import { SignupFormSchema } from "@/lib/miscellany/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { z } from "zod/v4";
 import { useRouter } from "next/navigation";
-import setPendingUser from "@/actions/db/set-pending-user";
 import { toastError, toastSuccess } from "@/lib/miscellany/toast-config";
 
 export default function useSignupForm() {
@@ -18,14 +17,35 @@ export default function useSignupForm() {
       email: "",
       phoneNumber: "",
       password: { password: "", confirmPassword: "" },
+      logo: undefined,
     },
   });
   const onSubmit = async (values: z.infer<typeof SignupFormSchema>) => {
     if (!values) {
       return;
     }
+
     try {
-      await setPendingUser(values);
+      const { password, ...rest } = values;
+      const formdata = new FormData();
+      Object.entries(rest).forEach(([key, value]) => {
+        if (typeof value === "undefined") {
+          return;
+        }
+        formdata.append(key, value);
+      });
+
+      formdata.append("password", password.password);
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        body: formdata,
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error?.message);
+      }
+
       localStorage.setItem("email", values.email);
       toastSuccess(`Check your email`, undefined, {
         label: "Success!",

@@ -32,3 +32,8 @@ export function getInvoiceNumber() {
     ?.join("-")
     .toLocaleUpperCase();
 }
+
+export async function getBuffer(file: File) {
+  const bytes = await file.arrayBuffer();
+  return Buffer.from(bytes);
+}

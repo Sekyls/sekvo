@@ -23,8 +23,8 @@ export default function NotesAndTerms() {
                 <FieldLabel htmlFor={item.name}>{item.label}</FieldLabel>
                 <Textarea
                   {...field}
-                  value={field.value as string}
-                  id={"notes"}
+                  value={(field.value as string) ?? ""}
+                  id={item.name}
                   aria-invalid={fieldState.invalid}
                   placeholder={item.placeholder}
                   autoComplete="on"

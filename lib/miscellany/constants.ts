@@ -299,20 +299,29 @@ export const NOTES_TERMS = [
 ];
 
 export const INVOICE_FORM_DEFAULTS = {
-  companyName: "",
-  companyAddress: "",
-  companyEmail: "",
-  contactPerson: {
-    title: "Mr",
-    name: "",
+  recipientName: "",
+  recipientAddress: "",
+  recipientEmail: undefined,
+
+  recipientContactPerson: {
+    title: undefined,
+    name: undefined,
   },
-  phoneNumber: "",
-  purchaseOrder: "",
+
+  issuer: {
+    name: "",
+    role: "",
+  },
+
+  issuerSignature: undefined,
+
+  recipientPhoneNumber: undefined,
+
+  purchaseOrder: undefined,
+
   invoiceNumber: getInvoiceNumber(),
   invoiceDate: formatCalendarDate(new Date()),
   dueDate: formatCalendarDate(new Date()),
-
-  issuer: { name: "", role: "", signature: undefined },
 
   customInvoiceFields: [],
 
@@ -325,22 +334,35 @@ export const INVOICE_FORM_DEFAULTS = {
         price: "0.00",
       },
       subTotal: "0.00",
-      description: "",
+      description: undefined,
     },
   ],
 
-  notes: "",
-  terms: "",
-  logo: undefined,
+  notes: undefined,
+  terms: undefined,
 
-  discount: "",
-  tax: "",
-  shipping: "",
+  issuerBrandLogo: undefined,
+
+  discount: undefined,
+  tax: undefined,
+  shipping: undefined,
 
   paymentMethods: {
-    mtnMobileMoney: { checked: false, accountName: "", accountNumber: "" },
-    telecelCash: { checked: false, accountName: "", accountNumber: "" },
-    atMoney: { checked: false, accountName: "", accountNumber: "" },
+    mtnMobileMoney: {
+      checked: false,
+      accountName: "",
+      accountNumber: "",
+    },
+    telecelCash: {
+      checked: false,
+      accountName: "",
+      accountNumber: "",
+    },
+    atMoney: {
+      checked: false,
+      accountName: "",
+      accountNumber: "",
+    },
     bankTransfer: {
       checked: false,
       bankName: "",
@@ -348,10 +370,20 @@ export const INVOICE_FORM_DEFAULTS = {
       accountNumber: "",
       branch: "",
     },
-    paymentGateway: { checked: false, link: "" },
-    others: { checked: false, specifyOther: "" },
-    cash: { checked: false },
-    cheque: { checked: false },
+    paymentGateway: {
+      checked: false,
+      link: "",
+    },
+    others: {
+      checked: false,
+      specifyOther: "",
+    },
+    cash: {
+      checked: false,
+    },
+    cheque: {
+      checked: false,
+    },
   },
 };
 

@@ -37,3 +37,7 @@ export async function getBuffer(file: File) {
   const bytes = await file.arrayBuffer();
   return Buffer.from(bytes);
 }
+
+export function sanitiseJSON(obj: any) {
+  return JSON.parse(JSON.stringify(obj));
+}

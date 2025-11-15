@@ -291,6 +291,7 @@ export default function InvoiceFieldItem({
               <FieldContent>
                 <Textarea
                   {...controllerField}
+                  value={controllerField.value ?? ""}
                   id={`invoice-items-${index}-description`}
                   aria-invalid={fieldState.invalid}
                   placeholder="e.g item description"

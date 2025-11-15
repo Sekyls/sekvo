@@ -28,8 +28,10 @@ import { toastError, toastSuccess } from "@/lib/miscellany/toast-config";
 import { HTTPResponseType } from "@/lib/miscellany/types";
 import { Spinner } from "@/components/ui/spinner";
 import { cn } from "@/lib/miscellany/utils";
+import { useRouter } from "next/navigation";
 
 export default function AggregatedInvoiceForm() {
+  const router = useRouter();
   const { handleSubmit, formState, reset } =
     useFormContext<z4.infer<typeof InvoiceFormSchema>>();
   const {
@@ -46,7 +48,7 @@ export default function AggregatedInvoiceForm() {
   async function onSubmit(values: z4.infer<typeof InvoiceFormSchema>) {
     try {
       const methodIsSelected = Object.values(values.paymentMethods).filter(
-        (method) => method.checked === true
+        (method) => method
       );
       if (methodIsSelected.length < 1) {
         throw new Error("Select at least one payment method");
@@ -72,20 +74,31 @@ export default function AggregatedInvoiceForm() {
           invoiceFormData.append(key, JSON.stringify(value));
         }
       });
+
       const response = await fetch("/api/invoice/save-invoice", {
         method: "POST",
         body: invoiceFormData,
       });
+
       const parsedResponse: HTTPResponseType = await response.json();
-      if (!response.ok || !parsedResponse.success) {
+
+      if (response.status === 401 || parsedResponse.error?.code === 401) {
         toastError(parsedResponse.error?.message || "", undefined, undefined);
+        return router.replace("/auth/login");
+      }
+
+      if (!response.ok || !parsedResponse.success) {
+        return toastError(
+          parsedResponse.error?.message || "",
+          undefined,
+          undefined
+        );
       }
       toastSuccess(parsedResponse.message || "", undefined, undefined);
-      reset();
       window.open(`/invoive-preview/${parsedResponse.data}`, "_blank");
     } catch (error) {
       if (error instanceof Error) {
-        toastError(error.message, undefined, undefined);
+        return toastError(error.message, undefined, undefined);
       }
     }
   }

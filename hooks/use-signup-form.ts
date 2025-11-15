@@ -29,13 +29,13 @@ export default function useSignupForm() {
       const { password, ...rest } = values;
       const formdata = new FormData();
       Object.entries(rest).forEach(([key, value]) => {
-        if (typeof value === "undefined") {
-          return;
+        if (value !== undefined && value !== null) {
+          formdata.append(key, value);
         }
-        formdata.append(key, value);
       });
 
       formdata.append("password", password.password);
+
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         body: formdata,
@@ -54,10 +54,12 @@ export default function useSignupForm() {
       form.reset();
       router.push("/auth/otp-verification");
     } catch (error) {
-      toastError("Failed to sign you up", undefined, {
-        label: "Retry",
-        onClick: () => form.reset(),
-      });
+      if (error instanceof Error) {
+        toastError(error.message || "Failed to sign you up", undefined, {
+          label: "Retry",
+          onClick: () => form.reset(),
+        });
+      }
     }
   };
 

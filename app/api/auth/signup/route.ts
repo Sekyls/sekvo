@@ -6,14 +6,13 @@ import { getBuffer } from "@/lib/miscellany/utils";
 import argon2 from "argon2";
 import { NextResponse } from "next/server";
 
-export default async function POST(request: Request) {
+export async function POST(request: Request) {
   try {
     const formData = await request.formData();
     const data: { [key: string]: string | File | undefined } = {};
     for (const [key, value] of formData.entries()) {
       data[key] = value;
     }
-
     const cleanedData = SignupFormDataSchema.safeParse(data);
     if (!cleanedData.success) {
       return NextResponse.json(
@@ -32,9 +31,16 @@ export default async function POST(request: Request) {
     const { address, email, name, password, phoneNumber, logo } =
       cleanedData.data;
 
+    let processedLogo: Buffer | undefined;
+    if (logo) {
+      processedLogo = await getBuffer(logo);
+    }
+
     const emailExist = await prisma.verifiedUsers.findUnique({
       where: { email: email },
+      select: { email: true },
     });
+
     if (emailExist) {
       return NextResponse.json(
         {
@@ -53,10 +59,6 @@ export default async function POST(request: Request) {
 
     const { hashedOTP, otp } = await otpGenerator();
 
-    let processedLogo = Buffer.alloc(0);
-    if (logo) {
-      processedLogo = await getBuffer(logo);
-    }
     await prisma.pendingUsers.create({
       data: {
         address,
@@ -65,7 +67,7 @@ export default async function POST(request: Request) {
         hashedPassword,
         name,
         phoneNumber,
-        logo: logo ? processedLogo : undefined,
+        logo: processedLogo,
       },
     });
 

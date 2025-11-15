@@ -7,22 +7,20 @@ import useGeolocation from "@/hooks/use-geolocation";
 import z4 from "zod/v4";
 import { InvoiceFormSchema } from "@/lib/miscellany/schema";
 
-export default function PhoneNumber() {
+export default function RecipientPhoneNumber() {
   const { control } = useFormContext<z4.infer<typeof InvoiceFormSchema>>();
 
   const country = useGeolocation();
 
   return (
     <Controller
-      name="phoneNumber"
+      name="recipientPhoneNumber"
       control={control}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid} className="max-w-sm">
-          <FieldLabel htmlFor="phoneNumber">
-            Recipient Telephone
-          </FieldLabel>
+          <FieldLabel htmlFor="phoneNumber">Recipient Telephone</FieldLabel>
           <PhoneInput
-            value={field.value as string}
+            value={(field.value as string) ?? ""}
             onChange={(value) => field.onChange(value)}
             onBlur={field.onBlur}
             enableSearch={true}

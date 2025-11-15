@@ -34,7 +34,7 @@ model VerifiedUsers {
 }
 
 model Invoices {
-  id                     String          @id @default(cuid())
+  id                     String         @id @default(cuid())
   recipientName          String
   recipientAddress       String
   recipientEmail         String?
@@ -51,19 +51,19 @@ model Invoices {
   discount               String?
   tax                    String?
   shipping               String?
-  grandTotal             Decimal         @db.Decimal(10, 2)
-  aggregateSubTotals     Decimal         @db.Decimal(10, 2)
-  calculatedDiscount     Decimal         @db.Decimal(10, 2)
-  calculatedTax          Decimal         @db.Decimal(10, 2)
+  grandTotal             Decimal        @db.Decimal(10, 2)
+  aggregateSubTotals     Decimal        @db.Decimal(10, 2)
+  calculatedDiscount     Decimal        @db.Decimal(10, 2)
+  calculatedTax          Decimal        @db.Decimal(10, 2)
   utilisePercentDiscount Boolean
   utilisePercentTax      Boolean
   utiliseTaxableShipping Boolean
   currency               String
   ownerID                String
+  paymentMethods         Json
   invoiceItems           InvoiceItems[]
   issuerRelation         Issuers?
-  ownerRelation          VerifiedUsers   @relation(fields: [ownerID], references: [id])
-  paymentMethods         PaymentMethods?
+  ownerRelation          VerifiedUsers  @relation(fields: [ownerID], references: [id], onDelete: Cascade)
 }
 
 model Issuers {
@@ -84,19 +84,5 @@ model InvoiceItems {
   subTotal         String
   description      String?
   relatedInvoiceID String
-  invoiceRelation  Invoices @relation(fields: [relatedInvoiceID], references: [id], onDelete: Cascade)
-}
-
-model PaymentMethods {
-  id               String   @id @default(cuid())
-  mtnMobileMoney   Json?
-  telecelCash      Json?
-  atMoney          Json?
-  bankTransfer     Json?
-  paymentGateway   Json?
-  others           Json?
-  cash             Json?
-  cheque           Json?
-  relatedInvoiceID String   @unique
   invoiceRelation  Invoices @relation(fields: [relatedInvoiceID], references: [id], onDelete: Cascade)
 }

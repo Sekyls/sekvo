@@ -34,7 +34,7 @@ export default function SignatureBlock() {
                   </FieldLabel>
                   <Input
                     {...field}
-                    value={field.value as string}
+                    value={(field.value as string) ?? ""}
                     id={item.name}
                     aria-invalid={fieldState.invalid}
                     placeholder={item.placeholder}
@@ -51,7 +51,7 @@ export default function SignatureBlock() {
           );
         })}
         <Controller
-          name="issuer.signature"
+          name="issuerSignature"
           control={control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid} className="max-w-sm">

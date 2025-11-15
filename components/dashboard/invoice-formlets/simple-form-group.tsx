@@ -8,14 +8,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { CLIENT_DETAILS_FIELDS } from "@/lib/miscellany/constants";
 import { Controller, useFormContext } from "react-hook-form";
-import ContactPerson from "./contact-person";
-import PhoneNumber from "./phone-number";
 import { useInvoiceDateHook } from "@/hooks/use-invoice-date";
 import { useDueDateHook } from "@/hooks/use-due-date";
-import SenderLogo from "./logo-input";
 import DatePicker from "./date-picker";
 import { InvoiceFormSchema } from "@/lib/miscellany/schema";
 import z4 from "zod/v4";
+import RecipientContactPerson from "./contact-person";
+import RecipientPhoneNumber from "./phone-number";
+import IssuerBrandLogo from "./logo-input";
 
 export default function SimpleFormDetailsGroup() {
   const { control } = useFormContext<z4.infer<typeof InvoiceFormSchema>>();
@@ -56,9 +56,9 @@ export default function SimpleFormDetailsGroup() {
           />
         );
       })}
-      <ContactPerson />
-      <PhoneNumber />
-      <SenderLogo />
+      <RecipientContactPerson />
+      <RecipientPhoneNumber />
+      <IssuerBrandLogo />
       <DatePicker {...invoiceDateProps} />
       <DatePicker {...dueDateProps} />
     </FieldGroup>

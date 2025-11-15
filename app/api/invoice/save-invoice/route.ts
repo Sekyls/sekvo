@@ -1,23 +1,37 @@
 import { prisma } from "@/lib/clients/prisma";
 import { InvoiceFormDataSchema } from "@/lib/miscellany/schema";
-import { getBuffer } from "@/lib/miscellany/utils";
+import { getBuffer, sanitiseJSON } from "@/lib/miscellany/utils";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export default async function POST(request: Request) {
+export async function POST(request: Request) {
   try {
-    const data = await request.formData();
+    const rawFormData = await request.formData();
     const formData: { [key: string]: any } = {};
 
-    for (const [key, value] of data.entries()) {
+    for (const [key, value] of rawFormData.entries()) {
       if (value instanceof File) {
-        formData[key] = value;
-      } else {
-        try {
-          formData[key] = JSON.parse(value);
-        } catch {
+        if (value.size > 0) {
           formData[key] = value;
         }
+        continue;
+      }
+
+      if (
+        value === "" ||
+        value === "undefined" ||
+        value === "null" ||
+        value === "{}" ||
+        value === "[null]" ||
+        value === '""'
+      ) {
+        continue;
+      }
+
+      try {
+        formData[key] = JSON.parse(value);
+      } catch {
+        formData[key] = value;
       }
     }
 
@@ -64,23 +78,46 @@ export default async function POST(request: Request) {
       shipping,
       tax,
       terms,
+      issuerSignature,
     } = formDataValidation.data;
 
     const userEmail = (await cookies()).get("email")?.value;
-    if (!userEmail) throw new Error("Authentication failed");
-
+    if (!userEmail) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            code: 401,
+            message: "Authentication required or failed.",
+            details: "Please log in",
+          },
+        },
+        { status: 401 }
+      );
+    }
     const user = await prisma.verifiedUsers.findUnique({
       where: { email: userEmail },
       select: { id: true },
     });
-    if (!user) throw new Error("Authentication failed");
+    if (!user) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            code: 401,
+            message: "Authentication required or failed.",
+            details: "Please log in",
+          },
+        },
+        { status: 401 }
+      );
+    }
 
     const issuerBrandLogoBuffer = issuerBrandLogo
       ? await getBuffer(issuerBrandLogo)
       : undefined;
-    const issuerSignature = await getBuffer(issuer.signature);
+    const issuerSignatureBuffer = await getBuffer(issuerSignature);
 
-    // Transaction begins
     const { id } = await prisma.$transaction(async (client) => {
       const invoice = await client.invoices.create({
         data: {
@@ -109,6 +146,7 @@ export default async function POST(request: Request) {
           shipping,
           tax,
           terms,
+          paymentMethods: sanitiseJSON(paymentMethods),
         },
         select: { id: true },
       });
@@ -117,7 +155,7 @@ export default async function POST(request: Request) {
         data: {
           name: issuer.name,
           role: issuer.role,
-          signature: issuerSignature,
+          signature: issuerSignatureBuffer,
           relatedInvoiceID: invoice.id,
         },
       });
@@ -136,22 +174,8 @@ export default async function POST(request: Request) {
         });
       }
 
-      await client.paymentMethods.create({
-        data: {
-          atMoney: paymentMethods.atMoney,
-          bankTransfer: paymentMethods.bankTransfer,
-          cash: paymentMethods.cash,
-          cheque: paymentMethods.cheque,
-          mtnMobileMoney: paymentMethods.mtnMobileMoney,
-          others: paymentMethods.others,
-          paymentGateway: paymentMethods.paymentGateway,
-          telecelCash: paymentMethods.telecelCash,
-          relatedInvoiceID: invoice.id,
-        },
-      });
       return invoice;
     });
-    // Transaction ends
     return NextResponse.json(
       {
         success: true,

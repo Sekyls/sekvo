@@ -121,7 +121,7 @@ export default function CalculationSummary() {
                         >
                           <Input
                             {...field}
-                            value={field.value as string}
+                            value={(field.value as string) ?? ""}
                             id={item.id}
                             aria-invalid={fieldState.invalid}
                             placeholder={item.placeholder}

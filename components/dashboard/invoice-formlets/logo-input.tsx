@@ -5,12 +5,12 @@ import { InvoiceFormSchema } from "@/lib/miscellany/schema";
 import { Controller, useFormContext } from "react-hook-form";
 import z4 from "zod/v4";
 
-export default function SenderLogo() {
+export default function IssuerBrandLogo() {
   const { control } = useFormContext<z4.infer<typeof InvoiceFormSchema>>();
 
   return (
     <Controller
-      name="logo"
+      name="issuerBrandLogo"
       control={control}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid} className="max-w-sm">

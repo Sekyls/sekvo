@@ -44,6 +44,7 @@ export default function AddCustomFields() {
                   <FieldContent>
                     <Input
                       {...controllerField}
+                      value={controllerField.value ?? ""}
                       id={`custom-field-label-${field.id}`}
                       aria-invalid={fieldState.invalid}
                       placeholder="label"
@@ -70,6 +71,7 @@ export default function AddCustomFields() {
                   <FieldContent>
                     <Input
                       {...controllerField}
+                      value={controllerField.value ?? ""}
                       id={`custom-field-content-${field.id}`}
                       aria-invalid={fieldState.invalid}
                       placeholder="enter your info"

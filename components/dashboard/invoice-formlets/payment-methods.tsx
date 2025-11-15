@@ -98,7 +98,7 @@ export default function PaymentMethods() {
                               <InputGroup className="invoice-bg-light">
                                 <InputGroupInput
                                   {...field}
-                                  value={field.value as string}
+                                  value={(field.value as string) ?? ""}
                                   id={input.name}
                                   aria-invalid={fieldState.invalid}
                                   autoComplete="on"

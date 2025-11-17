@@ -1,6 +1,11 @@
 import TemplateI from "@/components/invoice-templates/template-I";
-import { dummyData } from "@/lib/miscellany/constants";
 
-export default function page() {
-  return <TemplateI data={dummyData} />;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  
+  return <TemplateI id={id} />;
 }

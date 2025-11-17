@@ -1,6 +1,8 @@
 import { tree } from "next/dist/build/templates/app-page";
-import { CurrencyOption, RecipientDetails } from "./types";
+import { CurrencyOption, InvoiceTemplateData, RecipientDetails } from "./types";
 import { formatCalendarDate, getInvoiceNumber } from "./utils";
+import z4 from "zod/v4";
+import { InvoiceFormDataSchema } from "./schema";
 
 export const FOOTER_LINKS = [
   {
@@ -408,22 +410,20 @@ for (let i = 0; i < view.length; i++) {
 }
 const dummyUint8Array: Uint8Array<ArrayBufferLike> = view;
 
-export const dummyData = {
+export const dummyData: InvoiceTemplateData = {
   // ---------------- USER OBJECT ----------------
-  email: "user@example.com",
-  name: "Dennis Sekyi Opoku",
-  phoneNumber: "+233201234567",
-  logo: dummyUint8Array,
-  address: "123 Liberation Avenue, Accra, Ghana",
+
+  senderEmail: "user@example.com",
+  senderName: "Dennis Sekyi Opoku",
+  senderPhoneNumber: "+233201234567",
+  senderLogo: dummyUint8Array,
+  senderAddress: "123 Liberation Avenue, Accra, Ghana",
 
   // ---------------- INVOICE FORM ----------------
   recipientName: "Sekvo Technologies Ltd.",
   recipientAddress: "15 Independence Street, Accra, Ghana",
   recipientEmail: "info@sekvotech.com",
-  contactPerson: {
-    title: "Mr.",
-    name: "John Doe",
-  },
+  recipientContactPerson: { title: "Mr.", name: "John Doe" },
   recipientPhoneNumber: "+233501234567",
   purchaseOrder: "PO-78910",
   invoiceNumber: "INV-2025-001",
@@ -459,9 +459,9 @@ export const dummyData = {
   issuer: {
     name: "Kofi Manu",
     role: "Accounts Manager",
-    signature: dummyFile,
   },
 
+  issuerSignature: dummyFile,
   discount: "10",
   tax: "15",
   shipping: "50",

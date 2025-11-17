@@ -74,11 +74,11 @@ export interface PaymentMethodDetailsProps {
 }
 
 type UserObject = {
-  email: string;
-  name: string;
-  phoneNumber: string;
-  logo: Uint8Array<ArrayBufferLike> | null;
-  address: string;
+  senderEmail: string;
+  senderName: string;
+  senderPhoneNumber: string;
+  senderLogo: Uint8Array<ArrayBufferLike> | null;
+  senderAddress: string;
 } | null;
 
 export type InvoiceTemplateData = z4.infer<typeof InvoiceFormDataSchema> &
@@ -94,3 +94,14 @@ export interface HTTPResponseType {
     details: string;
   };
 }
+
+export type CustomInvoiceFieldsType = z4.infer<
+  typeof InvoiceFormSchema.shape.customInvoiceFields
+>;
+export type PaymentMethodsType = z4.infer<
+  typeof InvoiceFormSchema.shape.paymentMethods
+>;
+
+export type RecipientContactPersonType = z4.infer<
+  typeof InvoiceFormSchema.shape.recipientContactPerson
+>;

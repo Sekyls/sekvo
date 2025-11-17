@@ -8,51 +8,26 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { InvoiceTemplateData } from "@/lib/miscellany/types";
 import Image from "next/image";
 import { Field, FieldLabel, FieldTitle } from "../ui/field";
+import { getInvoiceFromDB } from "@/actions/db/get-invoice";
 
-export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
+export default async function TemplateI({ id }: { id: string }) {
   const {
-    address,
-    email,
-    name,
-    recipientAddress,
-    recipientName,
-    issuerBrandLogo,
+    invoice,
     recipientContactPerson,
-    recipientEmail,
-    recipientPhoneNumber,
-    logo,
-    notes,
-    terms,
-    invoiceNumber,
-    invoiceDate,
-    dueDate,
-    purchaseOrder,
     customInvoiceFields,
-    currency,
-    grandTotal,
     invoiceItems,
-    aggregateSubTotals,
-    calculatedDiscount,
-    calculatedTax,
-    utilisePercentDiscount,
-    utilisePercentTax,
-    utiliseTaxableShipping,
-    discount,
-    phoneNumber,
-    shipping,
-    tax,
-    issuer,
+    issuerRelation,
+    ownerRelation,
     paymentMethods,
-  } = data;
+  } = await getInvoiceFromDB(id);
 
   return (
     <div className="w-[794px] print:w-auto min-h-[1123px] print:h-auto mx-auto print:m-auto p-12 print:p-0 font-roboto text-32 border print:border-0 text-base overflow-x-hidden">
       <header className="flex justify-between font-roboto gap-x-20 print:hidden">
         <div className="text-invoice-templateI font-black font-roboto text-2xl">
-          {name}
+          {ownerRelation.name}
         </div>
         <div className="size-3 grow bg-invoice-templateI [clip-path:polygon(12_0,100%_0,100%_100%,0_100%)]"></div>
       </header>
@@ -63,28 +38,34 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
           <div className="text-32 font-roboto space-y-2">
             <div className="flex gap-x-2 items-center">
               <MapPin fill="#323232" color="#ffff" className="-ml-1" />
-              <span className="text-base">{address}</span>
+              <span className="text-base">{ownerRelation.address}</span>
             </div>
             <div className="flex gap-x-2 items-center">
               <Phone fill="#323232" color="#ffff" size={20} />
-              <span className="text-base">{phoneNumber}</span>
+              <span className="text-base">{ownerRelation.phoneNumber}</span>
             </div>
             <div className="flex gap-x-2 items-center">
               <Mail size={20} />
-              <span className="text-base">{email}</span>
+              <span className="text-base">{ownerRelation.email}</span>
             </div>
           </div>
           {/* Right section */}
           <div className="ml-auto text-right space-y-2 -mt-1">
             <span className="font-roboto font-black text-2xl text-32 block">
               Invoice |{" "}
-              <span className="text-invoice-templateI">{invoiceNumber}</span>
+              <span className="text-invoice-templateI">
+                {invoice.invoiceNumber}
+              </span>
             </span>
             <span className="text-base block">
-              Invoice Date | {invoiceDate}
+              Invoice Date | {invoice.invoiceDate}
             </span>
-            <span className="text-base block">Due Date | {dueDate}</span>
-            <span className="text-base block">P.O# | {purchaseOrder}</span>
+            <span className="text-base block">
+              Due Date | {invoice.dueDate}
+            </span>
+            <span className="text-base block">
+              P.O# | {invoice.purchaseOrder}
+            </span>
             {customInvoiceFields && customInvoiceFields.length > 1 ? (
               <>
                 {customInvoiceFields.map((item, index) => {
@@ -105,19 +86,23 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
           <div className="grid grid-cols-[5%_95%] items-center">
             <div className="h-full w-1 bg-invoice-templateI"></div>
             <div className="font-roboto text-32">
-              <p className="font-bold">{recipientName}</p>
-              <span className="text-base block">{recipientAddress}</span>
-              {recipientEmail && (
-                <span className="text-base block">{recipientEmail}</span>
+              <p className="font-bold">{invoice.recipientName}</p>
+              <span className="text-base block">
+                {invoice.recipientAddress}
+              </span>
+              {invoice.recipientEmail && (
+                <span className="text-base block">
+                  {invoice.recipientEmail}
+                </span>
               )}
               {recipientContactPerson && recipientContactPerson.name && (
                 <span className="text-base block text-muted-foreground italic">
                   {recipientContactPerson.title} {recipientContactPerson.name}
                 </span>
               )}
-              {recipientPhoneNumber && (
+              {invoice.recipientPhoneNumber && (
                 <span className="text-base block text-muted-foreground italic">
-                  {recipientPhoneNumber}
+                  {invoice.recipientPhoneNumber}
                 </span>
               )}
             </div>
@@ -126,7 +111,7 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
           <div className="bg-invoice-templateI text-white flex justify-between py-1 px-5 gap-x-10 [clip-path:polygon(20_0,100%_0,100%_100%,0_100%)]">
             <p>Total Due |</p>
             <p className="font-black">
-              {currency} {grandTotal.toLocaleString()}
+              {invoice.currency} {invoice.grandTotal.toLocaleString()}
             </p>
           </div>
         </section>
@@ -158,28 +143,29 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
               </TableRow>
             </TableHeader>
             <TableBody className="border border-invoice-templateI">
-              {invoiceItems.map((invoice, index) => (
+              {invoiceItems.map((item, index) => (
                 <TableRow
                   key={index}
                   className="border-t-4 border-invoice-templateI break-inside-avoid"
                 >
                   <TableCell className="font-medium">
-                    <span className="text-base block">{invoice.item}</span>
-                    {invoice.description && (
+                    <span className="text-base block">{item.item}</span>
+                    {item.description && (
                       <span className="text-muted-foreground font-normal text-xs">
-                        {invoice.description}
+                        {item.description}
                       </span>
                     )}
                   </TableCell>
                   <TableCell className="text-center text-base">
-                    {invoice.unitPrice.currency}{" "}
-                    {parseFloat(invoice.unitPrice.price).toLocaleString()}
+                    {item.currency}{" "}
+                    {parseFloat(item.unitPrice).toLocaleString()}
                   </TableCell>
                   <TableCell className="text-center text-base">
-                    {invoice.quantity}
+                    {item.quantity}
                   </TableCell>
                   <TableCell className="text-right pr-2 text-base">
-                    {currency} {parseFloat(invoice.subTotal).toLocaleString()}
+                    {invoice.currency}{" "}
+                    {parseFloat(item.subTotal).toLocaleString()}
                   </TableCell>
                 </TableRow>
               ))}
@@ -194,7 +180,7 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
             </span>
             <div className="py-1 space-y-3">
               {/* Payment Options */}
-              {paymentMethods.mtnMobileMoney.checked && (
+              {paymentMethods.mtnMobileMoney && (
                 <Field className="gap-1">
                   <FieldTitle className="text-base">
                     MTN Mobile Money{" "}
@@ -210,8 +196,9 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
                     {paymentMethods.mtnMobileMoney.accountNumber}
                   </FieldLabel>
                 </Field>
-              )}{" "}
-              {paymentMethods.telecelCash.checked && (
+              )}
+
+              {paymentMethods.telecelCash && (
                 <Field className="gap-1">
                   <FieldTitle className="text-base">
                     Telecel Cash{" "}
@@ -228,7 +215,7 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
                   </FieldLabel>
                 </Field>
               )}
-              {paymentMethods.atMoney.checked && (
+              {paymentMethods.atMoney && (
                 <Field className="gap-1">
                   <FieldTitle className="text-base">
                     AirtelTigo Money{" "}
@@ -245,7 +232,7 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
                   </FieldLabel>
                 </Field>
               )}
-              {paymentMethods.bankTransfer.checked && (
+              {paymentMethods.bankTransfer && (
                 <Field className="gap-1">
                   <FieldTitle className="text-base">
                     Bank Transfer{" "}
@@ -266,7 +253,7 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
                   </FieldLabel>
                 </Field>
               )}
-              {paymentMethods.paymentGateway.checked && (
+              {paymentMethods.paymentGateway && (
                 <Field className="gap-1">
                   <FieldTitle className="text-base">
                     Payment Gateway{" "}
@@ -282,7 +269,7 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
                   </FieldLabel>
                 </Field>
               )}
-              {paymentMethods.others.checked && (
+              {paymentMethods.others && (
                 <Field className="gap-1">
                   <FieldTitle className="text-base">
                     Others{" "}
@@ -299,7 +286,7 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
                 </Field>
               )}
               <div className="flex w-fit">
-                {paymentMethods.cash.checked && (
+                {paymentMethods.cash && (
                   <Field className="gap-1">
                     <FieldTitle className="text-base">
                       Cash{" "}
@@ -312,7 +299,7 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
                     </FieldTitle>
                   </Field>
                 )}{" "}
-                {paymentMethods.cheque.checked && (
+                {paymentMethods.cheque && (
                   <Field className="gap-1">
                     <FieldTitle className="text-base">
                       Cheque
@@ -334,42 +321,45 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
             <div className="flex items-center justify-between py-1 border-b border-dashed border-black/30 ">
               <span className="text-base block font-medium">SUB TOTAL</span>
               <span className="text-base block font-black">
-                {currency} {""}
-                {aggregateSubTotals.toLocaleString()}
+                {invoice.currency} {""}
+                {invoice.aggregateSubTotals.toLocaleString()}
               </span>
             </div>
             <div className="flex items-center justify-between py-1 ">
               <span className="text-base block font-medium">
-                TAX {utilisePercentTax && <span>{tax}%</span>}
+                TAX {invoice.utilisePercentTax && <span>{invoice.tax}%</span>}
               </span>
               <span className="text-base block font-black">
-                {currency} {""}
-                {calculatedTax.toLocaleString()}
+                {invoice.currency} {""}
+                {invoice.calculatedTax.toLocaleString()}
               </span>
             </div>
             <div className="flex items-center justify-between py-1 ">
               <span className="text-base block font-medium">
-                DISCOUNT {utilisePercentDiscount && <span>{discount}%</span>}
+                DISCOUNT{" "}
+                {invoice.utilisePercentDiscount && (
+                  <span>{invoice.discount}%</span>
+                )}
               </span>
               <span className="text-base block font-black">
-                {currency} {""}
-                {calculatedDiscount.toLocaleString()}
+                {invoice.currency} {""}
+                {invoice.calculatedDiscount.toLocaleString()}
               </span>
             </div>
             <div className="flex items-center justify-between py-1 border-b border-dashed border-black/30 ">
               <span className="text-base block font-medium">
-                SHIPPING {utiliseTaxableShipping ? "| T" : "| NT"}
+                SHIPPING {invoice.utiliseTaxableShipping ? "| T" : "| NT"}
               </span>
               <span className="text-base block font-black">
-                {currency} {""}
-                {parseFloat(shipping ?? "0").toLocaleString()}
+                {invoice.currency} {""}
+                {parseFloat(invoice.shipping ?? "0").toLocaleString()}
               </span>
             </div>
             <div className="flex items-center justify-between py-1 ">
               <span className="text-base block font-medium">TOTAL DUE</span>
               <span className="text-base block font-black">
-                {currency} {""}
-                {grandTotal.toLocaleString()}
+                {invoice.currency} {""}
+                {invoice.grandTotal.toLocaleString()}
               </span>
             </div>
           </section>
@@ -378,32 +368,40 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
         <section className="mt-10">
           <div className="space-y-2">
             <span className="text-base block text-muted-foreground">
-              {issuer.role}
+              {issuerRelation?.role}
             </span>
             <span className="text-base block">
-              <Image src={""} alt="" width={24} height={24} />
+              <Image src={"/#"} alt="" width={24} height={24} />
             </span>
-            <span className="text-base block font-medium">{issuer.name}</span>
+            <span className="text-base block font-medium">
+              {issuerRelation?.name}
+            </span>
             <span className="text-base block text-muted-foreground">
               Thank you for doing business with us!
             </span>
           </div>
         </section>
 
-        <section className={!terms || !notes ? "hidden" : "block mt-10"}>
-          {terms && (
+        <section
+          className={
+            !invoice.terms || !invoice.notes ? "hidden" : "block mt-10"
+          }
+        >
+          {invoice.terms && (
             <span className="text-xs block pb-1 font-medium">
               Terms:{" "}
               <span className="text-muted-foreground font-normal">
                 {" "}
-                {terms}
+                {invoice.terms}
               </span>
             </span>
           )}
-          {notes && (
+          {invoice.notes && (
             <span className="text-xs block font-medium ">
               Notes:{" "}
-              <span className="text-muted-foreground font-normal">{notes}</span>
+              <span className="text-muted-foreground font-normal">
+                {invoice.notes}
+              </span>
             </span>
           )}
         </section>
@@ -411,13 +409,15 @@ export default function TemplateI({ data }: { data: InvoiceTemplateData }) {
       <footer className="mt-10 print:hidden">
         <section className="border-t border-dashed flex justify-between items-center border-black/30 mt-5 pt-2">
           <div className="text-invoice-templateI font-black font-roboto text-2xl">
-            {name}
+            {ownerRelation.name}
           </div>
           <div>
-            <span className="text-base block">{address}</span>
-            <span className="text-center text-base block">{email}</span>
+            <span className="text-base block">{ownerRelation.address}</span>
+            <span className="text-center text-base block">
+              {ownerRelation.email}
+            </span>
           </div>
-          {logo || issuerBrandLogo ? (
+          {invoice.issuerBrandLogo || ownerRelation.logo ? (
             <Avatar>
               <AvatarImage
                 src="https://github.com/shadcn.png"

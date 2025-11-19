@@ -65,7 +65,7 @@ export default function InvoiceFieldItem({
 
   useEffect(() => {
     setValue(`invoiceItems.${index}.subTotal`, getSubTotal(quantity, price));
-  }, [quantity, price, index]);
+  }, [quantity, price, index, setValue]);
 
   return (
     <FieldGroup key={field.id} className="grid grid-cols-[95%_5%]">

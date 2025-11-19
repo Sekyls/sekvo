@@ -29,7 +29,7 @@ import { useRouter } from "next/navigation";
 
 export default function AggregatedInvoiceForm() {
   const router = useRouter();
-  const { handleSubmit, formState, reset } =
+  const { handleSubmit, formState } =
     useFormContext<z4.infer<typeof InvoiceFormSchema>>();
   const {
     grandTotal,
@@ -80,22 +80,18 @@ export default function AggregatedInvoiceForm() {
       const parsedResponse: HTTPResponseType = await response.json();
 
       if (response.status === 401 || parsedResponse.error?.code === 401) {
-        toastError(parsedResponse.error?.message || "", undefined, undefined);
+        toastError(parsedResponse.error?.message || "");
         return router.replace("/auth/login");
       }
 
       if (!response.ok || !parsedResponse.success) {
-        return toastError(
-          parsedResponse.error?.message || "",
-          undefined,
-          undefined
-        );
+        return toastError(parsedResponse.error?.message || "");
       }
-      toastSuccess(parsedResponse.message || "", undefined, undefined);
+      toastSuccess(parsedResponse.message || "");
       window.open(`/invoive-preview/${parsedResponse.data}`, "_blank");
     } catch (error) {
       if (error instanceof Error) {
-        return toastError(error.message, undefined, undefined);
+        return toastError(error.message);
       }
     }
   }

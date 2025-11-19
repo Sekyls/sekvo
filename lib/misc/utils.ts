@@ -38,7 +38,7 @@ export async function getBuffer(file: File) {
   return Buffer.from(bytes);
 }
 
-export function sanitiseJSON(obj: any) {
+export function sanitiseJSON(obj: unknown) {
   return JSON.parse(JSON.stringify(obj));
 }
 

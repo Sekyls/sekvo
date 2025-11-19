@@ -1,6 +1,5 @@
 import { PuppeteerPDFRequestBodySchema } from "@/lib/misc/schema";
 import { NextResponse } from "next/server";
-import { browser } from "process";
 import Puppeteer, { Browser } from "puppeteer";
 
 export async function POST(request: Request) {

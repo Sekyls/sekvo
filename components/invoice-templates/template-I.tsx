@@ -1,4 +1,3 @@
-import { Avatar, AvatarImage } from "../ui/avatar";
 import { Mail, MapPin, Phone } from "lucide-react";
 import {
   Table,

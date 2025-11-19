@@ -1,12 +1,7 @@
-import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import z4 from "zod/v4";
-import { InvoiceFormSchema } from "@/lib/misc/schema";
 
-export default function InvoiceTemplateI(
-  data: z4.infer<typeof InvoiceFormSchema>
-) {
+export default function InvoiceTemplateI() {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-6xl mx-auto bg-white shadow-lg">

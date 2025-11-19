@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   try {
     const rawFormData = await request.formData();
-    const formData: { [key: string]: any } = {};
+    const formData: { [key: string]: unknown } = {};
 
     for (const [key, value] of rawFormData.entries()) {
       if (value instanceof File) {

@@ -2,7 +2,7 @@ import { PuppeteerPDFRequestBodySchema } from "@/lib/misc/schema";
 import { NextResponse } from "next/server";
 import type { Browser } from "puppeteer-core";
 import puppeteerCore from "puppeteer-core";
-import chromium from "@sparticuz/chromium";
+import chromium from "@sparticuz/chromium-min";
 
 export const maxDuration = 60;
 
@@ -47,16 +47,18 @@ export async function POST(request: Request) {
       logoHTML = `<img src="${ownerLogoURL}" style="width:48px; height:48px; object-fit:cover; display:block;"/>`;
     }
 
-    if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
-      chromium.setGraphicsMode = false;
+    if (process.env.VERCEL || process.env.NODE_ENV === "production") {
+      const executablePath = await chromium.executablePath(
+        `https://github.com/Sparticuz/chromium/releases/download/v131.0.0/chromium-v131.0.0-pack.tar`
+      );
 
       browser = await puppeteerCore.launch({
         args: chromium.args,
-        executablePath: await chromium.executablePath(),
+        executablePath,
+        headless: true,
       });
     } else {
       const { default: puppeteer } = await import("puppeteer");
-
       browser = (await puppeteer.launch({
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
       })) as unknown as Browser;

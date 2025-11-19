@@ -5,7 +5,7 @@ import { FOOTER_LINKS } from "@/lib/misc/constants";
 
 export default function Footer() {
   return (
-    <footer className="px-5 grid md:grid-cols-[400px_1fr] gap-y-7 gap-x-5 lg:gap-x-20 xl:gap-x-36 justify-between sm:justify-items-center py-10 bg-accent dark:bg-transparent dark:shadow-2xl dark:shadow-white rounded-t-4xl text-white">
+    <footer className="px-5 grid md:grid-cols-[400px_1fr] gap-y-7 gap-x-5 lg:gap-x-20 xl:gap-x-36 justify-between sm:justify-items-center py-10 bg-accent dark:bg-transparent dark:shadow-sm dark:shadow-baby-powder/40 rounded-t-4xl text-white">
       {/* First Column */}
       <div className="space-y-4">
         <Link href={"/"}>

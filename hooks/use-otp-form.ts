@@ -3,7 +3,7 @@
 import { OTPFormSchema } from "@/lib/misc/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import z, { email } from "zod/v4";
+import z from "zod/v4";
 import { useRouter } from "next/navigation";
 import { toastError, toastSuccess } from "@/lib/misc/toast-config";
 import { resendOTP } from "@/actions/auth/otp";
@@ -15,7 +15,7 @@ export default function useOTPForm() {
   const [resendingOTP, setResendingOTP] = useState<boolean>(false);
   const otpForm = useForm<z.infer<typeof OTPFormSchema>>({
     resolver: zodResolver(OTPFormSchema),
-    mode: "onBlur",
+    mode: "all",
     defaultValues: {
       pin: "",
     },

@@ -140,10 +140,12 @@ export default function SignUpForm() {
           <CardFooter className="flex-col gap-2">
             <Button
               type="submit"
-              className="w-full flex items-center gap-4 primary-gradient dark:primary-gradient"
+              className="w-full flex items-center gap-4 primary-gradient dark:primary-gradient text-white"
               disabled={!form.formState.isValid || form.formState.isSubmitting}
             >
-              {form.formState.isSubmitting && <Spinner />}
+              {form.formState.isSubmitting && (
+                <Spinner className="text-white" />
+              )}
               Signup
             </Button>
             <p className="text-sm! text-center mx-auto">

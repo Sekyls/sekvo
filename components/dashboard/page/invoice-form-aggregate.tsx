@@ -78,6 +78,7 @@ export default function AggregatedInvoiceForm() {
       });
 
       const parsedResponse: HTTPResponseType = await response.json();
+      router.prefetch(`/invoice-preview/${parsedResponse.data}`);
 
       if (response.status === 401 || parsedResponse.error?.code === 401) {
         toastError(parsedResponse.error?.message || "");
@@ -88,7 +89,8 @@ export default function AggregatedInvoiceForm() {
         return toastError(parsedResponse.error?.message || "");
       }
       toastSuccess(parsedResponse.message || "");
-      window.open(`/invoive-preview/${parsedResponse.data}`, "_blank");
+      router.push(`/invoice-preview/${parsedResponse.data}`);
+      // window.open(`/invoice-preview/${parsedResponse.data}`, "_blank");
     } catch (error) {
       if (error instanceof Error) {
         return toastError(error.message);
@@ -130,7 +132,7 @@ export default function AggregatedInvoiceForm() {
           <Button
             type="submit"
             form="form-invoice-aggregate"
-            className="w-full max-w-3xs mx-auto mt-5 bg-green-800 font-bold tracking-wider text-md hover:scale-90 hover:bg-green-700"
+            className="w-full max-w-3xs mx-auto mt-5 bg-green-800 font-bold tracking-wider text-md hover:scale-90 hover:bg-green-700 text-white"
             disabled={!formState.isValid || formState.isSubmitting}
           >
             Generate{" "}

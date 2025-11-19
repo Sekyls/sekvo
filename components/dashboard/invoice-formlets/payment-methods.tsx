@@ -35,7 +35,7 @@ export default function PaymentMethods() {
         </Label>
         <PopoverTrigger
           asChild
-          className="max-w-sm flex bg-transparent items-center gap-x-1 text-foreground invoice-bg-light hover:bg-transparent justify-between"
+          className="max-w-sm flex bg-input/40 items-center gap-x-1 text-foreground invoice-bg-light hover:bg-transparent justify-between"
         >
           <Button>
             <span className="block">Select</span> <ChevronDown />

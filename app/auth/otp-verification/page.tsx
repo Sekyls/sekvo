@@ -1,6 +1,9 @@
-export const dynamic = "force-dynamic";
-
-import InputOTPForm from "@/components/authentication/otp-input-form";
+"use client";
+import dynamic from "next/dynamic";
+const InputOTPForm = dynamic(
+  () => import("@/components/authentication/otp-input-form"),
+  { ssr: false }
+);
 
 export default function page() {
   return <InputOTPForm />;

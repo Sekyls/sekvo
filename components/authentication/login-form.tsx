@@ -102,11 +102,11 @@ export default function LoginForm() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full flex justify-center items-center gap-5 primary-gradient"
+            className="w-full flex justify-center items-center gap-5 primary-gradient text-white"
           >
             Log in
             <LoaderCircle
-              className={cn(isLoading ? "animate-spin" : "hidden")}
+              className={cn(isLoading ? "animate-spin text-white" : "hidden")}
             />
           </Button>
           <p className="text-sm! text-center mx-auto">

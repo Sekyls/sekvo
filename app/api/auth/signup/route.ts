@@ -83,7 +83,7 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     if (error instanceof Error) {
-      NextResponse.json(
+      return NextResponse.json(
         {
           success: false,
           error: { code: 500, message: error.message, details: error.stack },

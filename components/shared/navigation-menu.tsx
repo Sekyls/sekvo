@@ -6,7 +6,7 @@ import MobileMenu from "./menu-mobile";
 
 export default function NavigationMenu() {
   return (
-    <nav className="flex justify-between items-center flex-nowrap px-5 py-2 backdrop-blur-sm dark:shadow-baby-powder/20 shadow-lg w-full fixed top-0 z-50 rounded-b-xl">
+    <nav className="flex justify-between items-center flex-nowrap px-5 py-2 backdrop-blur-sm dark:shadow-baby-powder/10 shadow-sm w-full fixed top-0 z-50 rounded-b-xl">
       <div className="flex gap-x-5 items-center">
         <Link href={"/"}>
           <Image src={"/logo.png"} alt="Sekvo" width={70} height={70} />

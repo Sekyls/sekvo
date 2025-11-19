@@ -54,7 +54,7 @@ export async function POST(request: Request) {
       printBackground: true,
       displayHeaderFooter: true,
       margin: {
-        top: "0px",
+        top: "10mm",
         bottom: "20mm",
         left: "10mm",
         right: "10mm",

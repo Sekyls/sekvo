@@ -11,6 +11,7 @@ import Image from "next/image";
 import { Field, FieldLabel, FieldTitle } from "../ui/field";
 import { getPDFPreview } from "@/lib/misc/preview";
 import DownloadInvoice from "../misc/download-invoice";
+import { ModeToggle } from "../ui/mode-toggle";
 
 export default async function TemplateI({
   id,
@@ -49,7 +50,7 @@ export default async function TemplateI({
 
   return (
     <>
-      <div className="w-[790px] print:w-auto mx-auto px-5 py-1 font-roboto bg-white overflow-x-hidden">
+      <div className="w-[790px] print:w-auto mx-auto px-5 py-1 font-roboto bg-white overflow-x-hidden dark:text-background">
         <header className="flex justify-between items-center gap-x-8  mb-12">
           <div className="text-[#133e58] font-black text-3xl">
             {ownerRelation.name}
@@ -57,7 +58,7 @@ export default async function TemplateI({
           <div className="size-3 flex-1 bg-invoice-templateI [clip-path:polygon(12_0,100%_0,100%_100%,0_100%)]"></div>
         </header>
 
-        <main>
+        <main className="text-baby-">
           {/* Sender's & Invoice data */}
           <section className="flex justify-between gap-x-16 mb-16">
             {/* Left Section */}
@@ -124,9 +125,9 @@ export default async function TemplateI({
           {/* Recipient Info & Due Amount */}
           <section className="flex items-center justify-between mb-16">
             {/* Left section */}
-            <div className="grid grid-cols-[5%_95%] items-center">
+            <div className="grid grid-cols-[3%_97%] items-center flex-1">
               <div className="h-full w-1 bg-invoice-templateI"></div>
-              <div className="font-roboto pl-3">
+              <div className="font-roboto">
                 <p className="font-bold text-lg">{invoice.recipientName}</p>
                 <span className="text-sm block leading-relaxed">
                   {invoice.recipientAddress}
@@ -406,7 +407,7 @@ export default async function TemplateI({
           </div>
 
           {/* Signature Section */}
-          <section className="mb-12 print:mb-0">
+          <section className="mb-12 print:mb-0 ml-2">
             <div className="space-y-3">
               <div className="text-sm text-gray-500">
                 {issuerRelation?.role}
@@ -414,9 +415,9 @@ export default async function TemplateI({
               <Image
                 src={signatureURL}
                 alt=""
-                width={100}
-                height={100}
-                className="-ml-5 break-inside-avoid"
+                width={80}
+                height={80}
+                className="-ml-1 break-inside-avoid"
               />
               <div className="font-semibold text-base text-gray-800">
                 {issuerRelation?.name}
@@ -454,10 +455,10 @@ export default async function TemplateI({
               {(invoice.issuerBrandLogo || ownerRelation.logo) && (
                 <Image
                   alt=""
-                  width={100}
-                  height={100}
+                  width={50}
+                  height={50}
                   src={issuerBrandLogoURL || ownerLogoURL}
-                  className="-ml-8 max-w-sm"
+                  className="-ml-1 max-w-sm"
                 />
               )}
             </div>

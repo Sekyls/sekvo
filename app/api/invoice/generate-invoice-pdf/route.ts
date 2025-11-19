@@ -1,12 +1,18 @@
 import { PuppeteerPDFRequestBodySchema } from "@/lib/misc/schema";
 import { NextResponse } from "next/server";
-import Puppeteer, { Browser } from "puppeteer";
+import type { Browser } from "puppeteer-core";
+import puppeteerCore from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
+
+export const maxDuration = 60;
 
 export async function POST(request: Request) {
-  let browser: Browser;
+  let browser: Browser | null = null;
+
   try {
     const body = await request.json();
     const data = PuppeteerPDFRequestBodySchema.safeParse(body);
+
     if (!data.success) {
       throw new Error(data.error.message);
     }
@@ -26,8 +32,10 @@ export async function POST(request: Request) {
       process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test"
         ? process.env.BASE_URL_DEV
         : process.env.BASE_URL_PROD;
+
     if (!baseURL) {
-      return console.log("BASE_URL_DEV or BASE_URL_PROD is not set");
+      console.log("BASE_URL_DEV or BASE_URL_PROD is not set");
+      return NextResponse.json({ error: "Base URL missing" }, { status: 500 });
     }
 
     const invoicePreviewURL = `${baseURL}/invoice-preview/${invoiceID}?agent=puppeteer`;
@@ -39,10 +47,21 @@ export async function POST(request: Request) {
       logoHTML = `<img src="${ownerLogoURL}" style="width:48px; height:48px; object-fit:cover; display:block;"/>`;
     }
 
-    browser = await Puppeteer.launch({
-      headless: true,
-      executablePath: Puppeteer.executablePath(),
-    });
+    if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
+      chromium.setGraphicsMode = false;
+
+      browser = await puppeteerCore.launch({
+        args: chromium.args,
+        executablePath: await chromium.executablePath(),
+      });
+    } else {
+      const { default: puppeteer } = await import("puppeteer");
+
+      browser = (await puppeteer.launch({
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      })) as unknown as Browser;
+    }
+
     const page = await browser.newPage();
 
     await page.goto(invoicePreviewURL, {
@@ -61,38 +80,37 @@ export async function POST(request: Request) {
       },
       headerTemplate: `<div style="display:none !important;"></div>`,
       footerTemplate: `
-  <div style="font-size:14px; width:100%; padding:10px 10mm; border-top:1px dashed #d1d5db;">
-    <table style="width:100%; border-collapse:collapse;">
-      <tr>
-        <td style="width:50%; vertical-align:middle;">
-          <table style="border-collapse:collapse;">
+        <div style="font-size:14px; width:100%; padding:10px 10mm; border-top:1px dashed #d1d5db;">
+          <table style="width:100%; border-collapse:collapse;">
             <tr>
-              <td style="vertical-align:middle; padding-right:2px;">
-                <span style="font-weight:900; color:#133e58; font-size:20px;">
-                  ${ownerRelationname}
-                </span>
+              <td style="width:50%; vertical-align:middle;">
+                <table style="border-collapse:collapse;">
+                  <tr>
+                    <td style="vertical-align:middle; padding-right:2px;">
+                      <span style="font-weight:900; color:#133e58; font-size:20px;">
+                        ${ownerRelationname}
+                      </span>
+                    </td>
+                    <td style="vertical-align:middle; padding-top:5px">
+                     ${logoHTML}
+                    </td>
+                  </tr>
+                </table>
               </td>
-              
-              <td style="vertical-align:middle; padding-top:5px">
-               ${logoHTML}
+              <td style="width:50%; text-align:right; vertical-align:top; color:#4b5563;">
+                <div>${ownerRelationaddress}</div>
+                <div>${ownerRelationemail}</div>
+                <div>Page <span class="pageNumber"></span> of <span class="totalPages"></span></div>
               </td>
-             
             </tr>
           </table>
-        </td>
-        <td style="width:50%; text-align:right; vertical-align:top; color:#4b5563;">
-          <div>${ownerRelationaddress}</div>
-          <div>${ownerRelationemail}</div>
-          <div>Page <span class="pageNumber"></span> of <span class="totalPages"></span></div>
-        </td>
-      </tr>
-    </table>
-  </div>
-`,
+        </div>`,
     });
 
     const pdf = Buffer.from(pdfUint8Buffer);
+
     await browser.close();
+    browser = null;
 
     return new NextResponse(pdf, {
       status: 200,
@@ -102,9 +120,12 @@ export async function POST(request: Request) {
       },
     });
   } catch (error) {
-    if (browser!) {
+    console.error("PDF Generation Error:", error);
+
+    if (browser) {
       await browser.close();
     }
+
     if (error instanceof Error) {
       return NextResponse.json(
         {
@@ -114,8 +135,12 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+    return NextResponse.json(
+      { success: false, error: "Unknown error" },
+      { status: 500 }
+    );
   } finally {
-    if (browser!) {
+    if (browser) {
       await browser.close();
     }
   }

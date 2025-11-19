@@ -21,7 +21,7 @@ export default function PasswordToggle({
       {showPassword ? (
         <Eye size={20} className="text-green-700" />
       ) : (
-        <EyeOff size={20} className="text-rich-black/60" />
+        <EyeOff size={20} className="text-rich-black/60 dark:text-input/40" />
       )}
     </div>
   );

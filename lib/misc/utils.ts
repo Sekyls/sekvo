@@ -41,3 +41,12 @@ export async function getBuffer(file: File) {
 export function sanitiseJSON(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }
+
+export function uint8ArrayToDataURL(
+  uint8: Uint8Array<ArrayBufferLike>,
+  mime = "image/png"
+) {
+  const buffer = Buffer.from(uint8);
+  const base64 = buffer.toString("base64");
+  return `data:${mime};base64,${base64}`;
+}

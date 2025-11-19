@@ -1,11 +1,11 @@
 "use client";
 
-import { OTPFormSchema } from "@/lib/miscellany/schema";
+import { OTPFormSchema } from "@/lib/misc/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z, { email } from "zod/v4";
 import { useRouter } from "next/navigation";
-import { toastError, toastSuccess } from "@/lib/miscellany/toast-config";
+import { toastError, toastSuccess } from "@/lib/misc/toast-config";
 import { resendOTP } from "@/actions/auth/otp";
 import { useState } from "react";
 import setVerifiedUser from "@/actions/db/set-verified-user";

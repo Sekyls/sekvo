@@ -1,212 +1,152 @@
 import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Mail, Phone } from "lucide-react";
+import z4 from "zod/v4";
+import { InvoiceFormSchema } from "@/lib/misc/schema";
 
-export default function InvoiceTemplateIV() {
+export default function InvoiceTemplateI(
+  data: z4.infer<typeof InvoiceFormSchema>
+) {
   return (
-    <div className="min-h-screen bg-white flex">
-      {/* Left Cyan Stripe */}
-      <div className="w-6 bg-cyan-500 flex-shrink-0"></div>
-
-      {/* Main Content */}
-      <div className="flex-1 p-12 max-w-4xl">
+    <div className="min-h-screen bg-gray-50 p-8">
+      <div className="max-w-6xl mx-auto bg-white shadow-lg">
         {/* Header */}
-        <div className="flex justify-between items-start mb-16">
-          <div className="flex items-center gap-3">
-            <svg className="w-12 h-12" viewBox="0 0 50 50">
-              <path
-                d="M 15 10 Q 10 15 10 25 Q 10 35 15 40"
-                stroke="#06b6d4"
-                strokeWidth="3"
-                fill="none"
-              />
-              <path
-                d="M 35 10 Q 40 15 40 25 Q 40 35 35 40"
-                stroke="#06b6d4"
-                strokeWidth="3"
-                fill="none"
-              />
-              <line
-                x1="20"
-                y1="25"
-                x2="30"
-                y2="25"
-                stroke="#06b6d4"
-                strokeWidth="3"
-              />
-            </svg>
-            <h1 className="text-4xl">
-              <span className="text-cyan-500 font-semibold">ockup</span>
-              <span className="text-gray-800"> | Invoice</span>
-            </h1>
-          </div>
-          <div className="text-right text-sm">
-            <p className="text-gray-500 font-semibold">INVOICE NO.</p>
-            <p className="text-gray-800 mb-3">001/2020</p>
-            <p className="text-gray-500 font-semibold">INVOICE DATE</p>
-            <p className="text-gray-800">January 1, 2020</p>
-          </div>
+        <div className="bg-teal-800 text-white p-8">
+          <h1 className="text-4xl font-bold">
+            Invoice <span className="text-teal-200">| [Project name]</span>
+          </h1>
         </div>
 
-        {/* Recipient and Mockup Info */}
-        <div className="grid grid-cols-2 gap-12 mb-12">
-          {/* Recipient */}
-          <div>
-            <h3 className="text-xs font-bold text-gray-800 mb-3">RECIPIENT</h3>
-            <div className="space-y-1 text-sm">
-              <p className="font-semibold text-gray-800">JOHN SNOW</p>
-              <p className="text-gray-600">2345 Fite Island</p>
-              <p className="text-gray-600">6789 Winterfeln, N</p>
-              <p className="text-gray-600">VAT no.: 0987654</p>
-              <div className="flex items-center gap-2 mt-3 text-gray-600">
-                <Mail className="w-4 h-4" />
-                <span>company.mail@gmail.com</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-600">
-                <Phone className="w-4 h-4" />
-                <span>+386 714 505 8985</span>
-              </div>
-            </div>
-          </div>
+        {/* Top Cards Section */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-8 bg-gray-100">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold">
+                Client details
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2 text-sm text-gray-600">
+              <p>Client name</p>
+              <p>Client email ID</p>
+              <p>Client phone number</p>
+            </CardContent>
+          </Card>
 
-          {/* Mockup */}
-          <div className="text-right">
-            <h3 className="text-xs font-bold text-gray-800 mb-3">MOCKUP</h3>
-            <div className="space-y-1 text-sm">
-              <p className="text-gray-600">7896 Cloude Way</p>
-              <p className="text-gray-600">99237 Braxwos, SE</p>
-              <p className="text-gray-600">VAT no.: 2344234</p>
-              <div className="flex items-center justify-end gap-2 mt-3 text-gray-600">
-                <Mail className="w-4 h-4" />
-                <span>your.mail@gmail.com</span>
-              </div>
-              <div className="flex items-center justify-end gap-2 text-gray-600">
-                <Phone className="w-4 h-4" />
-                <span>+00 000 000 000</span>
-              </div>
-            </div>
-          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold">Billed to</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2 text-sm text-gray-600">
+              <p>Your name</p>
+              <p>Your address</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold">
+                Invoice details
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2 text-sm text-gray-600">
+              <p>Invoice number:</p>
+              <p>Issue date:</p>
+              <p>Due date:</p>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Items Table */}
-        <div className="mb-8">
-          <div className="grid grid-cols-12 gap-4 mb-3 text-xs font-bold text-cyan-600">
-            <div className="col-span-5">DESCRIPTION</div>
-            <div className="col-span-2 text-center">HOURS</div>
-            <div className="col-span-2 text-center">UNITS</div>
-            <div className="col-span-3 text-right">AMOUNT</div>
-          </div>
-
-          <Separator className="mb-4" />
-
-          {/* Item 1 */}
-          <div className="grid grid-cols-12 gap-4 py-3 text-sm">
-            <div className="col-span-5 text-gray-700">Castle Black attack</div>
-            <div className="col-span-2 text-center text-gray-700">60</div>
-            <div className="col-span-2 text-center text-gray-700">15 u.</div>
-            <div className="col-span-3 text-right text-gray-700">
-              900.00 USD
-            </div>
-          </div>
-
-          <Separator className="my-2" />
-
-          {/* Item 2 */}
-          <div className="grid grid-cols-12 gap-4 py-3 text-sm">
-            <div className="col-span-5 text-gray-700">Dragon defence</div>
-            <div className="col-span-2 text-center text-gray-700">20</div>
-            <div className="col-span-2 text-center text-gray-700">12 u.</div>
-            <div className="col-span-3 text-right text-gray-700">
-              240.00 USD
-            </div>
-          </div>
-
-          <Separator className="my-4" />
-
-          {/* Subtotal */}
-          <div className="grid grid-cols-12 gap-4 py-2 text-sm">
-            <div className="col-span-9 text-right font-semibold text-cyan-600">
-              SUBTOTAL
-            </div>
-            <div className="col-span-3 text-right text-gray-700">
-              1140.00 USD
-            </div>
-          </div>
-
-          <Separator className="my-2" />
-
-          {/* Discount */}
-          <div className="grid grid-cols-12 gap-4 py-2 text-sm">
-            <div className="col-span-9 text-right font-semibold text-cyan-600">
-              DISCOUNT 5%
-            </div>
-            <div className="col-span-3 text-right text-gray-700">57.00 USD</div>
-          </div>
-
-          <Separator className="my-2" />
-
-          {/* Total */}
-          <div className="grid grid-cols-12 gap-4 py-3">
-            <div className="col-span-9 text-right font-bold text-gray-800">
-              TOTAL
-            </div>
-            <div className="col-span-3 text-right font-bold text-cyan-600 text-lg">
-              1083,00 USD
-            </div>
-          </div>
-        </div>
-
-        {/* Account Data */}
-        <div className="bg-cyan-500 text-white p-4 mb-8">
-          <h3 className="font-bold mb-2">ACCOUNT DATA</h3>
-          <p className="text-sm mb-3">
-            Transfer the amount to the business account below. Please include
-            invoice number on your check.
+        {/* Project Details Section */}
+        <div className="p-8 bg-gray-50">
+          <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+            Project details
+          </h2>
+          <p className="text-gray-600 leading-relaxed">
+            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+            sint. Velit officia consequat duis enim velit mollit. Exercitation
+            veniam consequat sunt nostrud amet.
           </p>
-          <div className="text-sm space-y-1">
-            <p>
-              <span className="font-semibold">BANK:</span> FENTOS
-            </p>
-            <p>
-              <span className="font-semibold">IBAN:</span> ADSA 2345 9332 23534
-            </p>
-          </div>
         </div>
 
-        {/* Notes */}
-        <div className="mb-12">
-          <h3 className="font-bold text-gray-800 mb-3">NOTES</h3>
-          <div className="space-y-3 text-sm text-gray-600 leading-relaxed">
-            <p>
-              Arya hated them making fun of Needle. 
-            </p>
-            <p>
-              The orphan boys hooted. 
-            </p>
-            <p>Thank you and have a nice day.</p>
+        {/* Deliverables Table */}
+        <div className="p-8">
+          <div className="mb-4">
+            <div className="grid grid-cols-2 font-semibold text-gray-700 pb-4">
+              <div>Deliverables</div>
+              <div className="text-right">Price</div>
+            </div>
+            <Separator className="bg-teal-800 h-0.5" />
+          </div>
+
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 py-3 bg-gray-50 px-4 rounded">
+              <div className="text-gray-600">Deliverable #1</div>
+              <div className="text-right text-gray-600">INR 0000.00</div>
+            </div>
+
+            <div className="grid grid-cols-2 py-3 bg-gray-100 px-4 rounded">
+              <div className="text-gray-600">Deliverable #1</div>
+              <div className="text-right text-gray-600">INR 0000.00</div>
+            </div>
+
+            <div className="grid grid-cols-2 py-3 bg-gray-50 px-4 rounded">
+              <div className="text-gray-600">Deliverable #1</div>
+              <div className="text-right text-gray-600">INR 0000.00</div>
+            </div>
+
+            <div className="grid grid-cols-2 py-3 bg-gray-50 px-4 rounded">
+              <div className="text-teal-700 font-semibold">Discount</div>
+              <div className="text-right text-teal-700 font-semibold">
+                - INR 0000.00
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 py-3 bg-gray-100 px-4 rounded">
+              <div className="font-bold text-gray-800">TOTAL</div>
+              <div className="text-right font-bold text-gray-800">
+                INR 0000.00
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 py-3 bg-gray-50 px-4 rounded">
+              <div className="font-semibold text-gray-700">Advance x%</div>
+              <div className="text-right font-semibold text-gray-700">
+                INR 0000.00
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Footer */}
-        <Separator className="my-8" />
-        <div className="flex justify-between text-xs text-gray-400">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8 bg-gray-50 border-t">
+          <div className="flex gap-6">
+            <div className="w-20 h-20 bg-teal-700 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg
+                className="w-10 h-10 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M14.5 2L6 10.5l3.5 3.5 8.5-8.5-3.5-3.5zm-5 13L7 17.5 3.5 14 6 11.5l3.5 3.5z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-2">
+                Contact details:
+              </h3>
+              <p className="text-sm text-gray-600">Richard Hendricks</p>
+              <p className="text-sm text-gray-600">richard@piedpiper.com</p>
+              <p className="text-sm text-gray-600">+1 8366 385 9239</p>
+            </div>
+          </div>
+
           <div>
-            <p className="font-semibold">MOCKUP</p>
-            <p>7896 Cloude Way | 99237 Braxwos, SE</p>
-          </div>
-          <div className="text-right space-y-1">
-            <div className="flex items-center justify-end gap-2">
-              <Mail className="w-3 h-3" />
-              <span>your.mail@gmail.com</span>
-            </div>
-            <div className="flex items-center justify-end gap-2">
-              <Phone className="w-3 h-3" />
-              <span>+00 000 000 000</span>
-            </div>
-          </div>
-          <div className="text-right">
-            <p>DB: VAT</p>
-            <p>2344012028</p>
+            <h3 className="font-semibold text-gray-800 mb-2">
+              Wiring details:
+            </h3>
+            <p className="text-sm text-gray-600">Richard Hendricks</p>
+            <p className="text-sm text-gray-600">Acc No: 50100287345954</p>
+            <p className="text-sm text-gray-600">IFSC: HDFC0000919</p>
+            <p className="text-sm text-gray-600">G-pay: richard97@okhdfcbank</p>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 import { FormProvider } from "react-hook-form";
 import useInvoiceForm from "@/hooks/use-invoice-form";
-import { InvoiceFormProviderProps } from "@/lib/miscellany/types";
+import { InvoiceFormProviderProps } from "@/lib/misc/types";
 
 export default function InvoiceFormProvider({
   children,

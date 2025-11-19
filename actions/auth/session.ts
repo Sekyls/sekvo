@@ -1,6 +1,6 @@
 "use server";
 import { connectRedis, redis } from "@/lib/clients/redis";
-import { SESSION_EXPIRATION } from "@/lib/miscellany/constants";
+import { SESSION_EXPIRATION } from "@/lib/misc/constants";
 import { randomBytes } from "crypto";
 import { cookies } from "next/headers";
 

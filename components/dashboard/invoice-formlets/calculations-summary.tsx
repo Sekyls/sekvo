@@ -16,8 +16,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useCalcSummary from "@/hooks/use-calculation-summary";
-import { InvoiceFormSchema } from "@/lib/miscellany/schema";
-import { FieldNames } from "@/lib/miscellany/types";
+import { InvoiceFormSchema } from "@/lib/misc/schema";
+import { FieldNames } from "@/lib/misc/types";
 import {
   BadgeTurkishLira,
   BadgeX,

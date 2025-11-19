@@ -1,8 +1,8 @@
 import { otpGenerator } from "@/actions/auth/otp";
 import { sendOTP } from "@/actions/email/nodemailer";
 import { prisma } from "@/lib/clients/prisma";
-import { SignupFormDataSchema } from "@/lib/miscellany/schema";
-import { getBuffer } from "@/lib/miscellany/utils";
+import { SignupFormDataSchema } from "@/lib/misc/schema";
+import { getBuffer } from "@/lib/misc/utils";
 import argon2 from "argon2";
 import { NextResponse } from "next/server";
 

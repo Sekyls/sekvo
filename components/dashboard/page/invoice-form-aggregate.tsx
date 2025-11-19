@@ -11,10 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Field, FieldGroup, FieldSet } from "@/components/ui/field";
 import { useFormContext } from "react-hook-form";
-import {
-  InvoiceFormDataSchema,
-  InvoiceFormSchema,
-} from "@/lib/miscellany/schema";
+import { InvoiceFormDataSchema, InvoiceFormSchema } from "@/lib/misc/schema";
 import useCalcSummary from "@/hooks/use-calculation-summary";
 import z4 from "zod/v4";
 import SimpleFormDetailsGroup from "../invoice-formlets/simple-form-group";
@@ -24,10 +21,10 @@ import NotesAndTerms from "../invoice-formlets/notes-terms";
 import CalculationSummary from "../invoice-formlets/calculations-summary";
 import PaymentMethods from "../invoice-formlets/payment-methods";
 import SignatureBlock from "../invoice-formlets/signature-block";
-import { toastError, toastSuccess } from "@/lib/miscellany/toast-config";
-import { HTTPResponseType } from "@/lib/miscellany/types";
+import { toastError, toastSuccess } from "@/lib/misc/toast-config";
+import { HTTPResponseType } from "@/lib/misc/types";
 import { Spinner } from "@/components/ui/spinner";
-import { cn } from "@/lib/miscellany/utils";
+import { cn } from "@/lib/misc/utils";
 import { useRouter } from "next/navigation";
 
 export default function AggregatedInvoiceForm() {

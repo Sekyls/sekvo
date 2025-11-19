@@ -4,7 +4,7 @@ import {
   CustomInvoiceFieldsType,
   PaymentMethodsType,
   RecipientContactPersonType,
-} from "@/lib/miscellany/types";
+} from "@/lib/misc/types";
 
 export async function getInvoiceFromDB(id: string) {
   const data = await prisma.invoices.findUnique({

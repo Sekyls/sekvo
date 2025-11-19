@@ -1,5 +1,5 @@
 "use client";
-import { getFormattedCountDown } from "@/lib/miscellany/utils";
+import { getFormattedCountDown } from "@/lib/misc/utils";
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Hourglass, RefreshCcw } from "lucide-react";

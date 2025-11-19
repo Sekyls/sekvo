@@ -18,8 +18,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Calculator, SearchIcon, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { CURRENCIES } from "@/lib/miscellany/constants";
-import { InvoiceFormSchema } from "@/lib/miscellany/schema";
+import { CURRENCIES } from "@/lib/misc/constants";
+import { InvoiceFormSchema } from "@/lib/misc/schema";
 import z4 from "zod/v4";
 import {
   Select,
@@ -27,7 +27,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { InvoiceFieldItemsProps } from "@/lib/miscellany/types";
+import { InvoiceFieldItemsProps } from "@/lib/misc/types";
 
 export default function InvoiceFieldItem({
   index,

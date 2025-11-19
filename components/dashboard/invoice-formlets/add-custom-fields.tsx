@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { InputGroupAddon, InputGroupButton } from "@/components/ui/input-group";
 import useAddCustomFields from "@/hooks/use-custom-fields";
-import { InvoiceFormSchema } from "@/lib/miscellany/schema";
+import { InvoiceFormSchema } from "@/lib/misc/schema";
 import { IconSquarePlus } from "@tabler/icons-react";
 import { Trash2 } from "lucide-react";
 import { Controller, useFormContext } from "react-hook-form";

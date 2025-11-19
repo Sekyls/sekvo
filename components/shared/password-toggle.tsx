@@ -1,4 +1,4 @@
-import { cn } from "@/lib/miscellany/utils";
+import { cn } from "@/lib/misc/utils";
 import { Eye, EyeOff } from "lucide-react";
 import React from "react";
 

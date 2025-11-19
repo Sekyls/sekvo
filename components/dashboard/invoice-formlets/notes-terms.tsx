@@ -1,9 +1,9 @@
 "use client";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
-import { NOTES_TERMS } from "@/lib/miscellany/constants";
-import { InvoiceFormSchema } from "@/lib/miscellany/schema";
-import { FieldNames } from "@/lib/miscellany/types";
+import { NOTES_TERMS } from "@/lib/misc/constants";
+import { InvoiceFormSchema } from "@/lib/misc/schema";
+import { FieldNames } from "@/lib/misc/types";
 import { Controller, useFormContext } from "react-hook-form";
 import z4 from "zod/v4";
 

@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { Check } from "lucide-react";
-import { cn } from "@/lib/miscellany/utils";
+import { cn } from "@/lib/misc/utils";
 import {
   IconCoins,
   IconDeviceFloppy,

@@ -22,7 +22,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { FieldNames } from "@/lib/miscellany/types";
+import { FieldNames } from "@/lib/misc/types";
 import usePaymentMethod from "@/hooks/use-payment-method";
 
 export default function PaymentMethods() {

@@ -445,3 +445,14 @@ export const CalculationSchema = z4.object({
 export const InvoiceFormDataSchema = InvoiceFormSchema.safeExtend(
   CalculationSchema.shape
 );
+
+export const PuppeteerPDFRequestBodySchema = z4.object({
+  invoiceID: z4.string(),
+  ownerRelationname: z4.string(),
+  ownerRelationaddress: z4.string(),
+  ownerRelationemail: z4.string(),
+  issuerBrandLogo: z4.boolean(),
+  ownerRelationLogo: z4.boolean(),
+  issuerBrandLogoURL: z4.string(),
+  ownerLogoURL: z4.string(),
+});

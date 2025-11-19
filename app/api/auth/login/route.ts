@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { LoginDataSchema } from "@/lib/miscellany/schema";
-import { SESSION_EXPIRATION } from "@/lib/miscellany/constants";
+import { LoginDataSchema } from "@/lib/misc/schema";
+import { SESSION_EXPIRATION } from "@/lib/misc/constants";
 import { logUserIn } from "@/actions/auth/login-auth";
 
 export async function POST(req: Request) {

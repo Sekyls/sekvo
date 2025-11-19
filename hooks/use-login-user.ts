@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { toastError, toastSuccess } from "@/lib/miscellany/toast-config";
+import { toastError, toastSuccess } from "@/lib/misc/toast-config";
 import { useState, FormEvent } from "react";
 
 export default function useLoginUser() {

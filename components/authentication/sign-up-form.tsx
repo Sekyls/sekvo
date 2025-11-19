@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useSignupForm from "@/hooks/use-signup-form";
-import { SIGNUP_FORM_FIELDS } from "@/lib/miscellany/constants";
+import { SIGNUP_FORM_FIELDS } from "@/lib/misc/constants";
 import Image from "next/image";
 import Link from "next/link";
 import PhoneInput from "react-phone-input-2";

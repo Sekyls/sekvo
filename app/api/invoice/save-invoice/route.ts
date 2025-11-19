@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/clients/prisma";
-import { InvoiceFormDataSchema } from "@/lib/miscellany/schema";
-import { getBuffer, sanitiseJSON } from "@/lib/miscellany/utils";
+import { InvoiceFormDataSchema } from "@/lib/misc/schema";
+import { getBuffer, sanitiseJSON } from "@/lib/misc/utils";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 

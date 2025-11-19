@@ -1,5 +1,5 @@
 "use client";
-import { InvoiceFormSchema } from "@/lib/miscellany/schema";
+import { InvoiceFormSchema } from "@/lib/misc/schema";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import z4 from "zod/v4";
 

@@ -6,12 +6,12 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { CLIENT_DETAILS_FIELDS } from "@/lib/miscellany/constants";
+import { CLIENT_DETAILS_FIELDS } from "@/lib/misc/constants";
 import { Controller, useFormContext } from "react-hook-form";
 import { useInvoiceDateHook } from "@/hooks/use-invoice-date";
 import { useDueDateHook } from "@/hooks/use-due-date";
 import DatePicker from "./date-picker";
-import { InvoiceFormSchema } from "@/lib/miscellany/schema";
+import { InvoiceFormSchema } from "@/lib/misc/schema";
 import z4 from "zod/v4";
 import RecipientContactPerson from "./contact-person";
 import RecipientPhoneNumber from "./phone-number";

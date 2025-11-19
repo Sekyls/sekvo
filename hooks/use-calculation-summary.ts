@@ -1,6 +1,6 @@
 "use client";
-import { InvoiceFormSchema } from "@/lib/miscellany/schema";
-import { CalculationSummaryExtras, Switches } from "@/lib/miscellany/types";
+import { InvoiceFormSchema } from "@/lib/misc/schema";
+import { CalculationSummaryExtras, Switches } from "@/lib/misc/types";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import z4 from "zod/v4";

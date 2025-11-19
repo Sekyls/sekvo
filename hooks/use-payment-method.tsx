@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import z4 from "zod/v4";
-import { InvoiceFormSchema } from "@/lib/miscellany/schema";
+import { InvoiceFormSchema } from "@/lib/misc/schema";
 
 export default function usePaymentMethod() {
   const [mtnMomo, setMtnMomo] = useState<boolean>(false);

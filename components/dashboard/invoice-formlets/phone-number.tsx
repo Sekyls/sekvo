@@ -5,7 +5,7 @@ import PhoneInput from "react-phone-input-2";
 import "@/styles/react-phone-input-2.css";
 import useGeolocation from "@/hooks/use-geolocation";
 import z4 from "zod/v4";
-import { InvoiceFormSchema } from "@/lib/miscellany/schema";
+import { InvoiceFormSchema } from "@/lib/misc/schema";
 
 export default function RecipientPhoneNumber() {
   const { control } = useFormContext<z4.infer<typeof InvoiceFormSchema>>();

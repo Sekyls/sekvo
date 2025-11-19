@@ -24,7 +24,7 @@ export default function Error({
         <h2 className="mt-8 text-4xl font-bold text-white mb-4">
           Oops! Page Not Found
         </h2>
-        <p className="text-lg text-gray-300 mb-8 max-w-md mx-auto">
+        <p className="text-lg text-gray-300 mb-8 max-w-md mx-auto text-center truncate">
           {error.message ??
             ` The page you're looking for seems to have wandered off into the
           digital void. Don't worry, it happens to the best of us.`}

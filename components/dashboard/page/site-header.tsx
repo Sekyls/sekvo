@@ -6,7 +6,7 @@ import { SidebarTrigger } from "../../ui/sidebar";
 import { ModeToggle } from "../../ui/mode-toggle";
 import Link from "next/link";
 import Image from "next/image";
-import { toastError } from "@/lib/miscellany/toast-config";
+import { toastError } from "@/lib/misc/toast-config";
 import { useRouter } from "next/navigation";
 
 export function SiteHeader() {

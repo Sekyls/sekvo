@@ -1,5 +1,5 @@
 "use client";
-import { FieldNames } from "@/lib/miscellany/types";
+import { FieldNames } from "@/lib/misc/types";
 import { useState } from "react";
 
 export function useInvoiceDateHook() {

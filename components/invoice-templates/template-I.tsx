@@ -11,7 +11,6 @@ import Image from "next/image";
 import { Field, FieldLabel, FieldTitle } from "../ui/field";
 import { getPDFPreview } from "@/lib/misc/preview";
 import DownloadInvoice from "../misc/download-invoice";
-import { ModeToggle } from "../ui/mode-toggle";
 
 export default async function TemplateI({
   id,

@@ -53,7 +53,12 @@ export async function POST(request: Request) {
       );
 
       browser = await puppeteerCore.launch({
-        args: chromium.args,
+        args: [
+          ...chromium.args,
+          "--disable-font-subpixel-positioning",
+          "--font-render-hinting=none",
+          "--disable-gpu",
+        ],
         executablePath,
         headless: true,
       });

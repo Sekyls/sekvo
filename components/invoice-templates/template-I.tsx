@@ -50,7 +50,7 @@ export default async function TemplateI({
 
   return (
     <>
-      <div className="w-[790px] print:w-auto mx-auto px-5 py-1 font-roboto bg-white overflow-x-hidden dark:text-background">
+      <div className="w-[790px] print:w-auto mx-auto px-5 py-1 invoice-pdf-font-fallback bg-white overflow-x-hidden dark:text-background">
         <header className="flex justify-between items-center gap-x-8  mb-12">
           <div className="text-[#133e58] font-black text-3xl">
             {ownerRelation.name}

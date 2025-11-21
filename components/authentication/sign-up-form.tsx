@@ -67,7 +67,12 @@ export default function SignUpForm() {
                   name={f.fieldName}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{f.label}</FormLabel>
+                      <FormLabel>
+                        {f.label}
+                        <span className="text-imperial-red font-black -ml-1">
+                          *
+                        </span>
+                      </FormLabel>
                       <FormControl>
                         {f.phone ? (
                           <PhoneInput

@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -5,77 +6,91 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Menu } from "lucide-react";
+import { LogIn, MousePointer2, Pencil, UserRoundPlus } from "lucide-react";
+import { cn } from "@/lib/misc/utils";
+import Link from "next/link";
+import { ModeToggle } from "../ui/mode-toggle";
+import LogoutUser from "../authentication/logout";
+import { useAuth } from "@/providers/authentication-provider";
 
 export default function MobileMenu() {
+  const { loggedIn, user } = useAuth();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="flex gap-x-2 rounded-4xl p-2 material-btn">
-          <Menu className="icon" />
+        <Button className="rounded-full size-10 material-btn">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
+            {loggedIn && user?.logo && <AvatarImage src={user?.logo || ""} />}
+            {!user?.logo && (
+              <AvatarFallback className="primary-gradient text-white">
+                {loggedIn ? (
+                  user?.name.trim().charAt(0)
+                ) : (
+                  <UserRoundPlus className="stroke-3" />
+                )}
+              </AvatarFallback>
+            )}
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="sm:w-56" align="center">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            Profile
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Billing
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Settings
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Keyboard shortcuts
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-          </DropdownMenuItem>
+      <DropdownMenuContent
+        className="min-w-50 max-w-sm"
+        alignOffset={1}
+        sideOffset={8}
+        align="end"
+      >
+        <DropdownMenuLabel className="font-bold font-space-grotesk text-base flex  items-center justify-between py-0.5">
+          {loggedIn ? user?.name : "Guest"}
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup className={cn(loggedIn ? "" : "hidden")}>
+          <DropdownMenuItem>{user?.email}</DropdownMenuItem>
+          <DropdownMenuItem>{user?.phoneNumber}</DropdownMenuItem>
+          <DropdownMenuItem>{user?.address}</DropdownMenuItem>
+          <DropdownMenuSeparator />
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>Email</DropdownMenuItem>
-                <DropdownMenuItem>Message</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>More...</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
-          <DropdownMenuItem>
-            New Team
-            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-          </DropdownMenuItem>
+        <DropdownMenuGroup className="space-y-2 pl-2 font-medium sm:hidden">
+          <Link
+            href={"/auth/signup"}
+            className="hover:underline decoration-2 underline-offset-8 decoration-red-700/70 text-sm flex items-center gap-x-2"
+          >
+            Get started{" "}
+            <MousePointer2
+              size={16}
+              className="rotate-90 -mt-0.5 text-amber-600"
+            />
+          </Link>
+          <Link
+            href={"/dashboard"}
+            className="hover:underline decoration-2 underline-offset-8 decoration-amber-500 flex items-center gap-x-2 text-sm"
+          >
+            Create Invoice <Pencil size={16} className="-mt-1 text-amber-600" />
+          </Link>
+          <DropdownMenuSeparator />
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>GitHub</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
-        <DropdownMenuItem disabled>API</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
+        {loggedIn ? (
+          <div className="flex justify-between items-center">
+            <LogoutUser className="bg-transparent! text-red-500! shadow-none!" />
+            <ModeToggle className="size-6! sm:hidden" />
+          </div>
+        ) : (
+          <div className="flex justify-between items-center">
+            <Link
+              href={"/auth/login"}
+              className={
+                "hover:underline decoration-2 underline-offset-8 decoration-amber-700 text-sm flex gap-x-2 items-center pl-2 font-medium"
+              }
+            >
+              Login
+              <LogIn size={16} className="text-green-600 stroke-2" />
+            </Link>
+            <ModeToggle className="size-6! sm:hidden" />
+          </div>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

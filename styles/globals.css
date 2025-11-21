@@ -277,3 +277,11 @@ input[type="number"]::-webkit-outer-spin-button {
     sans-serif,
     "Noto Sans Symbols 2" !important;
 }
+
+.primary-gradient-text {
+  background: linear-gradient(135deg, #e91e63 0%, #ff5722 50%, #ff9800 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}

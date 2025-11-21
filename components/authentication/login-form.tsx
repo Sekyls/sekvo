@@ -59,7 +59,10 @@ export default function LoginForm() {
         </CardHeader>
         <CardContent className="flex flex-col gap-6 space-y-4">
           <div className="space-y-3">
-            <Label>Email</Label>
+            <Label>
+              Email{" "}
+              <span className="text-imperial-red font-black -ml-1">*</span>
+            </Label>
             <Input
               className="focus-visible:border-0 focus-visible:ring-0 focus:right-0 focus:border-0"
               placeholder="Enter your email"
@@ -74,7 +77,10 @@ export default function LoginForm() {
 
           <div className="space-y-3">
             <Label className="flex justify-between items-center">
-              Password{" "}
+              <span>
+                Password
+                <span className="text-imperial-red font-black ml-1">*</span>
+              </span>
               <Link href={"#"} className="hidden sm:block">
                 Forgot password?
               </Link>

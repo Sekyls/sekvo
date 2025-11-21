@@ -106,4 +106,14 @@ export type RecipientContactPersonType = z4.infer<
   typeof InvoiceFormSchema.shape.recipientContactPerson
 >;
 
-
+export type UserAuth = {
+  loggedIn: boolean;
+  user: {
+    id: string;
+    address: string;
+    name: string;
+    email: string;
+    phoneNumber: string;
+    logo: string | null;
+  } | null;
+};

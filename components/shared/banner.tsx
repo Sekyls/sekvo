@@ -17,10 +17,10 @@ export default function Banner() {
       <Button className="font-bold primary-gradient max-w-full dark:text-white py-6">
         <Link
           href={"/auth/signup"}
-          className="flex gap-x-3 items-center justify-center"
+          className="flex gap-x-3 max-[286px]:gap-x-1 items-center justify-center"
         >
-          <SendHorizontal className="size-5" />
-          <p> Start sending invoices now!</p>
+          <SendHorizontal className="size-5 max-[286px]:size-4" />
+          <p className="max-[286px]:text-xs!"> Start sending invoices now!</p>
         </Link>
       </Button>
       <Image

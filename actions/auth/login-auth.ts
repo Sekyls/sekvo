@@ -16,7 +16,7 @@ export async function logUserIn(email: string, password: string) {
       },
     });
 
-    if (userLoginsFromDB === null) {
+    if (!userLoginsFromDB) {
       throw new Error("Email does not exist");
     }
     const passwordIsMatch = await argon2.verify(

@@ -35,19 +35,19 @@ export function ModeToggle({ className }: { className?: string }) {
       <DropdownMenuContent align="center" sideOffset={5}>
         <DropdownMenuItem
           onClick={() => setTheme("light")}
-          className="hover:bg-[linear-gradient(135deg,_#e91e63_0%,_#ff5722_50%,_#ff9800_100%)] hover:text-white!"
+          className="hover:bg-[linear-gradient(135deg,#e91e63_0%,#ff5722_50%,#ff9800_100%)] hover:text-white!"
         >
           Light
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => setTheme("dark")}
-          className="hover:bg-[linear-gradient(135deg,_#e91e63_0%,_#ff5722_50%,_#ff9800_100%)] hover:text-white!"
+          className="hover:bg-[linear-gradient(135deg,#e91e63_0%,#ff5722_50%,#ff9800_100%)] hover:text-white!"
         >
           Dark
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => setTheme("system")}
-          className="hover:bg-[linear-gradient(135deg,_#e91e63_0%,_#ff5722_50%,_#ff9800_100%)] hover:text-white!"
+          className="hover:bg-[linear-gradient(135deg,#e91e63_0%,#ff5722_50%,#ff9800_100%)] hover:text-white!"
         >
           System
         </DropdownMenuItem>

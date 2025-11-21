@@ -12,7 +12,7 @@ export function SiteHeader() {
        sticky top-0 backdrop-blur-xl z-100"
     >
       <Link href={"/"} className="flex items-center gap-2">
-        <h3 className="bg-clip-text text-5xl font-extrabold text-transparent bg-[linear-gradient(135deg,_#e91e63_0%,_#ff5722_50%,_#ff9800_100%)]">
+        <h3 className="bg-clip-text text-5xl font-extrabold text-transparent bg-[linear-gradient(135deg,#e91e63_0%,#ff5722_50%,#ff9800_100%)]">
           Dashboard{" "}
         </h3>
         <Image
@@ -32,7 +32,7 @@ export function SiteHeader() {
           orientation="vertical"
           className="data-[orientation=vertical]:h-5 primary-gradient w-0.5!"
         />
-        <SidebarTrigger className="ml-auto rotate-180 primary-gradient shadow-[0_4px_6px_rgba(0,_0,_0,_0.17),_0_8px_12px_rgba(0,_0,_0,_0.17)] text-white hover:text-white" />
+        <SidebarTrigger className="ml-auto rotate-180 primary-gradient shadow-[0_4px_6px_rgba(0,0,0,0.17),0_8px_12px_rgba(0,0,0,0.17)] text-white hover:text-white" />
       </div>
     </header>
   );

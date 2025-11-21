@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function InvoiceLoadingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#e91e63] via-[#ff5722] to-[#ff9800] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-[#e91e63] via-[#ff5722] to-[#ff9800] flex items-center justify-center p-4">
       <div className="max-w-2xl w-full flex flex-col items-center">
         {/* Central Visual: The "Ghost" Invoice */}
         <div className="relative bg-white/10 backdrop-blur-sm p-8 rounded-xl border border-white/20 shadow-2xl transform transition-all hover:scale-105 duration-500">

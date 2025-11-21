@@ -13,7 +13,7 @@ export default function Error({
 }) {
   const router = useRouter();
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#e91e63] via-[#ff5722] to-[#ff9800] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-[#e91e63] via-[#ff5722] to-[#ff9800] flex items-center justify-center p-4">
       <div className="max-w-2xl w-full text-center">
         {/* Error Code */}
         <div className="relative">

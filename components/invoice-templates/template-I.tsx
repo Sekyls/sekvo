@@ -51,7 +51,7 @@ export default async function TemplateI({
     <>
       <div className="w-[790px] print:w-auto mx-auto px-5 py-1 invoice-pdf-font-fallback bg-white overflow-x-hidden dark:text-background">
         <header className="flex justify-between items-center gap-x-8  mb-12">
-          <div className="text-[#133e58] font-black text-3xl">
+          <div className="text-invoice-templateI font-black text-3xl">
             {ownerRelation.name}
           </div>
           <div className="size-3 flex-1 bg-invoice-templateI [clip-path:polygon(12_0,100%_0,100%_100%,0_100%)]"></div>
@@ -66,7 +66,7 @@ export default async function TemplateI({
                 <MapPin
                   fill="#323232"
                   color="#ffff"
-                  className="mt-0.5 flex-shrink-0 -ml-1"
+                  className="mt-0.5 shrink-0 -ml-1"
                   size={18}
                 />
                 <span className="text-sm leading-relaxed">
@@ -78,12 +78,12 @@ export default async function TemplateI({
                   fill="#323232"
                   color="#ffff"
                   size={18}
-                  className="flex-shrink-0"
+                  className="shrink-0"
                 />
                 <span className="text-sm">{ownerRelation.phoneNumber}</span>
               </div>
               <div className="flex gap-x-2.5 items-center">
-                <Mail size={18} className="flex-shrink-0" />
+                <Mail size={18} className="shrink-0" />
                 <span className="text-sm">{ownerRelation.email}</span>
               </div>
             </div>

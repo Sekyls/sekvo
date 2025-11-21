@@ -1,5 +1,4 @@
 "use client";
-import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -29,8 +28,10 @@ import { useRouter } from "next/navigation";
 
 export default function AggregatedInvoiceForm() {
   const router = useRouter();
+
   const { handleSubmit, formState } =
     useFormContext<z4.infer<typeof InvoiceFormSchema>>();
+
   const {
     grandTotal,
     aggregateSubTotals,
@@ -43,6 +44,8 @@ export default function AggregatedInvoiceForm() {
   } = useCalcSummary();
 
   async function onSubmit(values: z4.infer<typeof InvoiceFormSchema>) {
+    const newTab = window.open("/invoice-preview/loading", "_blank");
+
     try {
       const methodIsSelected = Object.values(values.paymentMethods).filter(
         (method) => method
@@ -78,22 +81,29 @@ export default function AggregatedInvoiceForm() {
       });
 
       const parsedResponse: HTTPResponseType = await response.json();
-      router.prefetch(`/invoice-preview/${parsedResponse.data}`);
 
       if (response.status === 401 || parsedResponse.error?.code === 401) {
         toastError(parsedResponse.error?.message || "");
         return router.replace("/auth/login");
       }
-
       if (!response.ok || !parsedResponse.success) {
-        return toastError(parsedResponse.error?.message || "");
+        newTab?.close();
+        return toastError(
+          parsedResponse.error?.message || "Failed to create invoice"
+        );
       }
-      toastSuccess(parsedResponse.message || "");
-      router.push(`/invoice-preview/${parsedResponse.data}`);
-      // window.open(`/invoice-preview/${parsedResponse.data}`, "_blank");
+
+      toastSuccess("Invoice created successfully!");
+
+      newTab
+        ? (newTab.location.href = `/invoice-preview/${parsedResponse.data}`)
+        : router.push(`/invoice-preview/${parsedResponse.data}`);
     } catch (error) {
       if (error instanceof Error) {
-        return toastError(error.message);
+        newTab?.close();
+        return toastError(
+          error instanceof Error ? error.message : "Something went wrong"
+        );
       }
     }
   }

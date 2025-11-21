@@ -24,10 +24,6 @@ export function SiteHeader() {
         />
       </Link>
       <div className="ml-auto flex gap-x-3 items-center">
-        <div className="hidden sm:block">
-          <ModeToggle />
-        </div>
-        <LogoutUser />
         <Separator
           orientation="vertical"
           className="data-[orientation=vertical]:h-5 primary-gradient w-0.5!"

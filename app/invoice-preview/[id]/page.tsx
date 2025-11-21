@@ -1,3 +1,4 @@
+import InvoiceLoadingPage from "@/components/invoice-preview/loading-page";
 import TemplateI from "@/components/invoice-templates/template-I";
 
 export default async function InvoicePreviewPage({
@@ -10,5 +11,9 @@ export default async function InvoicePreviewPage({
   const { id } = await params;
   const { agent } = await searchParams;
 
-  return <TemplateI id={id} agent={agent} />;
+  return id === "loading" ? (
+    <InvoiceLoadingPage />
+  ) : (
+    <TemplateI id={id} agent={agent} />
+  );
 }

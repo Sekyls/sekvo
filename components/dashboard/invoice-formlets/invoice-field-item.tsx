@@ -68,9 +68,9 @@ export default function InvoiceFieldItem({
   }, [quantity, price, index, setValue]);
 
   return (
-    <FieldGroup key={field.id} className="grid grid-cols-[95%_5%]">
-      <div className="space-y-3">
-        <div className="flex gap-x-2">
+    <FieldGroup key={field.id} className="flex-row gap-x-5">
+      <div className="space-y-3 flex-1">
+        <div className="flex flex-col lg:flex-row gap-x-2 gap-y-3">
           {/* Item Name */}
           <Controller
             name={`invoiceItems.${index}.item`}
@@ -79,7 +79,7 @@ export default function InvoiceFieldItem({
               <Field
                 orientation="horizontal"
                 data-invalid={fieldState.invalid}
-                className="block space-y-2"
+                className="block space-y-2 max-w-2xs lg:max-w-full"
               >
                 <FieldLabel htmlFor={`invoice-items-${index}-item`}>
                   Item <span className="text-imperial-red font-black">*</span>
@@ -112,11 +112,10 @@ export default function InvoiceFieldItem({
               <Field
                 orientation="horizontal"
                 data-invalid={fieldState.invalid}
-                className="block space-y-2 max-w-3xs"
+                className="block space-y-2 lg:w-fit max-w-2xs"
               >
                 <FieldLabel htmlFor={`invoice-items-${index}-quantity`}>
-                  Quantity{" "}
-                  <span className="text-imperial-red font-black">*</span>
+                  Qty <span className="text-imperial-red font-black">*</span>
                 </FieldLabel>
                 <FieldContent>
                   <Input
@@ -142,7 +141,7 @@ export default function InvoiceFieldItem({
           {/* Unit Price */}
           <FieldSet
             id={`invoice-items-${index}-unit-price`}
-            className="max-w-3xs w-full gap-0 space-y-2"
+            className=" max-w-2xs lg:max-w-3xs w-full gap-0 space-y-2"
           >
             <FieldLabel htmlFor={`invoice-items-${index}-unit-price`}>
               Unit Price <span className="text-imperial-red font-black">*</span>
@@ -251,7 +250,7 @@ export default function InvoiceFieldItem({
             render={({ field: controllerField, fieldState }) => (
               <Field
                 orientation="horizontal"
-                className="max-w-3xs block space-y-2"
+                className="max-w-2xs block space-y-2"
               >
                 <FieldLabel>Sub-total</FieldLabel>
                 <InputGroup className="invoice-bg-light">
@@ -286,7 +285,7 @@ export default function InvoiceFieldItem({
             <Field
               orientation="horizontal"
               data-invalid={fieldState.invalid}
-              className="block space-y-2"
+              className="block space-y-2 max-w-2xs lg:max-w-full"
             >
               <FieldContent>
                 <Textarea
@@ -296,7 +295,7 @@ export default function InvoiceFieldItem({
                   aria-invalid={fieldState.invalid}
                   placeholder="e.g item description"
                   autoComplete="on"
-                  className="invoice-bg-light"
+                  className="invoice-bg-light min-h-auto"
                 />
               </FieldContent>
               {fieldState.invalid && (
@@ -308,9 +307,23 @@ export default function InvoiceFieldItem({
             </Field>
           )}
         />
+        {fields.length > 1 && (
+          <InputGroupAddon align="inline-end" className="max-w-2xs lg:hidden">
+            <InputGroupButton
+              type="button"
+              variant="destructive"
+              size="icon-xs"
+              onClick={() => remove(index)}
+              aria-label={`Remove email ${index + 1}`}
+              className="hover:scale-110 transition-all duration-500 ease-in-out invoice-bg-light w-full"
+            >
+              <Trash2 />
+            </InputGroupButton>
+          </InputGroupAddon>
+        )}
       </div>
       {fields.length > 1 && (
-        <InputGroupAddon align="inline-end">
+        <InputGroupAddon align="inline-end" className="w-fit hidden lg:flex">
           <InputGroupButton
             type="button"
             variant="destructive"

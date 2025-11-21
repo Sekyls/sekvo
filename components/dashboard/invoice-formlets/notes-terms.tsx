@@ -28,7 +28,7 @@ export default function NotesAndTerms() {
                   aria-invalid={fieldState.invalid}
                   placeholder={item.placeholder}
                   autoComplete="on"
-                  className="invoice-bg-light"
+                  className="invoice-bg-light min-h-auto max-w-2xs lg:max-w-full"
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />

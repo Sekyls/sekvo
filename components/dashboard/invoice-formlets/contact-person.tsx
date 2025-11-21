@@ -17,7 +17,7 @@ export default function RecipientContactPerson() {
   const { control } = useFormContext<z4.infer<typeof InvoiceFormSchema>>();
 
   return (
-    <ButtonGroup className="w-full max-w-sm gap-x-2">
+    <div className="grid min-[300px]:flex gap-x-2.5 max-w-sm gap-y-3">
       <Controller
         name="recipientContactPerson.title"
         control={control}
@@ -26,7 +26,7 @@ export default function RecipientContactPerson() {
             <FieldLabel htmlFor={field.name}>Title</FieldLabel>
             <Select value={field.value ?? ""} onValueChange={field.onChange}>
               <SelectTrigger className="invoice-bg-light">
-                {field.value || "Select a title"}
+                {field.value || "Select"}
               </SelectTrigger>
               <SelectContent className="min-w-24">
                 {CONTACT_PERSON_TITLES.map((title) => (
@@ -59,6 +59,6 @@ export default function RecipientContactPerson() {
           </Field>
         )}
       />
-    </ButtonGroup>
+    </div>
   );
 }

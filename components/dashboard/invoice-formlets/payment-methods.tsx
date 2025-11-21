@@ -73,7 +73,7 @@ export default function PaymentMethods() {
                   {method.inputFieldLabel}
                   <Image src={method.icon} alt="" width={24} height={24} />
                 </FieldLabel>
-                <div className="flex gap-x-5">
+                <div className="flex max-[414px]:flex-col gap-x-5 gap-y-3">
                   {method.inputFields &&
                     method.inputFields.map((input, index) => {
                       return (

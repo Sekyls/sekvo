@@ -56,7 +56,7 @@ export default function CalculationSummary() {
 
   return (
     <FieldGroup>
-      <ButtonGroup className="flex flex-row gap-5 justify-between w-full max-w-sm">
+      <ButtonGroup className="flex-row max-[355px]:flex-col gap-5 justify-between w-full max-w-sm">
         {SWITCH_ITEMS.map((item) => {
           return (
             <div className="flex items-center space-x-2" key={item.id}>
@@ -79,7 +79,7 @@ export default function CalculationSummary() {
           return (
             <Fragment key={item.id}>
               {item.isChecked && (
-                <div className="grid grid-cols-[0.5fr_2fr] justify-between gap-5">
+                <div className="grid sm:grid-cols-[0.5fr_2fr] justify-between gap-x-5 gap-y-2">
                   <div className="flex items-center gap-x-1">
                     <Label>{item.label}</Label>
                     <InfoPopover

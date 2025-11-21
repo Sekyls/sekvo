@@ -188,7 +188,7 @@ small {
 }
 
 ::-webkit-scrollbar {
-  @apply bg-background w-1;
+  @apply bg-background w-1 h-1;
 }
 
 ::-webkit-scrollbar-thumb {

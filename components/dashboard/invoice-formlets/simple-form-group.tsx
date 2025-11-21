@@ -22,7 +22,7 @@ export default function SimpleFormDetailsGroup() {
   const invoiceDateProps = useInvoiceDateHook();
   const dueDateProps = useDueDateHook();
   return (
-    <FieldGroup className="grid grid-cols-2 justify-between">
+    <FieldGroup className="grid sm:grid-cols-2 justify-between">
       {CLIENT_DETAILS_FIELDS.map((item) => {
         return (
           <Controller

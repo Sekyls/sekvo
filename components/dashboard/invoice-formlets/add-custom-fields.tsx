@@ -29,9 +29,9 @@ export default function AddCustomFields() {
           Custom Fields <span className="text-imperial-red font-black">*</span>
         </FieldLegend>
       )}
-      <div className="grid grid-cols-2 gap-5 justify-between">
+      <div className="grid sm:grid-cols-2 gap-y-5 gap-x-2">
         {fields.map((field, index) => (
-          <FieldGroup className="flex-row gap-x-2 max-w-sm" key={field.id}>
+          <div className="flex max-w-sm gap-x-2" key={field.id}>
             <Controller
               name={`customInvoiceFields.${index}.label`}
               control={control}
@@ -100,7 +100,7 @@ export default function AddCustomFields() {
                 </InputGroupButton>
               </InputGroupAddon>
             )}
-          </FieldGroup>
+          </div>
         ))}
       </div>
       <Button

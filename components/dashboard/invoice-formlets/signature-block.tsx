@@ -19,7 +19,7 @@ export default function SignatureBlock() {
   return (
     <section>
       <FieldLegend>Signature Block</FieldLegend>
-      <FieldGroup className="flex-row gap-x-5">
+      <FieldGroup className="sm:flex-row gap-x-5 gap-y-2.5">
         {SIGNATURE_BLOCK.map((item, index) => {
           return (
             <Controller

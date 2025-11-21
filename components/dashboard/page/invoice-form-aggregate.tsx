@@ -93,7 +93,7 @@ export default function AggregatedInvoiceForm() {
         );
       }
 
-      toastSuccess("Invoice created successfully!");
+      toastSuccess("Invoice saved successfully!");
 
       newTab
         ? (newTab.location.href = `/invoice-preview/${parsedResponse.data}`)
@@ -129,7 +129,7 @@ export default function AggregatedInvoiceForm() {
           <FieldSet>
             <InvoiceItems />
           </FieldSet>
-          <FieldGroup className="flex-row">
+          <FieldGroup className="sm:flex-row">
             <NotesAndTerms />
           </FieldGroup>
           <FieldSet>
